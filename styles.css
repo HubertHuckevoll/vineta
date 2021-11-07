@@ -1,0 +1,396 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #000;
+  font-size: 14px;
+}
+
+#webcam {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background: url(./assets/backdrop.jpg) no-repeat fixed center center #191919;
+  -webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+  cursor: pointer;
+  z-index: 0;
+  transition: opacity 1s;
+}
+
+#timeAndControls {
+  position: absolute;
+  top: 35px;
+  left: 35px;
+  text-align: center;
+}
+
+#widgetClock {
+  display: block;
+}
+
+#widgetClock .time {
+  font-size: 6vw;
+  color: white;
+  text-shadow: 1px  1px 1px black, 1px -1px 1px black, -1px  1px 1px black, -1px -1px 1px black;
+  text-align: center;
+}
+
+#widgetClock .dots {
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+#widgetClock .date {
+  font-size: 1vw;
+  color: white;
+  text-shadow: 1px  1px 1px black, 1px -1px 1px black, -1px  1px 1px black, -1px -1px 1px black;
+  text-align: center;
+}
+
+#widgetControls {
+  overflow: hidden;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+#widgetControls button {
+  margin: 5px 5px 5px 0;
+}
+
+#widgetLastCam {
+  position: absolute;
+  bottom: 50px;
+  left: 35px;
+  display: inline-block;
+  overflow: hidden;
+}
+
+#widgetLastCam img {
+  width: auto;
+  max-width: 12vw;
+  border: 3px solid #fafafa;
+}
+
+#widgetLog {
+  position: absolute;
+  bottom: 5px;
+  left: 35px;
+  color: white;
+  font-size: 1vw;
+  text-shadow: 1px  1px 1px black, 1px -1px 1px black, -1px  1px 1px black, -1px -1px 1px black;
+  transition: opacity 1s;
+  display: inline-block;
+  overflow: hidden;
+}
+
+#widgetLocation {
+  position: absolute;
+  bottom: 50px;
+  right: 35px;
+  text-align: right;
+  color: white;
+  text-shadow: 1px  1px 1px black, 1px -1px 1px black, -1px  1px 1px black, -1px -1px 1px black;
+  display: inline-block;
+  overflow: hidden;
+}
+
+#widgetLocation .widgetLocationDesc,
+#widgetLocation .widgetLocationDesc a,
+#widgetLocation .widgetLocationDesc a:active,
+#widgetLocation .widgetLocationDesc a:visited,
+#widgetLocation .widgetLocationDesc a:focus,
+#widgetLocation .widgetLocationDesc a:active:focus,
+#widgetLocation .widgetLocationDesc a:visited:focus
+{
+  font-size: 1.5vw;
+  color: white;
+  text-decoration: none;
+}
+
+#widgetLocation .widgetLocationDesc a:hover {
+  text-decoration: underline;
+}
+
+#widgetLocation .widgetLocationPlace {
+  font-size: 1vw;
+}
+
+#widgetMap {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.widgetMapImage {
+  width: 15vw;
+  padding: 3px;
+  background-color: white;
+}
+
+.formoTab
+{
+  max-width: 600px;
+}
+
+#sidebar {
+  position: fixed;
+  opacity: 0;
+  right: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  transition: width .5s, opacity .5s;
+  overflow: auto;
+  background-color: white;
+}
+
+#sidebarFilter {
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 400px;
+  height: 50px;
+  background-color: #eee;
+}
+
+#sidebarSearch {
+  background-color: white;
+  display: inline-block;
+  outline: 0;
+  cursor: text;
+  width: 300px;
+}
+
+#sidebarFilterResetBut {
+  display: inline-block;
+}
+
+#sidebarWebcams {
+  border-bottom: 1px solid green;
+  text-align: left;
+  padding-top: 60px;
+}
+
+#sidebarWebcamsDisabled {
+  border-bottom: 1px solid red;
+  text-align: left;
+  overflow: hidden;
+}
+
+#sidebarWebcams div, #sidebarWebcamsDisabled div {
+  box-sizing: border-box;
+  color: black;
+  cursor: pointer;
+  margin: 0;
+  padding: 5px;
+}
+
+#sidebarWebcams .led {
+  display: block;
+  float: right;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+#sidebarWebcams .led-green {
+  background-color: #ABFF00;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
+}
+
+#sidebarWebcams .led-red {
+  background-color: #F00;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
+}
+
+#sidebarWebcams .led-yellow {
+  background-color: #FF0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 12px;
+}
+
+#sidebarWebcams .led-blue {
+  background-color: #24E0FF;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3F8CFF 0 2px 14px;
+}
+
+#sidebarWebcams .activeCam {
+  /*background: linear-gradient(to right, #eee, #ebebeb) !important;*/
+  border-left: 5px solid orangered;
+}
+
+.sidebarWebcamLocation {
+  font-weight: bold;
+}
+
+#sidebarWebcamsDisabled .previewImage {
+  width: 150px;
+  height: auto;
+  margin-top: 10px;
+  font-family: 'Helvetica';
+  font-weight: 300;
+  line-height: 1;
+  text-align: left;
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  min-height: 25px;
+}
+
+#sidebarWebcamsDisabled .previewImage:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -10px;
+  left: 0;
+  height: calc(100% + 10px);
+  width: 100%;
+  background-color: white;
+}
+
+#sidebarWebcamsDisabled .previewImage:after {
+  content: "Broken " attr(alt);
+  display: block;
+  color: rgb(100, 100, 100);
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+}
+
+
+#webcamCount, #disabledWebcamCount {
+  display: inline-block;
+  padding: 3px 10px;
+  margin: 0 3px 5px;
+  font-size: 0.8em;
+  border-radius: 0 0 5px 5px;
+  border: 1px solid green;
+  background-color: green;
+  color: white;
+}
+
+#disabledWebcamCount {
+  border: 1px solid red;
+  background-color: red;
+
+}
+
+#prefsScene {
+  background-color: white;
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0;
+  top: 0;
+  right: 0;
+  left: 100%;
+  bottom: 100%;
+  transition: left .3s, right .3s, top .3s, bottom .3s;
+  overflow: auto;
+}
+
+.prefsSceneHeader {
+  position: sticky;
+  left: 25px;
+  right: 25px;
+  top: 0px;
+  width: inherit;
+  background-color: white;
+}
+
+.prefsSceneTitle {
+  text-align: right;
+  padding: 5px;
+}
+
+#prefsSheetsTab h3, #prefsPresentationTab h3, #aboutTab h3 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+#prefsSceneStatus {
+  transition: opacity 1s;
+}
+
+#prefsTabbox {
+  padding: 10px 20px 10px 20px;
+}
+
+input::placeholder
+{
+  color: #bbb;
+}
+
+#prefsSheetsList {
+  padding-left: 15px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#prefsSheetsList li {
+  margin-bottom: 10px;
+  list-style-type: circle;
+}
+
+.line  {
+  padding: 5px 0 10px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+formo-slider
+{
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+fieldset
+{
+  border: 1px solid #eee;
+}
+
+.prefsSheetsDesc {
+  font-weight: normal;
+}
+
+.prefsSheetsKey {
+  color: #999 !important;
+  font-size: 10px;
+}
+
+.formoSliderMirror
+{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#aboutWrapper
+{
+  display: flex;
+  flex-direction: row;
+}
+
+#aboutWrapper div
+{
+  width: 350px;
+  margin-left: 20px;
+}
+
+#aboutWrapper img
+{
+  object-fit:contain;
+}

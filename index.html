@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vineta</title>
+  <meta charset="utf-8">
+  <meta name="application-name" content="Vineta">
+  <meta name="apple-mobile-web-app-title" content="Vineta">
+  <link rel="icon" sizes="16x16" href="./assets/ic_launcher.png">
+  <!--link rel="icon" sizes="128x122" href="./assets/webcam128.png">
+  <link rel="apple-touch-icon" href="./assets/webcam128.png"-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="referrer" content="no-referrer">
+  <script src="/frontschweine/js/Events.js"></script>
+  <script src="/frontschweine/js/BaseM.js"></script>
+  <script src="/frontschweine/js/BaseV.js"></script>
+  <script src="/frontschweine/js/BaseC.js"></script>
+  <script src="/frontschweine/js/FormoTabbox.js"></script>
+  <script src="/frontschweine/js/FormoSlider.js"></script>
+  <script src="/frontschweine/js/FormoDualButton.js"></script>
+  <script src="SheetsM.js"></script>
+  <script src="ImpExTsvM.js"></script>
+  <script src="RotatorM.js"></script>
+  <script src="WebcamLoaderM.js"></script>
+  <script src="OptionsM.js"></script>
+  <script src="WebcamsM.js"></script>
+  <script src="VceBaseV.js"></script>
+  <script src="VceSidebarV.js"></script>
+  <script src="VceLocationV.js"></script>
+  <script src="VceLogV.js"></script>
+  <script src="VceMapV.js"></script>
+  <script src="VceLastCamV.js"></script>
+  <script src="VceControlsV.js"></script>
+  <script src="VceClockV.js"></script>
+  <script src="WidgetsC.js"></script>
+  <script src="AppC.js"></script>
+  <script src="PresentationC.js"></script>
+  <script src="PresentationV.js"></script>
+  <script src="PrefsC.js"></script>
+  <script src="PrefsV.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  <link href="/frontschweine/css/FormoTabbox.css" rel="stylesheet">
+  <link href="/frontschweine/css/appskin.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+  <div id="mainScene" class="scene" style="display: block;">
+    <div id="webcam">
+      <div id="dynamicOverlays">
+        <vce-location id="widgetLocation" place="" desc=""></vce-location>
+        <vce-map id="widgetMap"></vce-map>
+        <vce-lastcam id="widgetLastCam"></vce-lastcam>
+      </div>
+    </div>
+    <div id="staticOverlays">
+      <vce-sidebar id="sidebar">
+        <div id="sidebarFilter">
+          <input type="text" id="sidebarSearch">
+          <button id="sidebarFilterResetBut">Clear</button>
+        </div>
+        <div id="sidebarWebcams"></div>
+        <div id="webcamCount"></div>
+        <div id="sidebarWebcamsDisabled"></div>
+        <div id="disabledWebcamCount"></div>
+      </vce-sidebar>
+      <div id="timeAndControls">
+        <vce-clock id="widgetClock"></vce-clock>
+        <vce-controls id="widgetControls"></vce-controls>
+      </div>
+      <vce-log id="widgetLog"></vce-log>
+    </div>
+  </div>
+
+  <div id="prefsScene" class="scene">
+
+    <div class="prefsSceneHeader">
+      <div class="prefsSceneTitle">
+        <span id="prefsSceneStatus"></span>
+        <button id="prefsCloseButton">&nbsp;X&nbsp;</button>
+      </div>
+      <formo-tabbox tabbox="prefsTabbox" active="prefsSheetsTab">
+        <ul class="formoTabStripe">
+          <li tab="prefsSheetsTab">Webcams</li>
+          <li tab="prefsPresentationTab">Presentation</li>
+          <li tab="aboutTab">About</li>
+        </ul>
+      </formo-tabbox>
+    </div>
+
+    <div id="prefsTabbox" class="formoTabBox">
+
+      <div class="formoTab" id="prefsSheetsTab">
+        <h3>Current Webcam Sheets</h3>
+        <div class="line">
+          <ul id="prefsSheetsList"></ul>
+        </div>
+        <h3>Add Webcam Sheet</h3>
+        <div class="line">
+          <fieldset>
+            <legend>Add Webcam Document </legend>
+            <label for="prefsAddSheetPub">
+              Published Google Sheets Document URL ("Publish to the Web" / "TSV")<br>
+              <input id="prefsSheetsAddPub" type="text" size="130" placeholder="https://docs.google.com/spreadsheets/d/e/2PACX-1vScHpI5MimEVrf65dMnl5NGhpThsbQjkF8ZtoqSIMnnHW1AtBf-C2Kp30mYVDVfY1TtaIsM40F-axW1/pub?output=tsv" value="">
+            </label>
+            <br><br>
+            <label for="prefsAddSheetSheet">
+              Google Sheets Document URL<br>
+              <input id="prefsSheetsAddSheet" type="text" size="130" placeholder="https://docs.google.com/spreadsheets/d/1GUuIzqqdo6BkQ34tSDrUCJxPC6kjfuzCenOv-rrh37c/edit#gid=0" value="">
+            </label>
+            <br><br>
+            <label for="prefsAddSheetDesc">
+              Description<br>
+              <input id="prefsSheetsAddDesc" type="text" size="30" placeholder="My Webcams" value="">
+            </label>
+            <br><br>
+            <button class="prefsSheetsAddButton">Add</button>
+          </fieldset>
+        </div>
+        <h3>Sheets Backup</h3>
+        <div class="line">
+          <span>Backup: </span>
+          <a id="prefsExpSheets">Download Sheets As TSV</a>
+        </div>
+        <div class="line">
+          <span>Restore: </span>
+          <input id="prefsImpSheetsFS" style="display: none;" type="file" accept=".tsv">
+          <button id="prefsImpSheetsSelect">Select TSV File</button>
+        </div>
+        <h3>Proxy</h3>
+        <div class="line">
+          <label for="prefsProxy">Use A Proxy Server (Recommended)</label>
+          <input type="checkbox" id="prefsProxy" />
+        </div>
+      </div>
+
+      <div class="formoTab" id="prefsPresentationTab">
+        <h3>Presentation</h3>
+        <div class="line"><formo-slider id="slideTime" class="formoSlider" label="Slide Time (s)" value="8" max="60" min="1" step="1"></formo-slider></div>
+        <div class="line">
+          <div>Image Size</div>
+          <select id="screenMode">
+            <option value="auto">Auto</option>
+            <option value="cover">Cover</option>
+            <option value="contain">Contain</option>
+            <option value="original">Original</option>
+          </select>
+        </div>
+        <div class="line">
+          <div id="screenModeHint"></div>
+        </div>
+        <div class="line">
+          <span>Rotation</span>&nbsp;
+          <select id="rotateMode">
+            <option value="serial">Default Order</option>
+            <option value="random">Random</option>
+          </select>
+        </div>
+        <h3>Widgets</h3>
+        <div id="overlaysBox"></div>
+        <div class="line"><formo-slider id="overlaysDisplayTime" class="formoSlider" label="Show Mousemove-Widgets For (s)" value="5" max="60" min="1" step="1"></formo-slider></div>
+        <div class="line"><formo-slider id="overlaysOpacity" class="formoSlider" label="Opacity (%)" value="90" max="100" min="20" step="1"></formo-slider></div>
+        <h3>Enhanced</h3>
+        <div class="line"><formo-slider id="webcamLoadTimeout" class="formoSlider" label="Webcam Load Timeout (s)" value="10" max="30" min="5" step="1"></formo-slider></div>
+        <div class="line">
+          <span>Webcam Load Error Logging</span>&nbsp;
+          <select id="logMode">
+            <option value="screen">Screen</option>
+            <option value="console">Console</option>
+            <option value="both">Screen And Console</option>
+            <option value="none">No logging</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="formoTab" id="aboutTab">
+        <div id="aboutWrapper">
+          <img src="./assets/ic_launcher.png">
+          <div>
+            <h3>Vineta</h3>
+            <p>A Webcam Slideshow App!</p>
+            <p>No frameworks were harmed in the making of this app, but we're standing on the shoulders of <a href="https://www.google.com/sheets/about/" target="_blank">giants</a>.</p>
+            <p>
+              Cobbled together by <a href="https://www.facebook.com/profile.php?id=100006858609870" target="_blank">MeyerK</a> in<br>
+              2013, 2015/10, 2017/11, 2019/10ff, 2021/05,06.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div style="display: none;">
+    <img id="image">
+  </div>
+
+</body>
+</html>
