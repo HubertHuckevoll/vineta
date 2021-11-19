@@ -7,7 +7,7 @@ class VceClockV extends VceBaseV
     super();
     this.tid = null;
   }
-  
+
   static get observedAttributes()
   {
     let attrs = super.observedAttributes;
@@ -25,7 +25,7 @@ class VceClockV extends VceBaseV
   attributeChangedCallback(name, oldValue, newValue)
   {
     super.attributeChangedCallback(name, oldValue, newValue);
-    
+
     if ((name === 'blinking') && (newValue == 'yes'))
     {
       this.startDots();
@@ -40,12 +40,12 @@ class VceClockV extends VceBaseV
   {
     return this.getAttribute('blinking');
   }
-  
+
   set blinking(trueFalse)
   {
     this.setAttribute('blinking', trueFalse);
   }
-  
+
   clockTick(refresh)
   {
     if (refresh === undefined)
@@ -56,7 +56,7 @@ class VceClockV extends VceBaseV
     {
       refresh = 60 * 1000;
     }
-    
+
     this.tid = setTimeout(() =>
       {
         this.update();
@@ -69,23 +69,23 @@ class VceClockV extends VceBaseV
   startDots()
   {
     var dotsEl = this.querySelector('.dots');
-    
+
     dotsEl.addEventListener('transitionend', this.fadeDots.bind(this));
     dotsEl.style.opacity = "0"; // trigger fade out for 1s - see CSS: transition
   }
-  
+
   stopDots()
   {
     var dotsEl = this.querySelector('.dots');
-    
+
     dotsEl.removeEventListener('transitionend', this.fadeDots.bind(this));
     dotsEl.style.opacity = "1"; // trigger fade in for 1s - see CSS: transition
   }
-  
+
   fadeDots(ev)
   {
     var dotsElStyle = this.querySelector('.dots').style;
-    
+
     if (dotsElStyle.opacity == "0")
     {
       dotsElStyle.opacity = "1";
@@ -95,7 +95,7 @@ class VceClockV extends VceBaseV
       dotsElStyle.opacity = "0";
     }
   }
-  
+
   render()
   {
     this.innerHTML = '<div class="time">'+
@@ -104,7 +104,7 @@ class VceClockV extends VceBaseV
                      '<div class="date"></div>';
     this.update();
   }
-  
+
   update()
   {
     var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -122,6 +122,6 @@ class VceClockV extends VceBaseV
     this.querySelector('.cm').innerHTML = cm;
     this.querySelector('.date').innerHTML = cd;
   }
-  
+
 }
 

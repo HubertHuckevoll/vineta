@@ -5,7 +5,6 @@ class VceBaseV extends HTMLElement
   constructor()
   {
     super();
-    this.fadeOutTimer = null;
   }
 
   static get observedAttributes()
@@ -15,7 +14,7 @@ class VceBaseV extends HTMLElement
 
   get fadeTime()
   {
-    return this.getAttribute('fadeTime') || '0.5';
+    return this.getAttribute('fadeTime') || '1';
   }
 
   set fadeTime(fadeTime)
@@ -48,13 +47,9 @@ class VceBaseV extends HTMLElement
     switch (name)
     {
       case 'visible':
+
         if (newValue == 'yes')
         {
-          if (this.fadeOutTimer !== null)
-          {
-            window.clearTimeout(this.fadeOutTimer);
-            this.fadeOutTimer = null;
-          }
           this.fadeIn();
         }
         else
@@ -64,39 +59,48 @@ class VceBaseV extends HTMLElement
       break;
 
       case 'opacity':
-        if (this.getAttribute('visible') == 'yes')
+        if (this.visible == 'yes')
         {
           this.style.opacity = newValue;
         }
+      break;
+
+      case 'fadeTime':
+        this.style.transition = 'opacity '+this.fadeTime+'s';
       break;
     }
   }
 
   fadeIn()
   {
-    this.style.transition = 'opacity '+this.getAttribute('fadeTime')+'s';
-    this.resetSize();
-    this.style.opacity = this.getAttribute('opacity'); // css3 transition will now start the fade
+    this.style.transition = 'opacity '+this.fadeTime+'s';
+    this.style.display = "";
+
+    window.setTimeout(() =>
+    {
+      this.ontransitionend = this.finishFadeIn.bind(this);
+      this.style.opacity = this.opacity; // css3 transition will now start the fade
+    }, 10); // hack needed for this to work
   }
 
   fadeOut()
   {
-    this.style.transition = 'opacity '+this.getAttribute('fadeTime')+'s';
+    this.style.transition = 'opacity '+this.fadeTime+'s';
+    this.ontransitionend = this.finishFadeOut.bind(this);
     this.style.opacity = 0; // css3 transition will now start the fade
-    this.fadeOutTimer = window.setTimeout(this.minimizeSize.bind(this), (this.getAttribute('fadeTime') * 1000));
   }
 
-  minimizeSize()
+  finishFadeIn()
   {
-    this.style.width = 0;
-    this.style.height = 0;
-    this.fadeOutTimer = null;
+    this.style.transition = '';
+    this.ontransitionend = null;
   }
 
-  resetSize()
+  finishFadeOut()
   {
-    this.style.width = '';
-    this.style.height = '';
+    this.style.transition = '';
+    this.ontransitionend = null;
+    this.style.display = "none";
   }
 
   iterate(objArr, callback)
