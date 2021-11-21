@@ -41,9 +41,9 @@ class VceClockV extends VceBaseV
     return this.getAttribute('blinking');
   }
 
-  set blinking(trueFalse)
+  set blinking(yesNo)
   {
-    this.setAttribute('blinking', trueFalse);
+    this.setAttribute('blinking', yesNo);
   }
 
   clockTick(refresh)
@@ -70,7 +70,7 @@ class VceClockV extends VceBaseV
   {
     var dotsEl = this.querySelector('.dots');
 
-    dotsEl.addEventListener('transitionend', this.fadeDots.bind(this));
+    dotsEl.ontransitionend = this.fadeDots.bind(this);
     dotsEl.style.opacity = "0"; // trigger fade out for 1s - see CSS: transition
   }
 
@@ -78,7 +78,7 @@ class VceClockV extends VceBaseV
   {
     var dotsEl = this.querySelector('.dots');
 
-    dotsEl.removeEventListener('transitionend', this.fadeDots.bind(this));
+    dotsEl.ontransitionend = null;
     dotsEl.style.opacity = "1"; // trigger fade in for 1s - see CSS: transition
   }
 
@@ -116,7 +116,6 @@ class VceClockV extends VceBaseV
     ch = (ch < 10) ? '0'+ch : ch;
     cm = (cm < 10) ? '0'+cm : cm;
     cd = t.toLocaleDateString({}, dateOptions);
-
 
     this.querySelector('.ch').innerHTML = ch;
     this.querySelector('.cm').innerHTML = cm;

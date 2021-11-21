@@ -153,7 +153,7 @@ class VceSidebarV extends VceBaseV
 
   startLoadingIndicator(ev)
   {
-    let cam = this.querySelector("#sidebarWebcams .sidebarWebcam[data-idx='"+ev.detail.idx+"']");
+    let cam = this.querySelector("#sidebarWebcams .sidebarWebcam[data-idx='"+ev.detail.payload.idx+"']");
     if (cam != null)
     {
       cam.style.fontStyle = 'italic';
@@ -162,7 +162,7 @@ class VceSidebarV extends VceBaseV
 
   stopLoadingIndicator(ev)
   {
-    let cam = this.querySelector("#sidebarWebcams .sidebarWebcam[data-idx='"+ev.detail.idx+"']");
+    let cam = this.querySelector("#sidebarWebcams .sidebarWebcam[data-idx='"+ev.detail.payload.idx+"']");
     if (cam != null)
     {
       cam.style.fontStyle = '';

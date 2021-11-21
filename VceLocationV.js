@@ -24,7 +24,7 @@ class VceLocationV extends VceBaseV
 
   set place(txt)
   {
-    this.setAttribute('place');
+    this.setAttribute('place', txt);
   }
 
   get desc()

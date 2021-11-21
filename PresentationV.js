@@ -34,8 +34,8 @@ class PresentationV extends BaseV
 
   setWidgetVisibility(ev)
   {
-    let widgets = ev.detail.widgets;
-    let isVisible = ev.detail.isVisible;
+    let widgets = ev.detail.payload.widgets;
+    let isVisible = ev.detail.payload.isVisible;
 
     this.iterate(widgets, (idx, widgetName) =>
     {
@@ -57,11 +57,11 @@ class PresentationV extends BaseV
   {
     let webcam = document.getElementById('webcam');
 
-    this.nextCam.prefs = ev.detail.prefs;
-    this.nextCam.lastCam = ev.detail.lastCam;
-    this.nextCam.img = ev.detail.img;
-    this.nextCam.cam = ev.detail.cam;
-    this.nextCam.idx = ev.detail.idx;
+    this.nextCam.prefs = ev.detail.payload.prefs;
+    this.nextCam.lastCam = ev.detail.payload.lastCam;
+    this.nextCam.img = ev.detail.payload.img;
+    this.nextCam.cam = ev.detail.payload.cam;
+    this.nextCam.idx = ev.detail.payload.idx;
 
     // css3 transition will now fade out for 1s
     // afterwards we finish the transition with "webcamSwapFinish", which is our "transitionend" handler
@@ -130,10 +130,10 @@ class PresentationV extends BaseV
 
   webcamSwapFailed(ev)
   {
-    let logMode = ev.detail.logMode;
-    let cam = ev.detail.cam;
-    let idx = ev.detail.idx;
-    let err = ev.detail.err;
+    let logMode = ev.detail.payload.logMode;
+    let cam = ev.detail.payload.cam;
+    let idx = ev.detail.payload.idx;
+    let err = ev.detail.payload.err;
 
     this.sidebarView.setSidebarCamColor(cam, idx);
 
@@ -156,7 +156,7 @@ class PresentationV extends BaseV
 
   log(ev)
   {
-    this.logText(ev.detail.txt);
+    this.logText(ev.detail.payload.txt);
   }
 
   logText(txt)

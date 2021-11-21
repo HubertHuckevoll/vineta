@@ -34,8 +34,8 @@ class PrefsV extends BaseV
 
   drawSheets(ev)
   {
-    // grabs Sheets
-    let sheets = ev.detail.sheets;
+    // grab Sheets
+    let sheets = ev.detail.payload.sheets;
 
     // Sheets
     var sheetsEl = document.getElementById('prefsSheetsList');
@@ -114,6 +114,6 @@ class PrefsV extends BaseV
 
   error(ev)
   {
-    window.alert(ev.detail.txt);
+    window.alert(ev.detail.payload.txt);
   }
 }

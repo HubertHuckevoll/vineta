@@ -66,7 +66,6 @@ class WidgetsC extends BaseC
   {
     this.timer = null;
     this.emit('widgetsVisibilityChange', {'widgets': this.mousemoveOverlays, 'isVisible':false});
-
   }
 
   cancelTimeout()

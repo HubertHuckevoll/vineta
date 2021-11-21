@@ -117,7 +117,7 @@ class PrefsC extends BaseC
   prefsSliderChange(ev)
   {
     let id = ev.target.id;
-    let val = ev.detail.value;
+    let val = ev.detail.payload.value;
 
     this.models.options.setPref(id, val);
   }
