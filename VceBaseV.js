@@ -71,16 +71,16 @@ class VceBaseV extends HTMLElement
     }
   }
 
-  fadeIn()
+  async fadeIn()
   {
     this.style.transition = 'opacity '+this.fadeTime+'s';
-    this.style.display = "";
+    //this.style.display = "";
+    this.style.height = '';
+    this.style.width = '';
 
-    window.setTimeout(() =>
-    {
-      this.ontransitionend = this.finishFadeIn.bind(this);
-      this.style.opacity = this.opacity; // css3 transition will now start the fade
-    }, 10); // hack needed for this to work
+    //await this.wait(10);
+    this.ontransitionend = this.finishFadeIn.bind(this);
+    this.style.opacity = this.opacity; // css3 transition will now start the fade
   }
 
   fadeOut()
@@ -100,7 +100,9 @@ class VceBaseV extends HTMLElement
   {
     this.style.transition = '';
     this.ontransitionend = null;
-    this.style.display = "none";
+    //this.style.display = "none";
+    this.style.height = 0;
+    this.style.width = 0;
   }
 
   iterate(objArr, callback)
@@ -115,6 +117,14 @@ class VceBaseV extends HTMLElement
     for (var i = 0; i < nodeList.length; i++) {
       callback(nodeList[i]);
     }
+  }
+
+  async wait(ms)
+  {
+    return new Promise((resolve, reject) =>
+    {
+      let timerID = setTimeout(resolve, ms);
+    });
   }
 }
 

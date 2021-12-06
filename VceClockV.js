@@ -24,16 +24,19 @@ class VceClockV extends VceBaseV
 
   attributeChangedCallback(name, oldValue, newValue)
   {
-    super.attributeChangedCallback(name, oldValue, newValue);
+    if ((name === 'blinking') || (name == 'visible'))
+    {
+      if (newValue == 'yes')
+      {
+        this.startDots();
+      }
+      else if (newValue == 'no')
+      {
+        this.stopDots();
+      }
+    }
 
-    if ((name === 'blinking') && (newValue == 'yes'))
-    {
-      this.startDots();
-    }
-    else if ((name === 'blinking') && (newValue == 'no'))
-    {
-      this.stopDots();
-    }
+    super.attributeChangedCallback(name, oldValue, newValue);
   }
 
   get blinking()
@@ -79,20 +82,24 @@ class VceClockV extends VceBaseV
     var dotsEl = this.querySelector('.dots');
 
     dotsEl.ontransitionend = null;
-    dotsEl.style.opacity = "1"; // trigger fade in for 1s - see CSS: transition
+    dotsEl.style.opacity = "1";
   }
 
   fadeDots(ev)
   {
-    var dotsElStyle = this.querySelector('.dots').style;
+    let dots = this.querySelector('.dots');
+    let dotsElStyle = dots.style;
 
-    if (dotsElStyle.opacity == "0")
+    if (ev.target == dots)
     {
-      dotsElStyle.opacity = "1";
-    }
-    else
-    {
-      dotsElStyle.opacity = "0";
+      if (dotsElStyle.opacity == "0")
+      {
+        dotsElStyle.opacity = "1";
+      }
+      else
+      {
+        dotsElStyle.opacity = "0";
+      }
     }
   }
 

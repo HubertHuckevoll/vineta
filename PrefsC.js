@@ -3,13 +3,13 @@
 class PrefsC extends BaseC
 {
 
-  constructor(views, models, widgets)
+  constructor(views, models, subcontrollers)
   {
     super();
 
     this.views = views;
     this.models = models;
-    this.widgets = widgets;
+    this.subcontrollers = subcontrollers;
 
     this.sheetsHaveChanged = false;
 
@@ -36,18 +36,18 @@ class PrefsC extends BaseC
     this.views.prefsView.prefsClose();
 
     let prefs = this.models.options.getPrefs();
-    this.models.rotator.setPrefs(prefs);
-    this.widgets.update(prefs);
+    this.subcontrollers.rotator.setPrefs(prefs);
+    this.subcontrollers.widgets.update(prefs);
     this.views.presentView.setWidgetsOpacity(prefs);
 
     if (this.sheetsHaveChanged === true)
     {
       let sheets = this.models.sheets.load();
       let webcams = await this.models.webcams.load(sheets);
-      this.models.rotator.stop();
-      this.models.rotator.setWebcams(webcams);
+      this.subcontrollers.rotator.stop();
+      this.subcontrollers.rotator.setWebcams(webcams);
       this.views.sidebarView.render(webcams);
-      this.models.rotator.start();
+      this.subcontrollers.rotator.start();
       this.sheetsHaveChanged = false;
     }
   }

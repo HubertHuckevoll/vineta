@@ -2,13 +2,13 @@
 
 class PresentationC extends BaseC
 {
-  constructor(views, models, widgets)
+  constructor(views, models, subcontrollers)
   {
     super();
 
     this.views = views;
     this.models = models;
-    this.widgets = widgets;
+    this.subcontrollers = subcontrollers;
 
     this.automaticRestart = false;
 
@@ -57,34 +57,34 @@ class PresentationC extends BaseC
   async go()
   {
     let prefs = this.models.options.load();
-    this.models.rotator.setPrefs(prefs);
-    this.widgets.update(prefs);
+    this.subcontrollers.rotator.setPrefs(prefs);
+    this.subcontrollers.widgets.update(prefs);
     this.views.presentView.setWidgetsOpacity(prefs);
 
     let sheets = this.models.sheets.load();
     let webcams = await this.models.webcams.load(sheets);
-    this.models.rotator.setWebcams(webcams);
+    this.subcontrollers.rotator.setWebcams(webcams);
     this.views.sidebarView.render(webcams);
 
-    this.models.rotator.start();
+    this.subcontrollers.rotator.start();
   }
 
   filterWebcams(ev)
   {
-    this.models.rotator.stop();
+    this.subcontrollers.rotator.stop();
     let webcams = this.models.webcams.filter(ev.target.value);
-    this.models.rotator.setWebcams(webcams);
+    this.subcontrollers.rotator.setWebcams(webcams);
     this.views.sidebarView.render(webcams);
   }
 
   filterWebcamsReset(ev)
   {
     document.getElementById('sidebarSearch').value = '';
-    this.models.rotator.stop();
+    this.subcontrollers.rotator.stop();
     let webcams = this.models.webcams.filterReset();
-    this.models.rotator.setWebcams(webcams);
+    this.subcontrollers.rotator.setWebcams(webcams);
     this.views.sidebarView.render(webcams);
-    this.models.rotator.start();
+    this.subcontrollers.rotator.start();
   }
 
   gotoCam(ev)
@@ -94,7 +94,7 @@ class PresentationC extends BaseC
     if (ev.target.parentNode.parentNode.parentNode.id == 'sidebarWebcams')
     {
       let idx = ev.target.parentNode.parentNode.getAttribute('data-idx');
-      this.models.rotator.goto(idx);
+      this.subcontrollers.rotator.goto(idx);
     }
   }
 
@@ -102,7 +102,7 @@ class PresentationC extends BaseC
   {
     var idx = ev.target.parentNode.getAttribute('data-idx');
     let webcams = this.models.webcams.enableCam(idx);
-    this.models.rotator.setWebcams(webcams);
+    this.subcontrollers.rotator.setWebcams(webcams);
     this.views.sidebarView.render(webcams);
   }
 
@@ -110,14 +110,14 @@ class PresentationC extends BaseC
   {
     var idx = ev.target.parentNode.getAttribute('data-idx');
     let webcams = this.models.webcams.disableCam(idx);
-    this.models.rotator.setWebcams(webcams);
+    this.subcontrollers.rotator.setWebcams(webcams);
     this.views.sidebarView.render(webcams);
   }
 
   gotoPreviousCam(ev)
   {
     var idx = ev.target.parentNode.getAttribute('idx');
-    this.models.rotator.goto(idx);
+    this.subcontrollers.rotator.goto(idx);
   }
 
   enableScreenshotMode()
@@ -137,7 +137,7 @@ class PresentationC extends BaseC
     {
       if (ev.target.id === 'webcam')
       {
-        this.views.sidebarView.toggleSidebar(this.models.rotator.idx);
+        this.views.sidebarView.toggleSidebar(this.subcontrollers.rotator.idx);
       }
     }
   }
@@ -146,7 +146,7 @@ class PresentationC extends BaseC
   {
     if (ev.key == ' ')
     { // space bar
-      this.models.rotator.toggle();
+      this.subcontrollers.rotator.toggle();
       ev.preventDefault(); // if we omit this line, the space bar press will trigger a scroll down
       return false;
     }
@@ -154,15 +154,15 @@ class PresentationC extends BaseC
 
   startStopOnButton(ev)
   {
-    this.models.rotator.toggle();
+    this.subcontrollers.rotator.toggle();
   }
 
   onConnectionLost()
   {
-    if (this.models.rotator.isRunning)
+    if (this.subcontrollers.rotator.isRunning)
     {
       this.automaticRestart = true;
-      this.models.rotator.stop();
+      this.subcontrollers.rotator.stop();
     }
   }
 
@@ -171,7 +171,7 @@ class PresentationC extends BaseC
     if (this.automaticRestart == true)
     {
       this.automaticRestart = false;
-      this.models.rotator.start();
+      this.subcontrollers.rotator.start();
     }
   }
 
@@ -179,10 +179,10 @@ class PresentationC extends BaseC
   {
     if (document.visibilityState == 'hidden')
     {
-      if (this.models.rotator.isRunning)
+      if (this.subcontrollers.rotator.isRunning)
       {
         this.automaticRestart = true;
-        this.models.rotator.stop();
+        this.subcontrollers.rotator.stop();
       }
     }
     else if (document.visibilityState == 'visible')
@@ -190,7 +190,7 @@ class PresentationC extends BaseC
       if (this.automaticRestart == true)
       {
         this.automaticRestart = false;
-        this.models.rotator.start();
+        this.subcontrollers.rotator.start();
       }
     }
   }

@@ -1,6 +1,6 @@
 "use strict";
 
-class RotatorM extends BaseM
+class RotatorC extends BaseC
 {
   constructor()
   {
@@ -70,7 +70,6 @@ class RotatorM extends BaseM
   start()
   {
     this.isRunning = true;
-    //if (this.onStart !== null) this.onStart();
     this.emit('rotatorStart');
 
     this.resetTicksToZero();
@@ -212,12 +211,12 @@ class RotatorM extends BaseM
   async loadImage()
   {
     // get cam
-    var cam = this.webcams[this.idx];
+    let cam = this.webcams[this.idx];
     cam.totalCalls = cam.totalCalls + 1;
 
     // we need the URL as value, not as reference, so a little fuckery is neccessary...
-    var camC = this.cloneObj(cam);
-    var url = camC.url.toString();
+    let camC = Object.assign({}, cam);
+    let url = camC.url.toString();
 
     // update status
     this.emit('log', {'txt': 'Loading: '+camC.location+' / '+camC.description});
@@ -242,7 +241,7 @@ class RotatorM extends BaseM
     this.emit('log', {'txt': 'Done'});
     this.emit('rotatorSwitch', {
       'prefs': this.prefs,
-      'lastCam': this.cloneObj(this.lastCam),
+      'lastCam': Object.assign({}, this.lastCam),
       'img': this.img,
       'cam': this.webcams[this.idx],
       'idx': this.idx

@@ -10,6 +10,7 @@
   <link rel="apple-touch-icon" href="./assets/webcam128.png"-->
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <meta name="referrer" content="no-referrer">
+  <script src="/frontschweine/js/AnimationV.js"></script>
   <script src="/frontschweine/js/Events.js"></script>
   <script src="/frontschweine/js/BaseM.js"></script>
   <script src="/frontschweine/js/BaseV.js"></script>
@@ -19,11 +20,12 @@
   <script src="/frontschweine/js/FormoDualButton.js"></script>
   <script src="SheetsM.js"></script>
   <script src="ImpExTsvM.js"></script>
-  <script src="RotatorM.js"></script>
+  <script src="RotatorC.js"></script>
   <script src="WebcamLoaderM.js"></script>
   <script src="OptionsM.js"></script>
   <script src="WebcamsM.js"></script>
   <script src="VceBaseV.js"></script>
+  <script src="VceBase2V.js"></script>
   <script src="VceSidebarV.js"></script>
   <script src="VceLocationV.js"></script>
   <script src="VceLogV.js"></script>
@@ -40,6 +42,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
   <link href="/frontschweine/css/FormoTabbox.css" rel="stylesheet">
   <link href="/frontschweine/css/appskin.css" rel="stylesheet">
+  <link href="/frontschweine/css/animation.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
 </head>
 <body>
@@ -65,7 +68,7 @@
       </vce-sidebar>
       <div id="timeAndControls">
         <vce-clock id="widgetClock"></vce-clock>
-        <vce-controls id="widgetControls"></vce-controls>
+        <vce-controls id="widgetControls" show="anim.fadeIn" hide="anim.fadeOut"></vce-controls>
       </div>
       <vce-log id="widgetLog"></vce-log>
     </div>

@@ -9,7 +9,7 @@ class AppC extends BaseC
 
     this.views = null;
     this.models = null;
-    this.widgets = null;
+    this.subcontrollers = null;
     this.events = null;
     this.present = null;
     this.prefs = null;
@@ -42,21 +42,26 @@ class AppC extends BaseC
     // Init models
     this.models =
     {
-      rotator: new RotatorM(),
       options: new OptionsM(),
       webcams: new WebcamsM(),
       sheets:  new SheetsM()
     }
 
+    this.subcontrollers =
+    {
+      widgets: new WidgetsC(),
+      rotator: new RotatorC()
+    }
+
     // Init controllers
-    this.widgets = new WidgetsC();
-    this.present = new PresentationC(this.views, this.models, this.widgets);
-    this.prefs = new PrefsC(this.views, this.models, this.widgets);
+    this.present = new PresentationC(this.views, this.models, this.subcontrollers);
+    this.prefs = new PrefsC(this.views, this.models, this.subcontrollers);
 
     // load and go
     this.present.go();
   }
 }
 
+var anim = new AnimationV(); // this must be available on the DOM level
 let vineta = new AppC();
 window.addEventListener("DOMContentLoaded", vineta.load.bind(vineta));
