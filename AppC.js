@@ -13,10 +13,13 @@ class AppC extends BaseC
     this.events = null;
     this.present = null;
     this.prefs = null;
+    this.anim = null;
   }
 
   load()
   {
+    this.anim = new AnimationV(); // this must be available on the DOM level
+
     // initialize generic custom elements
     window.customElements.define('formo-slider', FormoSlider);
     window.customElements.define('formo-tabbox', FormoTabbox);
@@ -62,6 +65,5 @@ class AppC extends BaseC
   }
 }
 
-var anim = new AnimationV(); // this must be available on the DOM level
-let vineta = new AppC();
+var vineta = new AppC();
 window.addEventListener("DOMContentLoaded", vineta.load.bind(vineta));
