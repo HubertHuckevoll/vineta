@@ -139,7 +139,7 @@ class VceSidebarV extends FormoBase
 
   closeSidebarWebcamsCamActions()
   {
-    let details = document.querySelectorAll('.sidebarWebcam__details');
+    let details = document.querySelectorAll('.sidebarWebcams .sidebarWebcam__details');
     details.forEach((detail) =>
     {
       detail.removeAttribute("open");
