@@ -6,7 +6,44 @@ html, body {
   font-size: 14px;
 }
 
-#webcam {
+.formoTab
+{
+  max-width: 600px;
+}
+
+formo-slider
+{
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+fieldset
+{
+  border: 1px solid #eee;
+}
+
+.element--visible {
+  display: block;
+}
+
+.element--invisible {
+  display: none;
+}
+
+.mainScene--foreground {
+  display: block;
+  transition: opacity .3;
+  opacity: 1;
+}
+
+.mainScene--background {
+  display: block;
+  transition: opacity .3;
+  opacity: .3;
+}
+
+.webcam {
   position: fixed;
   top: 0;
   left: 0;
@@ -20,50 +57,51 @@ html, body {
 	background-size: cover;
   cursor: pointer;
   z-index: 0;
-  transition: opacity 1s;
 }
 
-#timeAndControls {
+.webcam--hide
+{
+  transition: opacity 3s;
+  opacity: 0;
+}
+
+.webcam--show
+{
+  transition: opacity 3s;
+  opacity: 1;
+}
+
+.timeAndControlsWidgetWrapper {
   position: absolute;
   top: 35px;
   left: 35px;
   text-align: center;
 }
 
-#widgetClock {
-  display: block;
-}
-
-#widgetClock .time {
+.widgetClock {
   font-size: 6vw;
   color: white;
   text-shadow: 1px  1px 1px black, 1px -1px 1px black, -1px  1px 1px black, -1px -1px 1px black;
   text-align: center;
+  display: block;
 }
 
-#widgetClock .dots {
-  opacity: 1;
-  transition: opacity 1s;
-}
-
-#widgetClock .date {
+.widgetClock::part(date)
+{
   font-size: 1vw;
-  color: white;
-  text-shadow: 1px  1px 1px black, 1px -1px 1px black, -1px  1px 1px black, -1px -1px 1px black;
-  text-align: center;
 }
 
-#widgetControls {
+.widgetControls {
   overflow: hidden;
   box-sizing: border-box;
   text-align: left;
 }
 
-#widgetControls button {
+.widgetControls__button {
   margin: 5px 5px 5px 0;
 }
 
-#widgetLastCam {
+.widgetLastCam {
   position: absolute;
   bottom: 50px;
   left: 35px;
@@ -71,13 +109,13 @@ html, body {
   overflow: hidden;
 }
 
-#widgetLastCam img {
+.widgetLastCam__image {
   width: auto;
   max-width: 12vw;
   border: 3px solid #fafafa;
 }
 
-#widgetLog {
+.widgetLog {
   position: absolute;
   bottom: 5px;
   left: 35px;
@@ -89,7 +127,7 @@ html, body {
   overflow: hidden;
 }
 
-#widgetLocation {
+.widgetLocation {
   position: absolute;
   bottom: 50px;
   right: 35px;
@@ -100,28 +138,27 @@ html, body {
   overflow: hidden;
 }
 
-#widgetLocation .widgetLocationDesc,
-#widgetLocation .widgetLocationDesc a,
-#widgetLocation .widgetLocationDesc a:active,
-#widgetLocation .widgetLocationDesc a:visited,
-#widgetLocation .widgetLocationDesc a:focus,
-#widgetLocation .widgetLocationDesc a:active:focus,
-#widgetLocation .widgetLocationDesc a:visited:focus
+.widgetLocation__link,
+.widgetLocation__link:active,
+.widgetLocation__link:visited,
+.widgetLocation__link:focus,
+.widgetLocation__link:active:focus,
+.widgetLocation__link:visited:focus
 {
   font-size: 1.5vw;
   color: white;
   text-decoration: none;
 }
 
-#widgetLocation .widgetLocationDesc a:hover {
+.widgetLocation__link:hover {
   text-decoration: underline;
 }
 
-#widgetLocation .widgetLocationPlace {
+.widgetLocation__place {
   font-size: 1vw;
 }
 
-#widgetMap {
+.widgetMap {
   position: absolute;
   top: 35px;
   right: 35px;
@@ -129,30 +166,57 @@ html, body {
   overflow: hidden;
 }
 
-.widgetMapImage {
-  width: 15vw;
-  padding: 3px;
-  background-color: white;
-}
-
-.formoTab
+.widgetMap--imageVisible
 {
-  max-width: 600px;
+  transition: opacity .5s, width .5s, height .5s;
+  opacity: 1;
+  width: 250px;
+  height: 250px;
 }
 
-#sidebar {
-  position: fixed;
+.widgetMap--imageInvisible
+{
+  transition: opacity .5s, width .5s, height .5s;
   opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.widget--opacity0   {transition: opacity .5s; opacity:  0;}
+.widget--opacity10  {transition: opacity .5s; opacity: .1;}
+.widget--opacity20  {transition: opacity .5s; opacity: .2;}
+.widget--opacity30  {transition: opacity .5s; opacity: .3;}
+.widget--opacity40  {transition: opacity .5s; opacity: .4;}
+.widget--opacity50  {transition: opacity .5s; opacity: .5;}
+.widget--opacity60  {transition: opacity .5s; opacity: .6;}
+.widget--opacity70  {transition: opacity .5s; opacity: .7;}
+.widget--opacity80  {transition: opacity .5s; opacity: .8;}
+.widget--opacity90  {transition: opacity .5s; opacity: .9;}
+.widget--opacity100 {transition: opacity .5s; opacity:  1;}
+
+.sidebar {
+  position: fixed;
   right: 0;
   top: 0;
-  width: 0;
   height: 100%;
-  transition: width .5s, opacity .5s;
   overflow: auto;
   background-color: white;
 }
 
-#sidebarFilter {
+.sidebar--open {
+  transition: width .5s, opacity .5s;
+  width: 400px;
+  opacity: 1;
+}
+
+.sidebar--close
+{
+  transition: width .5s, opacity .5s;
+  width: 0;
+  opacity: 0;
+}
+
+.sidebarFilter {
   position: fixed;
   z-index: 9999;
   display: flex;
@@ -166,7 +230,7 @@ html, body {
   background-color: #eee;
 }
 
-#sidebarSearch {
+.sidebarFilter__input {
   background-color: white;
   display: inline-block;
   outline: 0;
@@ -174,23 +238,23 @@ html, body {
   width: 300px;
 }
 
-#sidebarFilterResetBut {
+.sidebarFilter__clearButton {
   display: inline-block;
 }
 
-#sidebarWebcams {
+.sidebarWebcams {
   border-bottom: 1px solid green;
   text-align: left;
   padding-top: 60px;
 }
 
-#sidebarWebcamsDisabled {
+.sidebarWebcamsDisabled {
   border-bottom: 1px solid red;
   text-align: left;
   overflow: hidden;
 }
 
-#sidebarWebcams div, #sidebarWebcamsDisabled div {
+.sidebarWebcam {
   box-sizing: border-box;
   color: black;
   cursor: pointer;
@@ -198,7 +262,15 @@ html, body {
   padding: 5px;
 }
 
-#sidebarWebcams .led {
+.sidebarWebcam--loading {
+  font-style: italic;
+}
+
+.sidebarWebcam--activeCam {
+  border-left: 5px solid orangered;
+}
+
+.sidebarWebcam__led {
   display: block;
   float: right;
   width: 8px;
@@ -206,36 +278,33 @@ html, body {
   border-radius: 50%;
 }
 
-#sidebarWebcams .led-green {
-  background-color: #ABFF00;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
+.sidebarWebcam__led--grey {
+  background-color: #CCCCCC;
 }
 
-#sidebarWebcams .led-red {
+.sidebarWebcam__led--green {
+  background-color: #1eff00;
+}
+
+.sidebarWebcam__led--red {
   background-color: #F00;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
 }
 
-#sidebarWebcams .led-yellow {
+/* currently not used */
+.sidebarWebcam__led--yellow {
   background-color: #FF0;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 12px;
 }
 
-#sidebarWebcams .led-blue {
-  background-color: #24E0FF;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3F8CFF 0 2px 14px;
+.sidebarWebcam__led--blue {
+  background-color: #2433ff;
 }
 
-#sidebarWebcams .activeCam {
-  /*background: linear-gradient(to right, #eee, #ebebeb) !important;*/
-  border-left: 5px solid orangered;
-}
-
-.sidebarWebcamLocation {
+.sidebarWebcam__location {
   font-weight: bold;
 }
 
-#sidebarWebcamsDisabled .previewImage {
+/* these occur only in the disabled category */
+.sidebarWebcam__previewImage {
   width: 150px;
   height: auto;
   margin-top: 10px;
@@ -250,7 +319,7 @@ html, body {
   min-height: 25px;
 }
 
-#sidebarWebcamsDisabled .previewImage:before {
+.sidebarWebcam__previewImage:before {
   content: "";
   display: block;
   position: absolute;
@@ -261,7 +330,7 @@ html, body {
   background-color: white;
 }
 
-#sidebarWebcamsDisabled .previewImage:after {
+.sidebarWebcam__previewImage:after {
   content: "Broken " attr(alt);
   display: block;
   color: rgb(100, 100, 100);
@@ -270,7 +339,6 @@ html, body {
   left: 0;
   width: 100%;
 }
-
 
 #webcamCount, #disabledWebcamCount {
   display: inline-block;
@@ -286,7 +354,6 @@ html, body {
 #disabledWebcamCount {
   border: 1px solid red;
   background-color: red;
-
 }
 
 #prefsScene {
@@ -294,12 +361,23 @@ html, body {
   position: absolute;
   box-sizing: border-box;
   padding: 0;
+  overflow: auto;
+}
+
+.prefsScene--open {
+  transition: left .3s, right .3s, top .3s, bottom .3s;
+  top: 25px;
+  right: 25px;
+  left: 25px;
+  bottom: 25px;
+}
+
+.prefsScene--close {
+  transition: left .3s, right .3s, top .3s, bottom .3s;
   top: 0;
   right: 0;
   left: 100%;
   bottom: 100%;
-  transition: left .3s, right .3s, top .3s, bottom .3s;
-  overflow: auto;
 }
 
 .prefsSceneHeader {
@@ -349,18 +427,6 @@ input::placeholder
   padding: 5px 0 10px 10px;
   display: flex;
   justify-content: space-between;
-}
-
-formo-slider
-{
-  display:flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-fieldset
-{
-  border: 1px solid #eee;
 }
 
 .prefsSheetsDesc {

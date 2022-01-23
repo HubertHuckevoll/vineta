@@ -1,6 +1,6 @@
 "use strict";
 
-class VceLocationV extends VceBaseV
+class VceLocationV extends FormoBase
 {
   constructor()
   {
@@ -9,12 +9,7 @@ class VceLocationV extends VceBaseV
 
   static get observedAttributes()
   {
-    let attrs = super.observedAttributes;
-    attrs.push('place');
-    attrs.push('desc');
-    attrs.push('url');
-
-    return attrs;
+    return ['place', 'desc', 'url'];
   }
 
   get place()
@@ -49,7 +44,6 @@ class VceLocationV extends VceBaseV
 
   attributeChangedCallback(name, oldValue, newValue)
   {
-    super.attributeChangedCallback(name, oldValue, newValue);
     this.render();
   }
 
@@ -60,8 +54,8 @@ class VceLocationV extends VceBaseV
 
   render()
   {
-    this.innerHTML = '<div class="widgetLocationDesc"><a href="'+this.url+'" target="_blank">'+this.desc+'</a></div>'+
-                     '<div class="widgetLocationPlace">'+this.place+'</div>';
+    this.innerHTML = '<div class="widgetLocation__desc"><a class="widgetLocation__link" href="'+this.url+'" target="_blank">'+this.desc+'</a></div>'+
+                     '<div class="widgetLocation__place">'+this.place+'</div>';
   }
 
 }

@@ -18,14 +18,11 @@ class AppC extends BaseC
 
   load()
   {
-    this.anim = new AnimationV(); // this must be available on the DOM level
-
     // initialize generic custom elements
     window.customElements.define('formo-slider', FormoSlider);
     window.customElements.define('formo-tabbox', FormoTabbox);
 
     // initialize specific custom elements
-    window.customElements.define('vce-base', VceBaseV);
     window.customElements.define('vce-sidebar', VceSidebarV);
     window.customElements.define('vce-location', VceLocationV);
     window.customElements.define('vce-log', VceLogV);
@@ -37,7 +34,7 @@ class AppC extends BaseC
     // Init views
     this.views =
     {
-      sidebarView: document.getElementById('sidebar'),
+      sidebarView: document.querySelector('.sidebar'),
       presentView: new PresentationV(),
       prefsView: new PrefsV()
     }

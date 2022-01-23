@@ -10,26 +10,29 @@ class PrefsV extends BaseV
   constructor()
   {
     super();
+
+    this.mainOpenCloseCSS = {
+      showClass: 'mainScene--foreground',
+      hideClass: 'mainScene--background'
+    }
+
+    this.prefsOpenCloseCSS = {
+      showClass: 'prefsScene--open',
+      hideClass: 'prefsScene--close'
+    };
+
   }
 
   prefsOpen()
   {
-    document.getElementById('mainScene').style.opacity = '0.3';
-    let prefsSceneS = document.getElementById('prefsScene').style;
-    prefsSceneS.top = '25px';
-    prefsSceneS.left = '25px';
-    prefsSceneS.bottom = '25px';
-    prefsSceneS.right = '25px';
+    this.hide('#mainScene', this.mainOpenCloseCSS);
+    this.show('#prefsScene', this.prefsOpenCloseCSS);
   }
 
   prefsClose()
   {
-    document.getElementById('mainScene').style.opacity = '1';
-    let prefsSceneS = document.getElementById('prefsScene').style;
-    prefsSceneS.top = '';
-    prefsSceneS.left = '';
-    prefsSceneS.bottom = '';
-    prefsSceneS.right = '';
+    this.hide('#prefsScene', this.prefsOpenCloseCSS);
+    this.show('#mainScene', this.mainOpenCloseCSS);
   }
 
   drawSheets(ev)
@@ -40,8 +43,9 @@ class PrefsV extends BaseV
     // Sheets
     var sheetsEl = document.getElementById('prefsSheetsList');
     sheetsEl.innerHTML = '';
-    this.iterate(sheets, (idx, sheet) =>
+    for (let idx = 0; idx < sheets.length; idx++)
     {
+      let sheet = sheets[idx];
       var li = document.createElement('li');
       var checked = (sheet.enabled === true) ? 'checked' : '';
       li.innerHTML = '<label><input class="prefsSheetsEnabledCheckbox" data-idx="'+idx+'" type="checkbox" '+checked+'>'+
@@ -52,7 +56,7 @@ class PrefsV extends BaseV
                      '<span class="prefsSheetsKey">'+sheet.pubUrl+'</span><br>'+
                      '<span class="prefsSheetsKey">'+sheet.sheetUrl+'</span>';
       sheetsEl.appendChild(li);
-    });
+    };
   }
 
   drawScreenModeHint(screenMode)
@@ -94,7 +98,7 @@ class PrefsV extends BaseV
     var disabled = null;
     var oB = document.getElementById('overlaysBox');
     oB.innerHTML = '';
-    this.iterate(prefs.overlays, (idx, overlay) =>
+    prefs.overlays.forEach((overlay, idx) =>
     {
       disabled = (overlay.name === 'controls') ? ' disabled' : '';
       var modeList = '<select id="overlayShowSelect_'+overlay.name+'"><option value="1">Always</option><option value="2">On Mousemove</option><option value="3"'+disabled+'>Never</option></select>';

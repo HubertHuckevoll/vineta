@@ -15,23 +15,20 @@ class PresentationC extends BaseC
     this.screenshotMode = false;
 
     // wire ui elements
-    this.on('click', '#startStopButton',       this.startStopOnButton.bind(this));
-    this.on('click', '#screenshotModeButton',  this.enableScreenshotMode.bind(this));
-    this.on('click', '#webcam',                this.toggleSidebar.bind(this));
-    this.on('click', '#widgetLastCam img',     this.gotoPreviousCam.bind(this));
-    this.on('keyup',                           this.startStopOnSpacebar.bind(this));
-    this.on('input', '#sidebarSearch',         this.filterWebcams.bind(this));
-    this.on('click', '#sidebarFilterResetBut', this.filterWebcamsReset.bind(this));
-    this.on('click', '.sidebarWebcam summary', this.gotoCam.bind(this));
-    this.on('click', '.disableBut',            this.disableCam.bind(this));
-    this.on('click', '.enableBut',             this.enableCam.bind(this));
-    this.on('click', '#prefsOpenButton',       this.prefsOpen.bind(this));
+    this.on('click', '.widgetControls__startStopButton',        this.startStopOnButton.bind(this));
+    this.on('click', '.widgetControls__screenshotModeButton',   this.enableScreenshotMode.bind(this));
+    this.on('click', '.webcam',                                 this.toggleSidebar.bind(this));
+    this.on('click', '.widgetLastCam__image',                   this.gotoPreviousCam.bind(this));
+    this.on('keyup',                                            this.startStopOnSpacebar.bind(this));
+    this.on('input', '.sidebarFilter__input',                   this.filterWebcams.bind(this));
+    this.on('click', '.sidebarFilter__clearButton',             this.filterWebcamsReset.bind(this));
+    this.on('click', '.sidebarWebcam__summary',                 this.gotoCam.bind(this));
+    this.on('click', '.sidebarWebcamCamActions__disableButton', this.disableCam.bind(this));
+    this.on('click', '.sidebarWebcamCamActions__enableButton',  this.enableCam.bind(this));
+    this.on('click', '.widgetControls__prefsOpenButton',        this.prefsOpen.bind(this));
 
     // widgets
     this.on('widgetsVisibilityChange', this.views.presentView.setWidgetVisibility.bind(this.views.presentView));
-
-    // webcam
-    this.on('transitionend', '#webcam', this.views.presentView.webcamSwapFinish.bind(this.views.presentView));
 
     // rotator
     this.on('rotatorStart', this.views.presentView.start.bind(this.views.presentView));
@@ -75,11 +72,12 @@ class PresentationC extends BaseC
     let webcams = this.models.webcams.filter(ev.target.value);
     this.subcontrollers.rotator.setWebcams(webcams);
     this.views.sidebarView.render(webcams);
+    this.views.sidebarView.scrollToTop();
   }
 
   filterWebcamsReset(ev)
   {
-    document.getElementById('sidebarSearch').value = '';
+    document.querySelector('.sidebarFilter__input').value = '';
     this.subcontrollers.rotator.stop();
     let webcams = this.models.webcams.filterReset();
     this.subcontrollers.rotator.setWebcams(webcams);
@@ -91,7 +89,7 @@ class PresentationC extends BaseC
   {
     this.views.sidebarView.closeSidebarWebcamsCamActions();
 
-    if (ev.target.parentNode.parentNode.parentNode.id == 'sidebarWebcams')
+    if (ev.target.parentNode.parentNode.parentNode.classList.contains('sidebarWebcams'))
     {
       let idx = ev.target.parentNode.parentNode.getAttribute('data-idx');
       this.subcontrollers.rotator.goto(idx);
@@ -135,7 +133,7 @@ class PresentationC extends BaseC
     }
     else
     {
-      if (ev.target.id === 'webcam')
+      if (ev.target.classList.contains('webcam'))
       {
         this.views.sidebarView.toggleSidebar(this.subcontrollers.rotator.idx);
       }

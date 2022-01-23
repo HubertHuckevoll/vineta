@@ -75,7 +75,7 @@ class WebcamLoaderM extends BaseM
           }
           else
           {
-            err = new Error('Host returned empty image (bin).');
+            err = new Error('Host returned empty image (binary).');
             err.name = 'EmptyError';
             reject(err);
           }
@@ -86,7 +86,7 @@ class WebcamLoaderM extends BaseM
         switch(this.abortReason)
         {
           case 'TimeoutError':
-            err = new Error('Loading the image took to long and was therefore aborted (timeout).');
+            err = new Error('Loading the image took too long and was aborted.');
             err.name = this.abortReason;
           break;
 

@@ -1,6 +1,6 @@
 "use strict";
 
-class VceControlsV extends VceBase2V
+class VceControlsV extends FormoBase
 {
   constructor()
   {
@@ -9,10 +9,7 @@ class VceControlsV extends VceBase2V
 
   static get observedAttributes()
   {
-    let attrs = super.observedAttributes;
-    attrs.push('caption');
-
-    return attrs;
+    return ['caption'];
   }
 
   get caption()
@@ -27,7 +24,6 @@ class VceControlsV extends VceBase2V
 
   attributeChangedCallback(name, oldValue, newValue)
   {
-    super.attributeChangedCallback(name, oldValue, newValue);
     this.render();
   }
 
@@ -38,9 +34,9 @@ class VceControlsV extends VceBase2V
 
   render()
   {
-    this.innerHTML = '<button id="startStopButton" data-tip="Start / Stop">'+this.caption+'</button>'+
-                     '<button id="prefsOpenButton" data-tip="Preferences">Preferences</button>'+
-                     '<button id="screenshotModeButton" data-tip="Hide all overlays (screenshot mode)">Hide Widgets</button>';
+    this.innerHTML = '<button class="widgetControls__startStopButton      widgetControls__button" data-tip="Start / Stop">'+this.caption+'</button>'+
+                     '<button class="widgetControls__prefsOpenButton      widgetControls__button" data-tip="Preferences">Preferences</button>'+
+                     '<button class="widgetControls__screenshotModeButton widgetControls__button" data-tip="Hide all overlays (screenshot mode)">Hide Widgets</button>';
   }
 
 }

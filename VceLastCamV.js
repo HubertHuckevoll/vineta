@@ -1,6 +1,6 @@
 "use strict";
 
-class VceLastCamV extends VceBaseV
+class VceLastCamV extends FormoBase
 {
   constructor()
   {
@@ -9,11 +9,7 @@ class VceLastCamV extends VceBaseV
 
   static get observedAttributes()
   {
-    let attrs = super.observedAttributes;
-    attrs.push('url');
-    attrs.push('idx');
-
-    return attrs;
+    return ['url', 'idx'];
   }
 
   get url()
@@ -38,8 +34,6 @@ class VceLastCamV extends VceBaseV
 
   attributeChangedCallback(name, oldValue, newValue)
   {
-    super.attributeChangedCallback(name, oldValue, newValue);
-
     if (name == 'url')
     {
       this.render();
@@ -48,6 +42,6 @@ class VceLastCamV extends VceBaseV
 
   render()
   {
-    this.innerHTML = (this.url !== "undefined") ? '<img src="' + this.url + '">' : '';
+    this.innerHTML = (this.url !== "undefined") ? '<img class="widgetLastCam__image" src="' + this.url + '">' : '';
   }
 }

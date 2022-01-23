@@ -10,22 +10,20 @@
   <link rel="apple-touch-icon" href="./assets/webcam128.png"-->
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <meta name="referrer" content="no-referrer">
-  <script src="/frontschweine/js/AnimationV.js"></script>
+  <script src="/frontschweine/js/AnimationX.js"></script>
   <script src="/frontschweine/js/Events.js"></script>
   <script src="/frontschweine/js/BaseM.js"></script>
   <script src="/frontschweine/js/BaseV.js"></script>
   <script src="/frontschweine/js/BaseC.js"></script>
+  <script src="/frontschweine/js/FormoBase.js"></script>
   <script src="/frontschweine/js/FormoTabbox.js"></script>
   <script src="/frontschweine/js/FormoSlider.js"></script>
-  <script src="/frontschweine/js/FormoDualButton.js"></script>
   <script src="SheetsM.js"></script>
   <script src="ImpExTsvM.js"></script>
   <script src="RotatorC.js"></script>
   <script src="WebcamLoaderM.js"></script>
   <script src="OptionsM.js"></script>
   <script src="WebcamsM.js"></script>
-  <script src="VceBaseV.js"></script>
-  <script src="VceBase2V.js"></script>
   <script src="VceSidebarV.js"></script>
   <script src="VceLocationV.js"></script>
   <script src="VceLogV.js"></script>
@@ -42,39 +40,38 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
   <link href="/frontschweine/css/FormoTabbox.css" rel="stylesheet">
   <link href="/frontschweine/css/appskin.css" rel="stylesheet">
-  <link href="/frontschweine/css/animation.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
 </head>
 <body>
 
-  <div id="mainScene" class="scene" style="display: block;">
-    <div id="webcam">
+  <div id="mainScene" class="scene mainScene--foreground">
+    <div class="webcam">
       <div id="dynamicOverlays">
-        <vce-location id="widgetLocation" place="" desc=""></vce-location>
-        <vce-map id="widgetMap"></vce-map>
-        <vce-lastcam id="widgetLastCam"></vce-lastcam>
+        <vce-location class="widgetLocation" place="" desc=""></vce-location>
+        <vce-map class="widgetMap"></vce-map>
+        <vce-lastcam class="widgetLastCam"></vce-lastcam>
       </div>
     </div>
     <div id="staticOverlays">
-      <vce-sidebar id="sidebar">
-        <div id="sidebarFilter">
-          <input type="text" id="sidebarSearch">
-          <button id="sidebarFilterResetBut">Clear</button>
+      <vce-sidebar class="sidebar sidebar--close">
+        <div class="sidebarFilter">
+          <input type="text" class="sidebarFilter__input">
+          <button class="sidebarFilter__clearButton">Clear</button>
         </div>
-        <div id="sidebarWebcams"></div>
+        <div class="sidebarWebcams"></div>
         <div id="webcamCount"></div>
-        <div id="sidebarWebcamsDisabled"></div>
+        <div class="sidebarWebcamsDisabled"></div>
         <div id="disabledWebcamCount"></div>
       </vce-sidebar>
-      <div id="timeAndControls">
-        <vce-clock id="widgetClock"></vce-clock>
-        <vce-controls id="widgetControls" show="vineta.anim.fadeIn" hide="vineta.anim.fadeOut"></vce-controls>
+      <div class="timeAndControlsWidgetWrapper">
+        <vce-clock class="widgetClock"></vce-clock>
+        <vce-controls class="widgetControls"></vce-controls>
       </div>
-      <vce-log id="widgetLog"></vce-log>
+      <vce-log class="widgetLog"></vce-log>
     </div>
   </div>
 
-  <div id="prefsScene" class="scene">
+  <div id="prefsScene" class="scene prefsScene--close">
 
     <div class="prefsSceneHeader">
       <div class="prefsSceneTitle">
@@ -161,7 +158,7 @@
         <h3>Widgets</h3>
         <div id="overlaysBox"></div>
         <div class="line"><formo-slider id="overlaysDisplayTime" class="formoSlider" label="Show Mousemove-Widgets For (s)" value="5" max="60" min="1" step="1"></formo-slider></div>
-        <div class="line"><formo-slider id="overlaysOpacity" class="formoSlider" label="Opacity (%)" value="90" max="100" min="20" step="1"></formo-slider></div>
+        <div class="line"><formo-slider id="overlaysOpacity" class="formoSlider" label="Opacity (%)" value="90" max="100" min="10" step="10"></formo-slider></div>
         <h3>Enhanced</h3>
         <div class="line"><formo-slider id="webcamLoadTimeout" class="formoSlider" label="Webcam Load Timeout (s)" value="10" max="30" min="5" step="1"></formo-slider></div>
         <div class="line">

@@ -1,6 +1,6 @@
 "use strict";
 
-class VceLogV extends VceBaseV
+class VceLogV extends FormoBase
 {
   constructor()
   {
@@ -9,10 +9,7 @@ class VceLogV extends VceBaseV
 
   static get observedAttributes()
   {
-    let attrs = super.observedAttributes;
-    attrs.push('text');
-
-    return attrs;
+    return ['text'];
   }
 
   set text(txt)
@@ -27,7 +24,6 @@ class VceLogV extends VceBaseV
 
   attributeChangedCallback(name, oldValue, newValue)
   {
-    super.attributeChangedCallback(name, oldValue, newValue);
     this.render();
   }
 

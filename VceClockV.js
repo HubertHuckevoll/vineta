@@ -1,42 +1,33 @@
 "use strict";
 
-class VceClockV extends VceBaseV
+class VceClockV extends FormoBase
 {
   constructor()
   {
     super();
     this.tid = null;
+    this.shadow = this.attachShadow({mode: 'closed'});
+    this.dots = null;
   }
 
   static get observedAttributes()
   {
-    let attrs = super.observedAttributes;
-    attrs.push('blinking');
-
-    return attrs;
+    return ['blinking'];
   }
 
   connectedCallback()
   {
     this.render();
+    this.dots = this.shadow.querySelector('.dots');
     this.clockTick();
   }
 
   attributeChangedCallback(name, oldValue, newValue)
   {
-    if ((name === 'blinking') || (name == 'visible'))
+    if ((name === 'blinking') && (newValue == 'yes'))
     {
-      if (newValue == 'yes')
-      {
-        this.startDots();
-      }
-      else if (newValue == 'no')
-      {
-        this.stopDots();
-      }
+      this.blinkDots();
     }
-
-    super.attributeChangedCallback(name, oldValue, newValue);
   }
 
   get blinking()
@@ -69,46 +60,31 @@ class VceClockV extends VceBaseV
     );
   }
 
-  startDots()
+  async blinkDots()
   {
-    var dotsEl = this.querySelector('.dots');
-
-    dotsEl.ontransitionend = this.fadeDots.bind(this);
-    dotsEl.style.opacity = "0"; // trigger fade out for 1s - see CSS: transition
-  }
-
-  stopDots()
-  {
-    var dotsEl = this.querySelector('.dots');
-
-    dotsEl.ontransitionend = null;
-    dotsEl.style.opacity = "1";
-  }
-
-  fadeDots(ev)
-  {
-    let dots = this.querySelector('.dots');
-    let dotsElStyle = dots.style;
-
-    if (ev.target == dots)
+    let cssClasses =
     {
-      if (dotsElStyle.opacity == "0")
-      {
-        dotsElStyle.opacity = "1";
-      }
-      else
-      {
-        dotsElStyle.opacity = "0";
-      }
+      showClass: 'showDots',
+      hideClass: 'hideDots'
+    }
+
+    while (this.blinking == 'yes')
+    {
+      await this.hide(this.dots, cssClasses);
+      await this.show(this.dots, cssClasses);
     }
   }
 
   render()
   {
-    this.innerHTML = '<div class="time">'+
-                       '<span class="ch"></span><span class="dots">:</span><span class="cm"></span>'+
-                     '</div>'+
-                     '<div class="date"></div>';
+    this.shadow.innerHTML = '<style>'+
+                              '.showDots { transition: opacity 1s; opacity: 1; }'+
+                              '.hideDots { transition: opacity 1s; opacity: 0; }'+
+                            '</style>'+
+                            '<div class="time">'+
+                              '<span class="ch"></span><span class="dots">:</span><span class="cm"></span>'+
+                            '</div>'+
+                            '<div part="date" class="date"></div>';
     this.update();
   }
 
@@ -124,10 +100,9 @@ class VceClockV extends VceBaseV
     cm = (cm < 10) ? '0'+cm : cm;
     cd = t.toLocaleDateString({}, dateOptions);
 
-    this.querySelector('.ch').innerHTML = ch;
-    this.querySelector('.cm').innerHTML = cm;
-    this.querySelector('.date').innerHTML = cd;
+    this.shadow.querySelector('.ch').innerHTML = ch;
+    this.shadow.querySelector('.cm').innerHTML = cm;
+    this.shadow.querySelector('.date').innerHTML = cd;
   }
 
 }
-

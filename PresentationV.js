@@ -1,8 +1,8 @@
 "use strict";
 
-/*
-  Presentation View
-*/
+/**
+ * Presentation View
+ */
 
 class PresentationV extends BaseV
 {
@@ -10,26 +10,19 @@ class PresentationV extends BaseV
   {
     super();
 
-    this.sidebarView = document.getElementById('sidebar');
+    this.sidebarView = document.querySelector('.sidebar');
 
     this.widgets =
     {
-      clock:    document.getElementById('widgetClock'),
-      controls: document.getElementById('widgetControls'),
-      log:      document.getElementById('widgetLog'),
-      location: document.getElementById('widgetLocation'),
-      map:      document.getElementById('widgetMap'),
-      lastCam:  document.getElementById('widgetLastCam')
+      clock:    document.querySelector('.widgetClock'),
+      controls: document.querySelector('.widgetControls'),
+      log:      document.querySelector('.widgetLog'),
+      location: document.querySelector('.widgetLocation'),
+      map:      document.querySelector('.widgetMap'),
+      lastCam:  document.querySelector('.widgetLastCam')
     };
 
-    this.nextCam =
-    {
-      idx: null,
-      cam: null,
-      lastCam: null,
-      img: null
-    };
-
+    this.widgetOpacity = 'widgetOpacity100';
   }
 
   setWidgetVisibility(ev)
@@ -37,94 +30,111 @@ class PresentationV extends BaseV
     let widgets = ev.detail.payload.widgets;
     let isVisible = ev.detail.payload.isVisible;
 
-    this.iterate(widgets, (idx, widgetName) =>
+    if (widgets.length > 0)
     {
-      let isVis = (isVisible === true) ? 'yes' : 'no';
-      this.widgets[widgetName].setAttribute('visible', isVis);
-    });
+      widgets.forEach((widgetName) =>
+      {
+        if (isVisible === true)
+        {
+          if (widgetName == 'map') this.widgets[widgetName].setAttribute('visible', 'yes');
+          this.show(this.widgets[widgetName], {showClass: this.widgetOpacity, hideClass: 'widget--opacity0'});
+        }
+        else
+        {
+          if (widgetName == 'map') this.widgets[widgetName].setAttribute('visible', 'no');
+          this.hide(this.widgets[widgetName], {showClass: this.widgetOpacity, hideClass: 'widget--opacity0'});
+        }
+      });
+    }
   }
 
   setWidgetsOpacity(prefs)
   {
-    var opacity = prefs.overlaysOpacity / 100;
+    let oldOpacity = this.widgetOpacity;
+    this.widgetOpacity = 'widget--opacity' + prefs.overlaysOpacity;
+
     for (var widget in this.widgets)
     {
-      this.widgets[widget].setAttribute('opacity', opacity);
+      // only (re-)set widget opacity if widget not invisible
+      if (!this.widgets[widget].classList.contains('widget--opacity0'))
+      {
+        this.widgets[widget].classList.remove(oldOpacity);
+        this.widgets[widget].classList.add(this.widgetOpacity);
+      }
     }
   }
 
-  webcamSwap(ev)
+  async webcamSwap(ev)
   {
-    let webcam = document.getElementById('webcam');
-
-    this.nextCam.prefs = ev.detail.payload.prefs;
-    this.nextCam.lastCam = ev.detail.payload.lastCam;
-    this.nextCam.img = ev.detail.payload.img;
-    this.nextCam.cam = ev.detail.payload.cam;
-    this.nextCam.idx = ev.detail.payload.idx;
-
-    // css3 transition will now fade out for 1s
-    // afterwards we finish the transition with "webcamSwapFinish", which is our "transitionend" handler
-    // FIXME - replace this somehow with requestAnimationFrame or something
-    webcam.style.opacity = '0';
-  }
-
-  webcamSwapFinish()
-  {
-    var webcam = document.getElementById('webcam');
-
-    // only swap if we are faded out
-    if (webcam.style.opacity == '0')
+    let webcamCssClasses = { 'showClass': 'webcam--show', 'hideClass': 'webcam--hide' };
+    var bgSize = 'contain';
+    var nextCam =
     {
-      var bgSize = 'contain';
-      var aspect = null;
-      var nodeList = null;
+      idx: null,
+      cam: null,
+      lastCam: null,
+      img: null
+    };
 
-      // Scaling
-      switch (this.nextCam.prefs.screenMode)
+    let webcam = document.querySelector('.webcam');
+
+    // fade out current image
+    await this.hide(webcam, webcamCssClasses);
+
+    // grab next image
+    nextCam.prefs = ev.detail.payload.prefs;
+    nextCam.lastCam = ev.detail.payload.lastCam;
+    nextCam.img = ev.detail.payload.img;
+    nextCam.cam = ev.detail.payload.cam;
+    nextCam.idx = ev.detail.payload.idx;
+
+    // Scaling
+    switch (nextCam.prefs.screenMode)
+    {
+      case 'auto':
+        bgSize = 'contain';
+        if (nextCam.img.width >= 640) bgSize = 'contain';
+        if (nextCam.img.width >= 1280) bgSize = 'cover';
+      break;
+
+      case 'original':
+        bgSize = 'auto';
+      break;
+
+      default:
+        // it's "cover" or "contain"
+        bgSize = nextCam.prefs.screenMode;
+      break;
+    }
+
+    if (nextCam.cam !== null)
+    {
+      // update widgets
+      this.widgets.location.setAttribute('place', nextCam.cam.location);
+      this.widgets.location.setAttribute('desc', nextCam.cam.description);
+      this.widgets.location.setAttribute('url', nextCam.cam.homepage);
+      this.widgets.map.setAttribute('place', this.widgets.location.getAttribute('place'));
+
+      // make sure sidebar is set to current location/cam
+      this.sidebarView.setSidebarActiveCam(nextCam.idx);
+
+      // delete old image, set new image
+      delete(webcam.style.backgroundImage);
+      webcam.style.backgroundSize = bgSize;
+      webcam.style.backgroundImage = 'url(' + nextCam.img.src + ')';
+
+      // store "last cam"
+      if ((nextCam.lastCam.url !== null) || (nextCam.lastCam.url !== null))
       {
-        case 'auto':
-          //var aspect = img.width/img.height;
-          //if (aspect >= 1.4) bgSize = 'contain';
-          bgSize = 'contain';
-          if (this.nextCam.img.width >= 640) bgSize = 'contain';
-          if (this.nextCam.img.width >= 1280) bgSize = 'cover';
-        break;
-
-        case 'original':
-          bgSize = 'auto';
-        break;
-
-        default:
-          bgSize = this.nextCam.prefs.screenMode;
-        break;
+        this.widgets.lastCam.setAttribute('url', nextCam.lastCam.url);
+        this.widgets.lastCam.setAttribute('idx', nextCam.lastCam.idx);
       }
 
-      if (this.nextCam.cam !== null)
-      {
-        this.widgets.location.setAttribute('place', this.nextCam.cam.location);
-        this.widgets.location.setAttribute('desc', this.nextCam.cam.description);
-        this.widgets.location.setAttribute('url', this.nextCam.cam.homepage);
+      // set sidebar cam color
+      this.sidebarView.setSidebarCamColor(nextCam.cam, nextCam.idx);
 
-        this.widgets.map.setAttribute('place', this.nextCam.cam.location);
-
-        this.sidebarView.setSidebarActiveCam(this.nextCam.idx);
-
-        delete(webcam.style.backgroundImage);
-        webcam.style.backgroundSize = bgSize;
-        webcam.style.backgroundImage = 'url('+this.nextCam.img.src+')';
-
-        // "last cam"
-        if ((this.nextCam.lastCam.url !== null) || (this.nextCam.lastCam.url !== null))
-        {
-          this.widgets.lastCam.setAttribute('url', this.nextCam.lastCam.url);
-          this.widgets.lastCam.setAttribute('idx', this.nextCam.lastCam.idx);
-        }
-
-        this.sidebarView.setSidebarCamColor(this.nextCam.cam, this.nextCam.idx);
-
-        webcam.style.opacity = '1'; // this will trigger the fade in for 1s.
-      }
+      // finally, fade in new image
+      await this.show(webcam, webcamCssClasses);
     }
   }
 
@@ -185,15 +195,19 @@ class PresentationV extends BaseV
 
   showOverlays()
   {
-    document.getElementById('staticOverlays').style.display = 'block';
-    document.getElementById('dynamicOverlays').style.display = 'block';
-    document.getElementById('sidebar').style.display = 'block';
+    document.querySelectorAll('#staticOverlays, #dynamicOverlays, .sidebar').forEach((el) =>
+    {
+      el.classList.remove('element--invisible');
+      el.classList.add('element--visible');
+    });
   }
 
   hideOverlays()
   {
-    document.getElementById('staticOverlays').style.display = 'none';
-    document.getElementById('dynamicOverlays').style.display = 'none';
-    document.getElementById('sidebar').style.display = 'none';
+    document.querySelectorAll('#staticOverlays, #dynamicOverlays, .sidebar').forEach((el) =>
+    {
+      el.classList.remove('element--visible');
+      el.classList.add('element--invisible');
+    });
   }
 }

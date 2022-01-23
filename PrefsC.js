@@ -100,11 +100,15 @@ class PrefsC extends BaseC
       this.models.options.setPref('overlays', overlays);
     }
     else
-    { // Screen Mode (cover, contain...)
+    {
       let e = document.getElementById(id);
       val = e.options[e.selectedIndex].value;
       this.models.options.setPref(id, val);
-      this.views.prefsView.drawScreenModeHint(val);
+
+      if (id == 'screenMode')
+      { // Screen Mode (cover, contain...) => update hint.
+        this.views.prefsView.drawScreenModeHint(val);
+      }
     }
   }
 
