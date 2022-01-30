@@ -13,28 +13,26 @@ class WidgetV extends FormoBase
     this.widgetOpacity = 'widget--opacity100';
   }
 
-  showElement(opacity)
+  showElement()
   {
-    this.widgetOpacity = 'widget--opacity' + opacity;
     this.show(this, {showClass: this.widgetOpacity, hideClass: this.widgetOpacity0});
   }
 
-  hideElement(opacity)
+  hideElement()
   {
-    this.widgetOpacity = 'widget--opacity' + opacity;
     this.hide(this, {showClass: this.widgetOpacity, hideClass: this.widgetOpacity0});
   }
 
   setWidgetsOpacity(opacity)
   {
     let oldWidgetOpacity = this.widgetOpacity;
-    let newWidgetOpacity = 'widget--opacity' + opacity;
+    this.widgetOpacity = 'widget--opacity' + opacity;
 
     // only (re-)set widget opacity if widget not invisible
     if (!this.classList.contains(this.widgetOpacity0))
     {
       this.classList.remove(oldWidgetOpacity);
-      this.classList.add(newWidgetOpacity);
+      this.classList.add(this.widgetOpacity);
     }
   }
 }

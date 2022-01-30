@@ -21,8 +21,6 @@ class PresentationV extends BaseV
       map:      document.querySelector('.widgetMap'),
       lastCam:  document.querySelector('.widgetLastCam')
     };
-
-    this.widgetOpacity = '100';
   }
 
   setWidgetVisibility(ev)
@@ -36,11 +34,11 @@ class PresentationV extends BaseV
       {
         if (isVisible === true)
         {
-          this.widgets[widgetName].showElement(this.widgetOpacity);
+          this.widgets[widgetName].showElement();
         }
         else
         {
-          this.widgets[widgetName].hideElement(this.widgetOpacity);
+          this.widgets[widgetName].hideElement();
         }
       });
     }
@@ -48,11 +46,9 @@ class PresentationV extends BaseV
 
   setWidgetsOpacity(prefs)
   {
-    this.widgetOpacity = prefs.overlaysOpacity;
-
     for (var widget in this.widgets)
     {
-      this.widgets[widget].setWidgetsOpacity(this.widgetOpacity);
+      this.widgets[widget].setWidgetsOpacity(prefs.overlaysOpacity);
     }
   }
 
