@@ -5,6 +5,8 @@ class VceMapV extends WidgetV
   constructor()
   {
     super();
+    this.isVisible = null;
+    this.transparentGIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
     this.render();
   }
 
@@ -25,18 +27,28 @@ class VceMapV extends WidgetV
 
   showElement(opacity)
   {
+    this.isVisible = true;
     this.fetchMap();
     super.showElement(opacity);
   }
 
   hideElement(opacity)
   {
+    this.isVisible = false;
     super.hideElement(opacity);
   }
 
   render()
   {
     this.innerHTML = '<img class="widgetMap__image" src="'+this.transparentGIF+'">';
+  }
+
+  attributeChangedCallback(name, oldValue, newValue)
+  {
+    if ((name == 'place') && (this.isVisible == true))
+    {
+      this.fetchMap();
+    }
   }
 
   async fetchMap()
