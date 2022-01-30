@@ -1,6 +1,6 @@
 "use strict";
 
-class VceClockV extends FormoBase
+class VceClockV extends WidgetV
 {
   constructor()
   {

@@ -1,6 +1,6 @@
 "use strict";
 
-class VceLastCamV extends FormoBase
+class VceLastCamV extends WidgetV
 {
   constructor()
   {

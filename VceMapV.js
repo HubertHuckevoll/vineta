@@ -1,19 +1,16 @@
 "use strict";
 
-class VceMapV extends FormoBase
+class VceMapV extends WidgetV
 {
   constructor()
   {
     super();
-    this.transparentGIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-    this.mapUrl = this.transparentGIF;
-    this.cssClasses = {'showClass': 'widgetMap--imageVisible', 'hideClass': 'widgetMap--imageInvisible'}
     this.render();
   }
 
   static get observedAttributes()
   {
-    return ['place', 'visible'];
+    return ['place'];
   }
 
   get place()
@@ -26,61 +23,59 @@ class VceMapV extends FormoBase
     this.setAttribute('place', txt);
   }
 
-  get visible()
+  showElement(opacity)
   {
-    return this.getAttribute('visible');
+    this.fetchMap();
+    super.showElement(opacity);
   }
 
-  set visible(yesNo)
+  hideElement(opacity)
   {
-    this.setAttribute('visible', yesNo);
+    super.hideElement(opacity);
   }
 
-  attributeChangedCallback(name, oldValue, newValue)
+  render()
   {
-    if (
-        (name == 'place') && (this.getAttribute('visible') == 'yes') ||
-        (name == 'visible') && (newValue == 'yes')
-       )
-    {
-      this.fetchMap();
-    }
-    else
-    {
-      this.hide('.widgetMapImage', this.cssClasses);
-    }
+    this.innerHTML = '<img class="widgetMap__image" src="'+this.transparentGIF+'">';
   }
 
   async fetchMap()
   {
     if (this.place !== '')
     {
+      this.setSpinner();
       try
       {
         const response = await fetch('https://nominatim.openstreetmap.org/search?format=json&polygon=0&q='+encodeURIComponent(this.place));
         const loc = await response.json();
-        this.mapUrl = 'https://static-maps.yandex.ru/1.x/?lang=de_DE&ll='+loc[0].lon+','+loc[0].lat+'&size=350,350&z=10&l=map&pt='+loc[0].lon+','+loc[0].lat+',vkgrm';
-        this.update();
+        var mapUrl = 'https://static-maps.yandex.ru/1.x/?lang=de_DE&ll='+loc[0].lon+','+loc[0].lat+'&size=350,350&z=10&l=map&pt='+loc[0].lon+','+loc[0].lat+',vkgrm';
+        this.setImage(mapUrl);
       }
       catch(err)
       {
-        this.mapUrl = this.transparentGIF;
-        this.update();
+        let mapUrl = this.transparentGIF;
+        this.setImage(mapUrl);
       };
     }
   }
 
-  render()
+  setSpinner()
   {
-    this.innerHTML = '<img class="widgetMapImage" src="'+this.transparentGIF+'">';
+    let elem = this.querySelector('.widgetMap__image');
+    elem.src = this.transparentGIF;
+
+    elem.classList.add('widgetMap__image--loading');
   }
 
-  update()
+  setImage(mapUrl)
   {
-    this.style.display = (this.mapUrl == this.transparentGIF) ? 'none' : '';
+    let elem = this.querySelector('.widgetMap__image');
 
-    let elem = this.querySelector('.widgetMapImage');
-    elem.onload = () => this.show(elem, this.cssClasses);
-    elem.src = this.mapUrl;
+    elem.onload = () =>
+    {
+      elem.classList.remove('widgetMap--loading');
+    }
+
+    elem.src = mapUrl;
   }
 }

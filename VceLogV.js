@@ -1,6 +1,6 @@
 "use strict";
 
-class VceLogV extends FormoBase
+class VceLogV extends WidgetV
 {
   constructor()
   {

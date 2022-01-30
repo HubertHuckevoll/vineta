@@ -22,7 +22,7 @@ class PresentationV extends BaseV
       lastCam:  document.querySelector('.widgetLastCam')
     };
 
-    this.widgetOpacity = 'widgetOpacity100';
+    this.widgetOpacity = '100';
   }
 
   setWidgetVisibility(ev)
@@ -36,13 +36,11 @@ class PresentationV extends BaseV
       {
         if (isVisible === true)
         {
-          if (widgetName == 'map') this.widgets[widgetName].setAttribute('visible', 'yes');
-          this.show(this.widgets[widgetName], {showClass: this.widgetOpacity, hideClass: 'widget--opacity0'});
+          this.widgets[widgetName].showElement(this.widgetOpacity);
         }
         else
         {
-          if (widgetName == 'map') this.widgets[widgetName].setAttribute('visible', 'no');
-          this.hide(this.widgets[widgetName], {showClass: this.widgetOpacity, hideClass: 'widget--opacity0'});
+          this.widgets[widgetName].hideElement(this.widgetOpacity);
         }
       });
     }
@@ -50,17 +48,11 @@ class PresentationV extends BaseV
 
   setWidgetsOpacity(prefs)
   {
-    let oldOpacity = this.widgetOpacity;
-    this.widgetOpacity = 'widget--opacity' + prefs.overlaysOpacity;
+    this.widgetOpacity = prefs.overlaysOpacity;
 
     for (var widget in this.widgets)
     {
-      // only (re-)set widget opacity if widget not invisible
-      if (!this.widgets[widget].classList.contains('widget--opacity0'))
-      {
-        this.widgets[widget].classList.remove(oldOpacity);
-        this.widgets[widget].classList.add(this.widgetOpacity);
-      }
+      this.widgets[widget].setWidgetsOpacity(this.widgetOpacity);
     }
   }
 
