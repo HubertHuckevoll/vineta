@@ -18,6 +18,12 @@ class AppC extends BaseC
 
   load()
   {
+    // install our service worker - we are basically an "online only" app
+    if ('serviceWorker' in navigator)
+    {
+      navigator.serviceWorker.register('./sw.js');
+    }
+
     // initialize generic custom elements
     window.customElements.define('formo-slider', FormoSlider);
     window.customElements.define('formo-tabbox', FormoTabbox);

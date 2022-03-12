@@ -1,0 +1,27 @@
+{
+  "background_color": "#000000",
+  "description": "Webcam Slideshow App",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Vineta",
+  "short_name": "Vineta",
+  "orientation": "landscape",
+  "scope": "/vineta/",
+  "start_url": "/vineta/index.html",
+  "id": "/vineta/index.html",
+  "categories": [],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "./assets/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "./assets/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "shortcuts": []
+}
