@@ -25,14 +25,14 @@ class PrefsV extends BaseV
 
   prefsOpen()
   {
-    this.hide('#mainScene', this.mainOpenCloseCSS);
-    this.show('#prefsScene', this.prefsOpenCloseCSS);
+    this.hide('.mainScene', this.mainOpenCloseCSS);
+    this.show('.prefsScene', this.prefsOpenCloseCSS);
   }
 
   prefsClose()
   {
-    this.hide('#prefsScene', this.prefsOpenCloseCSS);
-    this.show('#mainScene', this.mainOpenCloseCSS);
+    this.hide('.prefsScene', this.prefsOpenCloseCSS);
+    this.show('.mainScene', this.mainOpenCloseCSS);
   }
 
   drawSheets(ev)
@@ -41,12 +41,13 @@ class PrefsV extends BaseV
     let sheets = ev.detail.payload.sheets;
 
     // Sheets
-    var sheetsEl = document.getElementById('prefsSheetsList');
+    var sheetsEl = document.querySelector('.prefsSheetsList');
     sheetsEl.innerHTML = '';
     for (let idx = 0; idx < sheets.length; idx++)
     {
       let sheet = sheets[idx];
       var li = document.createElement('li');
+      li.className = 'prefsSheetsList__item';
       var checked = (sheet.enabled === true) ? 'checked' : '';
       li.innerHTML = '<label><input class="prefsSheetsEnabledCheckbox" data-idx="'+idx+'" type="checkbox" '+checked+'>'+
                      '<span class="prefsSheetsDesc">'+sheet.desc+'</span></label>'+
@@ -103,7 +104,7 @@ class PrefsV extends BaseV
       disabled = (overlay.name === 'controls') ? ' disabled' : '';
       var modeList = '<select id="overlayShowSelect_'+overlay.name+'"><option value="1">Always</option><option value="2">On Mousemove</option><option value="3"'+disabled+'>Never</option></select>';
       var div = document.createElement('div');
-      div.classList.add('line');
+      div.classList.add('formoTab__line');
       var name = overlay.name.charAt(0).toUpperCase() + overlay.name.slice(1);
       div.innerHTML = name+' '+modeList;
       div.querySelector('select').options.selectedIndex = overlay.show - 1 ;

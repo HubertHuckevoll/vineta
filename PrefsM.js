@@ -1,6 +1,6 @@
 "use strict";
 
-class OptionsM
+class PrefsM
 {
   constructor()
   {
@@ -38,7 +38,7 @@ class OptionsM
       overlaysDisplayTime: 5,
       webcamLoadTimeout: 10,
       logMode: 'console',
-      proxy: false,
+      proxy: true,
       proxyURL: 'https://script.google.com/macros/s/AKfycbzkgzfi7AZqiKSu0rnZW-2oaV0CH-DT4vbvlU80nZCs2hdaGX5b/exec?url='
       /*proxyURL: 'https://script.google.com/macros/s/AKfycbznLUpI5R-bm-S0Zo_PvOrpGOKye9wEg40rFzzSlhH4/dev?url='*/
     };

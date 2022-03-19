@@ -59,7 +59,7 @@ class PresentationC extends BaseC
 
   async go()
   {
-    let prefs = this.models.options.load();
+    let prefs = this.models.prefs.load();
     this.subcontrollers.rotator.setPrefs(prefs);
     this.subcontrollers.widgets.update(prefs);
     this.views.presentView.setWidgetsOpacity(prefs);
@@ -151,7 +151,7 @@ class PresentationC extends BaseC
     if (ev.key == ' ')
     { // space bar
       this.subcontrollers.rotator.toggle();
-      ev.preventDefault(); // if we omit this line, the space bar press will trigger a scroll down
+      ev.preventDefault(); // if we omit this formoTab__line, the space bar press will trigger a scroll down
       return false;
     }
   }
@@ -201,7 +201,7 @@ class PresentationC extends BaseC
 
   prefsOpen()
   {
-    let prefs = this.models.options.getPrefs();
+    let prefs = this.models.prefs.getPrefs();
     this.views.prefsView.drawPrefs(prefs);
     this.views.prefsView.prefsOpen();
   }

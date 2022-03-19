@@ -35,7 +35,7 @@ class PrefsC extends BaseC
   {
     this.views.prefsView.prefsClose();
 
-    let prefs = this.models.options.getPrefs();
+    let prefs = this.models.prefs.getPrefs();
     this.subcontrollers.rotator.setPrefs(prefs);
     this.subcontrollers.widgets.update(prefs);
     this.views.presentView.setWidgetsOpacity(prefs);
@@ -89,7 +89,7 @@ class PrefsC extends BaseC
     if (id.startsWith('overlayShowSelect_'))
     { // Overlays
       id = id.replace(/^(overlayShowSelect_)/,"");
-      let overlays = this.models.options.getPrefs().overlays;
+      let overlays = this.models.prefs.getPrefs().overlays;
       for (let i=0; i<overlays.length; i++)
       {
         if (overlays[i].name == id)
@@ -97,13 +97,13 @@ class PrefsC extends BaseC
           overlays[i].show = ev.target.value;
         }
       }
-      this.models.options.setPref('overlays', overlays);
+      this.models.prefs.setPref('overlays', overlays);
     }
     else
     {
       let e = document.getElementById(id);
-      val = e.options[e.selectedIndex].value;
-      this.models.options.setPref(id, val);
+      val = e.prefs[e.selectedIndex].value;
+      this.models.prefs.setPref(id, val);
 
       if (id == 'screenMode')
       { // Screen Mode (cover, contain...) => update hint.
@@ -115,7 +115,7 @@ class PrefsC extends BaseC
   prefsProxyChanged(ev)
   {
     let val = document.getElementById('prefsProxy').checked;
-    this.models.options.setPref('proxy', val);
+    this.models.prefs.setPref('proxy', val);
   }
 
   prefsSliderChange(ev)
@@ -123,7 +123,7 @@ class PrefsC extends BaseC
     let id = ev.target.id;
     let val = ev.detail.payload.value;
 
-    this.models.options.setPref(id, val);
+    this.models.prefs.setPref(id, val);
   }
 
   prefsExpSheets(ev)

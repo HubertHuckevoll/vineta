@@ -48,7 +48,7 @@ class AppC extends BaseC
     // Init models
     this.models =
     {
-      options: new OptionsM(),
+      prefs: new PrefsM(),
       webcams: new WebcamsM(),
       sheets:  new SheetsM()
     }

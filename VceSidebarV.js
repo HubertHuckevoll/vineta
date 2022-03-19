@@ -95,8 +95,8 @@ class VceSidebarV extends FormoBase
       this.setSidebarCamColor(webcam, idx);
     };
 
-    this.querySelector('#webcamCount').innerHTML = enabledCamCount + ' active camera(s)';
-    this.querySelector('#disabledWebcamCount').innerHTML = disabledCamCount + ' disabled camera(s)';
+    this.querySelector('.sidebarWebcamCount').innerHTML = enabledCamCount + ' active camera(s)';
+    this.querySelector('.sidebarDisabledWebcamCount').innerHTML = disabledCamCount + ' disabled camera(s)';
   }
 
   setSidebarCamColor(cam, idx)

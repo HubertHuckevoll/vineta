@@ -309,7 +309,7 @@ fieldset
   margin-top: 10px;
   font-family: 'Helvetica';
   font-weight: 300;
-  line-height: 1;
+  formoTab__line-height: 1;
   text-align: left;
   width: 100%;
   height: auto;
@@ -339,7 +339,7 @@ fieldset
   width: 100%;
 }
 
-#webcamCount, #disabledWebcamCount {
+.sidebarWebcamCount, .sidebarDisabledWebcamCount {
   display: inline-block;
   padding: 3px 10px;
   margin: 0 3px 5px;
@@ -350,12 +350,12 @@ fieldset
   color: white;
 }
 
-#disabledWebcamCount {
+.sidebarDisabledWebcamCount {
   border: 1px solid red;
   background-color: red;
 }
 
-#prefsScene {
+.prefsScene {
   background-color: white;
   position: absolute;
   box-sizing: border-box;
@@ -379,30 +379,32 @@ fieldset
   bottom: 100%;
 }
 
-.prefsSceneHeader {
+.prefsScene__header {
   position: sticky;
-  left: 25px;
-  right: 25px;
-  top: 0px;
+  left: 0;
+  right: 0;
+  top: 0;
   width: inherit;
   background-color: white;
 }
 
-.prefsSceneTitle {
+.prefsScene__title {
   text-align: right;
   padding: 5px;
 }
 
-#prefsSheetsTab h3, #prefsPresentationTab h3, #aboutTab h3 {
+.formoTab__header {
   border-bottom: 1px solid #eee;
   padding-bottom: 5px;
 }
 
-#prefsSceneStatus {
-  transition: opacity 1s;
+.formoTab__line {
+  padding: 5px 0 10px 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
-#prefsTabbox {
+.prefsTabbox {
   padding: 10px 20px 10px 20px;
 }
 
@@ -411,21 +413,15 @@ input::placeholder
   color: #bbb;
 }
 
-#prefsSheetsList {
+.prefsSheetsList {
   padding-left: 15px;
   padding-top: 0;
   padding-bottom: 0;
 }
 
-#prefsSheetsList li {
+.prefsSheetsList__item {
   margin-bottom: 10px;
   list-style-type: circle;
-}
-
-.line  {
-  padding: 5px 0 10px 10px;
-  display: flex;
-  justify-content: space-between;
 }
 
 .prefsSheetsDesc {
@@ -443,19 +439,19 @@ input::placeholder
   padding-right: 5px;
 }
 
-#aboutWrapper
+.aboutWrapper
 {
   display: flex;
   flex-direction: row;
 }
 
-#aboutWrapper div
+.aboutWrapper__image
+{
+  object-fit: contain;
+}
+
+.aboutWrapper__text
 {
   width: 350px;
   margin-left: 20px;
-}
-
-#aboutWrapper img
-{
-  object-fit:contain;
 }

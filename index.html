@@ -23,7 +23,7 @@
   <script src="ImpExTsvM.js"></script>
   <script src="RotatorC.js"></script>
   <script src="WebcamLoaderM.js"></script>
-  <script src="OptionsM.js"></script>
+  <script src="PrefsM.js"></script>
   <script src="WebcamsM.js"></script>
   <script src="VceSidebarV.js"></script>
   <script src="VceLocationV.js"></script>
@@ -45,7 +45,7 @@
 </head>
 <body>
 
-  <div id="mainScene" class="scene mainScene--foreground">
+  <div class="scene mainScene mainScene--foreground">
     <div class="webcam">
       <div id="dynamicOverlays">
         <vce-location class="widgetLocation" place="" desc=""></vce-location>
@@ -60,9 +60,9 @@
           <button class="sidebarFilter__clearButton">Clear</button>
         </div>
         <div class="sidebarWebcams"></div>
-        <div id="webcamCount"></div>
+        <div class="sidebarWebcamCount"></div>
         <div class="sidebarWebcamsDisabled"></div>
-        <div id="disabledWebcamCount"></div>
+        <div class="sidebarDisabledWebcamCount"></div>
       </vce-sidebar>
       <div class="timeAndControlsWidgetWrapper">
         <vce-clock class="widgetClock"></vce-clock>
@@ -72,31 +72,30 @@
     </div>
   </div>
 
-  <div id="prefsScene" class="scene prefsScene--close">
+  <div class="scene prefsScene prefsScene--close">
 
-    <div class="prefsSceneHeader">
-      <div class="prefsSceneTitle">
-        <span id="prefsSceneStatus"></span>
+    <div class="prefsScene__header">
+      <div class="prefsScene__title">
         <button id="prefsCloseButton">&nbsp;X&nbsp;</button>
       </div>
-      <formo-tabbox tabbox="prefsTabbox" active="prefsSheetsTab">
+      <formo-tabbox tabbox="prefsTabbox" active="prefsSceneTabSheets">
         <ul class="formoTabStripe">
-          <li tab="prefsSheetsTab">Webcams</li>
-          <li tab="prefsPresentationTab">Presentation</li>
-          <li tab="aboutTab">About</li>
+          <li tab="prefsSceneTabSheets">Webcams</li>
+          <li tab="prefsSceneTabPresentation">Presentation</li>
+          <li tab="prefsSceneTabAbout">About</li>
         </ul>
       </formo-tabbox>
     </div>
 
-    <div id="prefsTabbox" class="formoTabBox">
+    <div class="prefsTabbox formoTabBox">
 
-      <div class="formoTab" id="prefsSheetsTab">
-        <h3>Current Webcam Sheets</h3>
-        <div class="line">
-          <ul id="prefsSheetsList"></ul>
+      <div class="formoTab prefsSceneTabSheets">
+        <h3 class="formoTab__header">Current Webcam Sheets</h3>
+        <div class="formoTab__line">
+          <ul class="prefsSheetsList"></ul>
         </div>
-        <h3>Add Webcam Sheet</h3>
-        <div class="line">
+        <h3 class="formoTab__header">Add Webcam Sheet</h3>
+        <div class="formoTab__line">
           <fieldset>
             <legend>Add Webcam Document </legend>
             <label for="prefsAddSheetPub">
@@ -117,27 +116,27 @@
             <button class="prefsSheetsAddButton">Add</button>
           </fieldset>
         </div>
-        <h3>Sheets Backup</h3>
-        <div class="line">
+        <h3 class="formoTab__header">Sheets Backup</h3>
+        <div class="formoTab__line">
           <span>Backup: </span>
           <a id="prefsExpSheets">Download Sheets As TSV</a>
         </div>
-        <div class="line">
+        <div class="formoTab__line">
           <span>Restore: </span>
           <input id="prefsImpSheetsFS" style="display: none;" type="file" accept=".tsv">
           <button id="prefsImpSheetsSelect">Select TSV File</button>
         </div>
-        <h3>Proxy</h3>
-        <div class="line">
+        <h3 class="formoTab__header">Proxy</h3>
+        <div class="formoTab__line">
           <label for="prefsProxy">Use A Proxy Server (Recommended)</label>
           <input type="checkbox" id="prefsProxy" />
         </div>
       </div>
 
-      <div class="formoTab" id="prefsPresentationTab">
-        <h3>Presentation</h3>
-        <div class="line"><formo-slider id="slideTime" class="formoSlider" label="Slide Time (s)" value="8" max="60" min="1" step="1"></formo-slider></div>
-        <div class="line">
+      <div class="formoTab prefsSceneTabPresentation">
+        <h3 class="formoTab__header">Presentation</h3>
+        <div class="formoTab__line"><formo-slider id="slideTime" class="formoSlider" label="Slide Time (s)" value="8" max="60" min="1" step="1"></formo-slider></div>
+        <div class="formoTab__line">
           <div>Image Size</div>
           <select id="screenMode">
             <option value="auto">Auto</option>
@@ -146,23 +145,23 @@
             <option value="original">Original</option>
           </select>
         </div>
-        <div class="line">
+        <div class="formoTab__line">
           <div id="screenModeHint"></div>
         </div>
-        <div class="line">
+        <div class="formoTab__line">
           <span>Rotation</span>&nbsp;
           <select id="rotateMode">
             <option value="serial">Default Order</option>
             <option value="random">Random</option>
           </select>
         </div>
-        <h3>Widgets</h3>
+        <h3 class="formoTab__header">Widgets</h3>
         <div id="overlaysBox"></div>
-        <div class="line"><formo-slider id="overlaysDisplayTime" class="formoSlider" label="Show Mousemove-Widgets For (s)" value="5" max="60" min="1" step="1"></formo-slider></div>
-        <div class="line"><formo-slider id="overlaysOpacity" class="formoSlider" label="Opacity (%)" value="90" max="100" min="10" step="10"></formo-slider></div>
-        <h3>Enhanced</h3>
-        <div class="line"><formo-slider id="webcamLoadTimeout" class="formoSlider" label="Webcam Load Timeout (s)" value="10" max="30" min="5" step="1"></formo-slider></div>
-        <div class="line">
+        <div class="formoTab__line"><formo-slider id="overlaysDisplayTime" class="formoSlider" label="Show Mousemove-Widgets For (s)" value="5" max="60" min="1" step="1"></formo-slider></div>
+        <div class="formoTab__line"><formo-slider id="overlaysOpacity" class="formoSlider" label="Opacity (%)" value="90" max="100" min="10" step="10"></formo-slider></div>
+        <h3 class="formoTab__header">Enhanced</h3>
+        <div class="formoTab__line"><formo-slider id="webcamLoadTimeout" class="formoSlider" label="Webcam Load Timeout (s)" value="10" max="30" min="5" step="1"></formo-slider></div>
+        <div class="formoTab__line">
           <span>Webcam Load Error Logging</span>&nbsp;
           <select id="logMode">
             <option value="screen">Screen</option>
@@ -173,16 +172,16 @@
         </div>
       </div>
 
-      <div class="formoTab" id="aboutTab">
-        <div id="aboutWrapper">
-          <img src="./assets/android-chrome-maskable-192x192.png">
-          <div>
-            <h3>Vineta</h3>
+      <div class="formoTab prefsSceneTabAbout">
+        <h3 class="formoTab__header">Vineta</h3>
+        <div class="aboutWrapper">
+          <img class="aboutWrapper__image" src="./assets/android-chrome-maskable-192x192.png">
+          <div class="aboutWrapper__text">
             <p>A Webcam Slideshow App!</p>
-            <p>No frameworks were harmed in the making of this app, but we're standing on the shoulders of <a href="https://www.google.com/sheets/about/" target="_blank">giants</a>.</p>
+            <p>No frameworks were harmed in the making of this app.</p>
             <p>
               Cobbled together by <a href="https://www.facebook.com/profile.php?id=100006858609870" target="_blank">MeyerK</a> in<br>
-              2013, 2015/10, 2017/11, 2019/10ff, 2021/05,06.
+              2013, 2015/10, 2017/11, 2019/10ff, 2021/05,06, 2022/03ff.
             </p>
           </div>
         </div>
