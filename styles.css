@@ -169,8 +169,8 @@ fieldset
 .widgetMap__image
 {
   background: none;
-  width: 250px;
-  height: 250px;
+  width: 15vw;
+  height: 15vw;
 }
 
 .widgetMap__image--loading
@@ -309,7 +309,7 @@ fieldset
   margin-top: 10px;
   font-family: 'Helvetica';
   font-weight: 300;
-  formoTab__line-height: 1;
+  line-height: 1;
   text-align: left;
   width: 100%;
   height: auto;
