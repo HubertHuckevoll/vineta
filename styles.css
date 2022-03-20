@@ -50,7 +50,7 @@ fieldset
   right: 0;
   bottom: 0;
   text-align: center;
-  background: url(./assets/backdrop.jpg) no-repeat fixed center center #191919;
+  background: url(./assets/backdrop.webp) no-repeat fixed center center #191919;
   -webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
