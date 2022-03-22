@@ -14,13 +14,13 @@ class PrefsC extends BaseC
     this.sheetsHaveChanged = false;
 
     // wire ui elements
-    this.on('click', '#prefsCloseButton',                     this.prefsClose.bind(this));
+    this.on('click', '.prefsCloseButton',                     this.prefsClose.bind(this));
     this.on('click', '.prefsSheetsAddButton',                 this.prefsSheetsAddButton.bind(this));
     this.on('click', '.prefsSheetsEnabledCheckbox',           this.prefsSheetsEnabledCheckbox.bind(this));
     this.on('click', '.prefsSheetsRemoveLink',                this.prefsSheetsRemoveLink.bind(this));
     this.on('click', '.prefsSheetsEditLink',                  this.prefsSheetsEditLink.bind(this));
-    this.on('change',   '#prefsPresentationTab select',       this.prefsSelectChange.bind(this));
-    this.on('formoSliderChange', '#prefsPresentationTab .formoSlider', this.prefsSliderChange.bind(this));
+    this.on('change',   '.prefsSceneTabPresentation select',  this.prefsSelectChange.bind(this));
+    this.on('formoSliderChange', '.prefsSceneTabPresentation .formoSlider', this.prefsSliderChange.bind(this));
     this.on('click',  '#prefsExpSheets',                      this.prefsExpSheets.bind(this));
     this.on('click',  '#prefsImpSheetsSelect',                this.prefsImpSheetsSelect.bind(this));
     this.on('change', '#prefsImpSheetsFS',                    this.prefsImpSheetsFS.bind(this));
