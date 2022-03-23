@@ -100,9 +100,10 @@ class PrefsC extends BaseC
       this.models.prefs.setPref('overlays', overlays);
     }
     else
-    {
+    { // all other select boxes...
       let e = document.getElementById(id);
-      val = e.prefs[e.selectedIndex].value;
+      let val = e.options[e.selectedIndex].value;
+
       this.models.prefs.setPref(id, val);
 
       if (id == 'screenMode')
