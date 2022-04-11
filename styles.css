@@ -269,33 +269,25 @@ fieldset
   border-left: 5px solid orangered;
 }
 
-.sidebarWebcam__led {
-  display: block;
-  float: right;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+.sidebarWebcam__summary--grey::marker {
+  color: #CCCCCC;
 }
 
-.sidebarWebcam__led--grey {
-  background-color: #CCCCCC;
+.sidebarWebcam__summary--green::marker {
+  color: #1eff00;
 }
 
-.sidebarWebcam__led--green {
-  background-color: #1eff00;
+.sidebarWebcam__summary--red::marker {
+  color: #F00;
 }
 
-.sidebarWebcam__led--red {
-  background-color: #F00;
+/* currently not in use */
+.sidebarWebcam__summary--yellow::marker {
+  color: #FF0;
 }
 
-/* currently not used */
-.sidebarWebcam__led--yellow {
-  background-color: #FF0;
-}
-
-.sidebarWebcam__led--blue {
-  background-color: #2433ff;
+.sidebarWebcam__summary--blue::marker {
+  color: #2433ff;
 }
 
 .sidebarWebcam__location {
@@ -318,7 +310,7 @@ fieldset
   min-height: 25px;
 }
 
-.sidebarWebcam__previewImage:before {
+.sidebarWebcam__previewImage::before {
   content: "";
   display: block;
   position: absolute;
@@ -329,7 +321,7 @@ fieldset
   background-color: white;
 }
 
-.sidebarWebcam__previewImage:after {
+.sidebarWebcam__previewImage::after {
   content: "Broken " attr(alt);
   display: block;
   color: rgb(100, 100, 100);

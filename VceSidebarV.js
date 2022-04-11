@@ -51,7 +51,6 @@ class VceSidebarV extends FormoBase
         div.setAttribute('data-idx', idx);
         div.innerHTML = '<details class="sidebarWebcam__details">'+
                           '<summary class="sidebarWebcam__summary">'+
-                            '<span class="sidebarWebcam__led"></span>'+
                             '<span class="sidebarWebcam__location">'+webcam.location+'</span><br>'+
                             '<span class="sidebarWebcam__desc">'+webcam.description+'</span><br>'+
                           '</summary>'+
@@ -105,30 +104,31 @@ class VceSidebarV extends FormoBase
 
     if ((camDiv !== null) && (camDiv !== undefined))
     {
-      var camStatusLED = camDiv.querySelector('.sidebarWebcam__led');
+      var camStatusLED = camDiv.querySelector('.sidebarWebcam__summary');
+
       var tc = cam.totalCalls;
       var fc = cam.failedCalls;
       var ratio = (fc / tc) * 100;
 
       if (isNaN(ratio))
       {
-        camStatusLED.className = 'sidebarWebcam__led';
-        camStatusLED.classList.add('sidebarWebcam__led--grey');
+        camStatusLED.className = 'sidebarWebcam__summary';
+        camStatusLED.classList.add('sidebarWebcam__summary--grey');
       }
       if ((ratio >= 0) && (ratio < 33))
       {
-        camStatusLED.className = 'sidebarWebcam__led';
-        camStatusLED.classList.add('sidebarWebcam__led--blue');
+        camStatusLED.className = 'sidebarWebcam__summary';
+        camStatusLED.classList.add('sidebarWebcam__summary--blue');
       }
       if ((ratio >= 33) && (ratio < 66))
       {
-        camStatusLED.className = 'sidebarWebcam__led';
-        camStatusLED.classList.add('sidebarWebcam__led--yellow');
+        camStatusLED.className = 'sidebarWebcam__summary';
+        camStatusLED.classList.add('sidebarWebcam__summary--yellow');
       }
       if ((ratio >= 66) && (ratio <= 100))
       {
-        camStatusLED.className = 'sidebarWebcam__led';
-        camStatusLED.classList.add('sidebarWebcam__led--red');
+        camStatusLED.className = 'sidebarWebcam__summary';
+        camStatusLED.classList.add('sidebarWebcam__summary--red');
       }
     }
   }
