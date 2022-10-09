@@ -1,0 +1,6 @@
+@import '95.css';
+
+:root {
+  --title-bar-bg: linear-gradient(to right, #808080, #B5B5B5);
+  --title-bar-active-bg: linear-gradient(to right, #000080, #1084D0);
+}
