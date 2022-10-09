@@ -1,6 +1,6 @@
-"use strict";
+import { BaseC } from '/frontschweine/js/BaseC.js';
 
-class PresentationC extends BaseC
+export class PresentationC extends BaseC
 {
   constructor(views, models, subcontrollers)
   {

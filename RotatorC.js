@@ -1,6 +1,7 @@
-"use strict";
+import { BaseC } from '/frontschweine/js/BaseC.js';
+import { WebcamLoaderM } from './WebcamLoaderM.js';
 
-class RotatorC extends BaseC
+export class RotatorC extends BaseC
 {
   constructor()
   {

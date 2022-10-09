@@ -1,6 +1,6 @@
-"use strict";
+import { BaseC } from '/frontschweine/js/BaseC.js';
 
-class WidgetsC extends BaseC
+export class WidgetsC extends BaseC
 {
 
   constructor()

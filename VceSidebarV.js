@@ -1,10 +1,6 @@
-"use strict";
+import { FormoBase } from '/frontschweine/js/FormoBase.js';
 
-/*
-  Sidebar View
-*/
-
-class VceSidebarV extends FormoBase
+export class VceSidebarV extends FormoBase
 {
   constructor()
   {

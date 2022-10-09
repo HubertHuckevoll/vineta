@@ -1,6 +1,7 @@
-"use strict";
+import { BaseM } from '/frontschweine/js/BaseM.js';
+import { ImpExTsvM } from './ImpExTsvM.js';
 
-class SheetsM extends BaseM
+export class SheetsM extends BaseM
 {
   constructor()
   {

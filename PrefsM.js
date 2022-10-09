@@ -1,6 +1,4 @@
-"use strict";
-
-class PrefsM
+export class PrefsM
 {
   constructor()
   {

@@ -1,6 +1,6 @@
-"use strict";
+import { BaseM } from '/frontschweine/js/BaseM.js';
 
-class WebcamLoaderM extends BaseM
+export class WebcamLoaderM extends BaseM
 {
   constructor()
   {

@@ -1,6 +1,6 @@
-"use strict";
+import { BaseC } from '/frontschweine/js/BaseC.js';
 
-class PrefsC extends BaseC
+export class PrefsC extends BaseC
 {
 
   constructor(views, models, subcontrollers)

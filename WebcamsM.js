@@ -1,6 +1,7 @@
-"use strict";
+import { BaseM } from '/frontschweine/js/BaseM.js';
+import { ImpExTsvM } from './ImpExTsvM.js';
 
-class WebcamsM extends BaseM
+export class WebcamsM extends BaseM
 {
   constructor()
   {

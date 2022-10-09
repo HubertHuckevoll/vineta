@@ -1,11 +1,6 @@
-"use strict";
+import { BaseV } from '/frontschweine/js/BaseV.js';
 
-/**
-  Prefs View
-   ___________________________________________________________________
- */
-
-class PrefsV extends BaseV
+export class PrefsV extends BaseV
 {
   constructor()
   {

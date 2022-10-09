@@ -1,6 +1,6 @@
-"use strict";
+import { WidgetV } from './WidgetV.js';
 
-class VceClockV extends WidgetV
+export class VceClockV extends WidgetV
 {
   constructor()
   {

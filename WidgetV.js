@@ -1,10 +1,6 @@
-"use strict";
+import { FormoBase } from '/frontschweine/js/FormoBase.js';
 
-/**
- * Presentation View
- */
-
-class WidgetV extends FormoBase
+export class WidgetV extends FormoBase
 {
   constructor()
   {

@@ -1,6 +1,4 @@
-"use strict";
-
-class ImpExTsvM
+export class ImpExTsvM
 {
   constructor()
   {

@@ -1,4 +1,26 @@
-"use strict";
+import { BaseC } from '/frontschweine/js/BaseC.js';
+import { FormoTabbox } from '/frontschweine/js/FormoTabbox.js';
+import { FormoSlider } from '/frontschweine/js/FormoSlider.js';
+
+import { VceLocationV } from './VceLocationV.js';
+import { VceLogV } from './VceLogV.js';
+import { VceMapV } from './VceMapV.js';
+import { VceLastCamV } from './VceLastCamV.js';
+import { VceControlsV } from './VceControlsV.js';
+import { VceClockV } from './VceClockV.js';
+
+import { SheetsM } from './SheetsM.js';
+import { RotatorC } from './RotatorC.js';
+
+import { PrefsM } from './PrefsM.js';
+import { WebcamsM } from './WebcamsM.js';
+import { VceSidebarV } from './VceSidebarV.js';
+import { WidgetsC } from './WidgetsC.js';
+import { PresentationC } from './PresentationC.js';
+import { PresentationV } from './PresentationV.js';
+import { PrefsC } from './PrefsC.js';
+import { PrefsV } from './PrefsV.js';
+
 
 class AppC extends BaseC
 {
