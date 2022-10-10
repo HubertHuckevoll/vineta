@@ -40,7 +40,8 @@ class AppC extends BaseC
 
   load()
   {
-    // install our service worker - we are basically an "online only" app
+    // install our service worker - we are basically an "online only" app,
+    // but this way we gain some PWA capabilities
     if ('serviceWorker' in navigator)
     {
       navigator.serviceWorker.register('./sw.js');

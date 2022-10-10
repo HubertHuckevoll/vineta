@@ -36,9 +36,13 @@ export class WebcamsM extends BaseM
                 cam.totalCalls = 0;
                 cam.failedCalls = 0;
                 cam.sheetName = sheet.desc;
-                cam.sheetURL = sheet.sheetUrl+'&range='+(i+2)+':'+(i+2); //add 2 because the sheet is not zero based and we have the column names header line on top
                 cam.visible = true;
                 cam.enabled = true;
+
+                if (sheet.sheetUrl !== '')
+                {
+                  cam.sheetURL = sheet.sheetUrl+'&range='+(i+2)+':'+(i+2); //add 2 because the sheet is not zero based and we have the column names header line on top
+                }
 
                 if (this.isURLdisabled(cam.url))
                 {

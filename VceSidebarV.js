@@ -31,6 +31,7 @@ export class VceSidebarV extends FormoBase
     var div = null;
     var previewURL = null;
     var now = new Date();
+    let str = '';
 
     now = now.getTime();
     sw.innerHTML = '';
@@ -45,19 +46,23 @@ export class VceSidebarV extends FormoBase
         div = document.createElement('div');
         div.setAttribute('class', 'sidebarWebcam');
         div.setAttribute('data-idx', idx);
-        div.innerHTML = '<details class="sidebarWebcam__details">'+
-                          '<summary class="sidebarWebcam__summary">'+
-                            '<span class="sidebarWebcam__location">'+webcam.location+'</span><br>'+
-                            '<span class="sidebarWebcam__desc">'+webcam.description+'</span><br>'+
-                          '</summary>'+
-                          '<div class="sidebarWebcamCamActions" data-idx="'+idx+'">'+
-                            '<a class="sidebarWebcamCamActions__disableButton">Disable Camera</a><br>'+
-                            '<a href="'+webcam.homepage+'" target="_blank">Open Camera Homepage</a><br>'+
-                            '<a href="'+webcam.url+'"      target="_blank">Open Camera Image In New Tab</a><br>'+
-                            '<a href="'+webcam.sheetURL+'" target="_blank">Open Containing Google Sheet ("'+webcam.sheetName+'")</a><br>'+
-                          '</div>'+
-                        '</details>';
+        str = '<details class="sidebarWebcam__details">'+
+              '<summary class="sidebarWebcam__summary">'+
+                '<span class="sidebarWebcam__location">'+webcam.location+'</span><br>'+
+                '<span class="sidebarWebcam__desc">'+webcam.description+'</span><br>'+
+              '</summary>'+
+              '<div class="sidebarWebcamCamActions" data-idx="'+idx+'">'+
+                '<a class="sidebarWebcamCamActions__disableButton">Disable Camera</a><br>'+
+                '<a href="'+webcam.homepage+'" target="_blank">Open Camera Homepage</a><br>'+
+                '<a href="'+webcam.url+'"      target="_blank">Open Camera Image In New Tab</a><br>';
 
+        if (webcam.sheetURL)
+        {
+          str += '<a href="'+webcam.sheetURL+'" target="_blank">Open Containing Google Sheet ("'+webcam.sheetName+'")</a><br>';
+        }
+
+        str = str + '</div></details>';
+        div.innerHTML = str;
         sw.appendChild(div);
       }
 

@@ -56,14 +56,14 @@ export class SheetsM extends BaseM
     }
   }
 
-  addSheet(pubUrl, sheetUrl, desc)
+  addSheet(pubUrl, sheetUrl = '', desc)
   {
     let expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
     let regex = new RegExp(expression);
 
-    if ((pubUrl != '') && (sheetUrl != '') && (desc != ''))
+    if ((pubUrl != '') && (desc != ''))
     {
-      if (pubUrl.match(regex) && sheetUrl.match(regex))
+      if (pubUrl.match(regex))
       {
         let alreadyIn = false;
         this.sheets.forEach((sheet) =>
@@ -99,7 +99,7 @@ export class SheetsM extends BaseM
     }
     else
     {
-      this.emit('sheetsError', {'txt': 'Description or one of the URLs is empty.'});
+      this.emit('sheetsError', {'txt': 'Description or TSV-file URL empty.'});
     }
   }
 

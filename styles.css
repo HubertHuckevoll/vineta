@@ -8,19 +8,7 @@ html, body {
 
 .formoTab
 {
-  max-width: 600px;
-}
-
-formo-slider
-{
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-fieldset
-{
-  border: 1px solid #eee;
+  /*max-width: 600px;*/
 }
 
 .element--visible {
@@ -394,6 +382,7 @@ fieldset
   padding: 5px 0 10px 10px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .prefsTabbox {

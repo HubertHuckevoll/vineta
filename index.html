@@ -61,33 +61,40 @@
     </div>
 
     <div class="prefsTabbox formoTabBox">
-
       <div class="formoTab prefsSceneTabSheets">
-        <h3 class="formoTab__header">Current Webcam Sheets</h3>
-        <div class="formoTab__line">
-          <ul class="prefsSheetsList"></ul>
-        </div>
-        <h3 class="formoTab__header">Add Webcam Sheet</h3>
+        <h3 class="formoTab__header">Webcam Sheets</h3>
         <div class="formoTab__line">
           <fieldset>
-            <legend>Add Webcam Document </legend>
+            <legend>Current Sheets</legend>
+            <ul class="prefsSheetsList"></ul>
+          </fieldset>
+        <!--/div-->
+        <!--h3 class="formoTab__header">Add Webcam Sheet</h3-->
+        <!--div class="formoTab__line"-->
+          <fieldset>
+            <legend>Add Webcam Table Document </legend>
             <label for="prefsAddSheetPub">
-              Published Google Sheets Document URL ("Publish to the Web" / "TSV")<br>
-              <input id="prefsSheetsAddPub" type="text" size="130" placeholder="https://docs.google.com/spreadsheets/d/e/2PACX-1vScHpI5MimEVrf65dMnl5NGhpThsbQjkF8ZtoqSIMnnHW1AtBf-C2Kp30mYVDVfY1TtaIsM40F-axW1/pub?output=tsv" value="">
+              TSV-file URL (e.g. Published Google Sheets Document URL: "Publish to the Web" / "TSV")<br>
+              <input id="prefsSheetsAddPub" type="text" size="50" placeholder="https://docs.google.com/spreadsheets/d/e/2PACX-1vScHpI5MimEVrf65dMnl5NGhpThsbQjkF8ZtoqSIMnnHW1AtBf-C2Kp30mYVDVfY1TtaIsM40F-axW1/pub?output=tsv" value="">
             </label>
             <br><br>
             <label for="prefsAddSheetSheet">
-              Google Sheets Document URL<br>
-              <input id="prefsSheetsAddSheet" type="text" size="130" placeholder="https://docs.google.com/spreadsheets/d/1GUuIzqqdo6BkQ34tSDrUCJxPC6kjfuzCenOv-rrh37c/edit#gid=0" value="">
+              Google Sheets Document URL (optional)<br>
+              <input id="prefsSheetsAddSheet" type="text" size="50" placeholder="https://docs.google.com/spreadsheets/d/1GUuIzqqdo6BkQ34tSDrUCJxPC6kjfuzCenOv-rrh37c/edit#gid=0" value="">
             </label>
             <br><br>
             <label for="prefsAddSheetDesc">
               Description<br>
-              <input id="prefsSheetsAddDesc" type="text" size="30" placeholder="My Webcams" value="">
+              <input id="prefsSheetsAddDesc" type="text" size="50" placeholder="My Webcams" value="">
             </label>
             <br><br>
             <button class="prefsSheetsAddButton">Add</button>
           </fieldset>
+        </div>
+        <h3 class="formoTab__header">Proxy</h3>
+        <div class="formoTab__line">
+          <label for="prefsProxy">Use A Proxy Server (Recommended)</label>
+          <input type="checkbox" id="prefsProxy" />
         </div>
         <h3 class="formoTab__header">Sheets Backup</h3>
         <div class="formoTab__line">
@@ -98,11 +105,6 @@
           <span>Restore: </span>
           <input id="prefsImpSheetsFS" style="display: none;" type="file" accept=".tsv">
           <button id="prefsImpSheetsSelect">Select TSV File</button>
-        </div>
-        <h3 class="formoTab__header">Proxy</h3>
-        <div class="formoTab__line">
-          <label for="prefsProxy">Use A Proxy Server (Recommended)</label>
-          <input type="checkbox" id="prefsProxy" />
         </div>
       </div>
 
