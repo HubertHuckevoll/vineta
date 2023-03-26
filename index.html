@@ -9,9 +9,10 @@
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
   <link rel="manifest" href="manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#000000">
   <meta name="referrer" content="no-referrer">
   <script src="AppC.js" type="module"></script>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  <!--link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"-->
   <link href="/frontschweine/css/FormoTabbox.css" rel="stylesheet">
   <link href="/frontschweine/css/appskin.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
@@ -45,7 +46,7 @@
     </div>
   </div>
 
-  <div class="scene prefsScene prefsScene--close">
+  <div class="prefsScene prefsScene--close">
 
     <div class="prefsScene__header">
       <div class="prefsScene__title">
@@ -64,14 +65,11 @@
       <div class="formoTab prefsSceneTabSheets">
         <h3 class="formoTab__header">Webcam Sheets</h3>
         <div class="formoTab__line">
-          <fieldset>
+          <fieldset class="prefsSheetList">
             <legend>Current Sheets</legend>
             <ul class="prefsSheetsList"></ul>
           </fieldset>
-        <!--/div-->
-        <!--h3 class="formoTab__header">Add Webcam Sheet</h3-->
-        <!--div class="formoTab__line"-->
-          <fieldset>
+          <fieldset class="prefsAddSheet">
             <legend>Add Webcam Table Document </legend>
             <label for="prefsAddSheetPub">
               TSV-file URL (e.g. Published Google Sheets Document URL: "Publish to the Web" / "TSV")<br>
@@ -152,11 +150,11 @@
         <div class="aboutWrapper">
           <img class="aboutWrapper__image" src="./assets/android-chrome-maskable-192x192.png">
           <div class="aboutWrapper__text">
-            <p>A Webcam Slideshow App!</p>
+            <p><strong>A Webcam Slideshow App</strong></p>
             <p>No frameworks were harmed in the making of this app.</p>
             <p>
               Cobbled together by <a href="https://www.facebook.com/profile.php?id=100006858609870" target="_blank">MeyerK</a> in<br>
-              2013, 2015/10, 2017/11, 2019/10ff, 2021/05,06, 2022/03ff.
+              2013, 2015/10, 2017/11, 2019/10ff, 2021/05,06, 2022/03ff., 2022/10.
             </p>
           </div>
         </div>

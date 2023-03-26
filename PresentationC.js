@@ -15,8 +15,8 @@ export class PresentationC extends BaseC
     this.screenshotMode = false;
 
     // start / stop
-    this.on('keyup',                                            this.startStopOnSpacebar.bind(this));
-    this.on('click', '.widgetControls__startStopButton',        this.startStopOnButton.bind(this));
+    this.on('keyup', this.startStopOnSpacebar.bind(this));
+    this.on('click', '.widgetControls__startStopButton', this.startStopOnButton.bind(this));
 
     // start / stop on (loosing / regaining) visibility
     this.on('visibilitychange', this.onDocumentVisibilityChange.bind(this));
@@ -28,19 +28,19 @@ export class PresentationC extends BaseC
     this.on('online', this.onReconnect.bind(this));
 
     //open / close ui elements
-    this.on('click', '.widgetControls__prefsOpenButton',        this.prefsOpen.bind(this));
-    this.on('click', '.widgetControls__screenshotModeButton',   this.enableScreenshotMode.bind(this));
-    this.on('click', '.webcam',                                 this.toggleSidebar.bind(this));
+    this.on('click', '.widgetControls__prefsOpenButton', this.prefsOpen.bind(this));
+    this.on('click', '.widgetControls__screenshotModeButton', this.enableScreenshotMode.bind(this));
+    this.on('click', '.webcam', this.toggleSidebar.bind(this));
 
     // sidebar actions
-    this.on('input', '.sidebarFilter__input',                   this.filterWebcams.bind(this));
-    this.on('click', '.sidebarFilter__clearButton',             this.filterWebcamsReset.bind(this));
-    this.on('click', '.sidebarWebcam__summary',                 this.gotoCam.bind(this));
+    this.on('input', '.sidebarFilter__input', this.filterWebcams.bind(this));
+    this.on('click', '.sidebarFilter__clearButton', this.filterWebcamsReset.bind(this));
+    this.on('click', '.sidebarWebcam__summary', this.gotoCam.bind(this));
     this.on('click', '.sidebarWebcamCamActions__disableButton', this.disableCam.bind(this));
-    this.on('click', '.sidebarWebcamCamActions__enableButton',  this.enableCam.bind(this));
+    this.on('click', '.sidebarWebcamCamActions__enableButton', this.enableCam.bind(this));
 
     // last cam
-    this.on('click', '.widgetLastCam__image',                   this.gotoPreviousCam.bind(this));
+    this.on('click', '.widgetLastCam__image', this.gotoPreviousCam.bind(this));
 
     // widgets
     this.on('widgetsVisibilityChange', this.views.presentView.setWidgetVisibility.bind(this.views.presentView));

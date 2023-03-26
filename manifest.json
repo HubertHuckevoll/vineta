@@ -1,5 +1,5 @@
 {
-  "theme_color": "transparent",
+  "theme_color": "#000000",
   "background_color": "#000000",
   "description": "Webcam Slideshow App",
   "dir": "ltr",

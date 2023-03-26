@@ -1,37 +1,38 @@
-html, body {
+html, body
+{
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: system-ui, sans-serif;
   background-color: #000;
   font-size: 14px;
 }
 
-.formoTab
+.element--visible
 {
-  /*max-width: 600px;*/
-}
-
-.element--visible {
   display: block;
 }
 
-.element--invisible {
+.element--invisible
+{
   display: none;
 }
 
-.mainScene--foreground {
+.mainScene--foreground
+{
   display: block;
   transition: opacity .3;
   opacity: 1;
 }
 
-.mainScene--background {
+.mainScene--background
+{
   display: block;
   transition: opacity .3;
   opacity: .3;
 }
 
-.webcam {
+.webcam
+{
   position: fixed;
   top: 0;
   left: 0;
@@ -59,14 +60,16 @@ html, body {
   opacity: 1;
 }
 
-.timeAndControlsWidgetWrapper {
+.timeAndControlsWidgetWrapper
+{
   position: absolute;
   top: 35px;
   left: 35px;
   text-align: center;
 }
 
-.widgetClock {
+.widgetClock
+{
   font-size: 6vw;
   color: white;
   text-shadow: 1px  1px 1px black, 1px -1px 1px black, -1px  1px 1px black, -1px -1px 1px black;
@@ -79,17 +82,20 @@ html, body {
   font-size: 1vw;
 }
 
-.widgetControls {
+.widgetControls
+{
   overflow: hidden;
   box-sizing: border-box;
   text-align: left;
 }
 
-.widgetControls__button {
+.widgetControls__button
+{
   margin: 5px 5px 5px 0;
 }
 
-.widgetLastCam {
+.widgetLastCam
+{
   position: absolute;
   bottom: 50px;
   left: 35px;
@@ -97,13 +103,16 @@ html, body {
   overflow: hidden;
 }
 
-.widgetLastCam__image {
+.widgetLastCam__image
+{
   width: auto;
   max-width: 12vw;
   border: 3px solid #fafafa;
+  background-color: rgba(255, 255, 255, 50%);
 }
 
-.widgetLog {
+.widgetLog
+{
   position: absolute;
   bottom: 5px;
   left: 35px;
@@ -115,7 +124,8 @@ html, body {
   overflow: hidden;
 }
 
-.widgetLocation {
+.widgetLocation
+{
   position: absolute;
   bottom: 50px;
   right: 35px;
@@ -138,15 +148,18 @@ html, body {
   text-decoration: none;
 }
 
-.widgetLocation__link:hover {
+.widgetLocation__link:hover
+{
   text-decoration: underline;
 }
 
-.widgetLocation__place {
+.widgetLocation__place
+{
   font-size: 1vw;
 }
 
-.widgetMap {
+.widgetMap
+{
   position: absolute;
   top: 35px;
   right: 35px;
@@ -159,6 +172,8 @@ html, body {
   background: none;
   width: 15vw;
   height: 15vw;
+  border: 3px solid #fafafa;
+  background-color: rgba(255, 255, 255, 50%);
 }
 
 .widgetMap__image--loading
@@ -181,7 +196,8 @@ html, body {
 .widget--opacity90  {transition: opacity .5s; opacity: .9;}
 .widget--opacity100 {transition: opacity .5s; opacity:  1;}
 
-.sidebar {
+.sidebar
+{
   position: fixed;
   right: 0;
   top: 0;
@@ -190,7 +206,8 @@ html, body {
   background-color: white;
 }
 
-.sidebar--open {
+.sidebar--open
+{
   transition: width .5s, opacity .5s;
   width: 400px;
   opacity: 1;
@@ -203,7 +220,8 @@ html, body {
   opacity: 0;
 }
 
-.sidebarFilter {
+.sidebarFilter
+{
   position: fixed;
   z-index: 9999;
   display: flex;
@@ -217,7 +235,8 @@ html, body {
   background-color: #eee;
 }
 
-.sidebarFilter__input {
+.sidebarFilter__input
+{
   background-color: white;
   display: inline-block;
   outline: 0;
@@ -225,23 +244,27 @@ html, body {
   width: 300px;
 }
 
-.sidebarFilter__clearButton {
+.sidebarFilter__clearButton
+{
   display: inline-block;
 }
 
-.sidebarWebcams {
+.sidebarWebcams
+{
   border-bottom: 1px solid green;
   text-align: left;
   padding-top: 60px;
 }
 
-.sidebarWebcamsDisabled {
+.sidebarWebcamsDisabled
+{
   border-bottom: 1px solid red;
   text-align: left;
   overflow: hidden;
 }
 
-.sidebarWebcam {
+.sidebarWebcam
+{
   box-sizing: border-box;
   color: black;
   cursor: pointer;
@@ -249,41 +272,54 @@ html, body {
   padding: 5px;
 }
 
-.sidebarWebcam--loading {
-  font-style: italic;
+.sidebarWebcam--loading
+{
+  animation: blinker 1.5s ease infinite;
 }
 
-.sidebarWebcam--activeCam {
+@keyframes blinker
+{
+  50% { background-color: orangered; }
+}
+
+.sidebarWebcam--activeCam
+{
   border-left: 5px solid orangered;
 }
 
-.sidebarWebcam__summary--grey::marker {
-  color: #CCCCCC;
+.sidebarWebcam__summary--grey::marker
+{
+  color: #ddd;
 }
 
-.sidebarWebcam__summary--green::marker {
+.sidebarWebcam__summary--green::marker
+{
   color: #1eff00;
 }
 
-.sidebarWebcam__summary--red::marker {
+.sidebarWebcam__summary--red::marker
+{
   color: #F00;
 }
 
-/* currently not in use */
-.sidebarWebcam__summary--yellow::marker {
+.sidebarWebcam__summary--yellow::marker
+{
   color: #FF0;
 }
 
-.sidebarWebcam__summary--blue::marker {
+.sidebarWebcam__summary--blue::marker
+{
   color: #2433ff;
 }
 
-.sidebarWebcam__location {
+.sidebarWebcam__location
+{
   font-weight: bold;
 }
 
 /* these occur only in the disabled category */
-.sidebarWebcam__previewImage {
+.sidebarWebcam__previewImage
+{
   width: 150px;
   height: auto;
   margin-top: 10px;
@@ -298,7 +334,8 @@ html, body {
   min-height: 25px;
 }
 
-.sidebarWebcam__previewImage::before {
+.sidebarWebcam__previewImage::before
+{
   content: "";
   display: block;
   position: absolute;
@@ -309,7 +346,8 @@ html, body {
   background-color: white;
 }
 
-.sidebarWebcam__previewImage::after {
+.sidebarWebcam__previewImage::after
+{
   content: "Broken " attr(alt);
   display: block;
   color: rgb(100, 100, 100);
@@ -319,7 +357,8 @@ html, body {
   width: 100%;
 }
 
-.sidebarWebcamCount, .sidebarDisabledWebcamCount {
+.sidebarWebcamCount, .sidebarDisabledWebcamCount
+{
   display: inline-block;
   padding: 3px 10px;
   margin: 0 3px 5px;
@@ -330,12 +369,14 @@ html, body {
   color: white;
 }
 
-.sidebarDisabledWebcamCount {
+.sidebarDisabledWebcamCount
+{
   border: 1px solid red;
   background-color: red;
 }
 
-.prefsScene {
+.prefsScene
+{
   background-color: white;
   position: absolute;
   box-sizing: border-box;
@@ -343,7 +384,8 @@ html, body {
   overflow: auto;
 }
 
-.prefsScene--open {
+.prefsScene--open
+{
   transition: left .3s, right .3s, top .3s, bottom .3s;
   top: 25px;
   right: 25px;
@@ -351,7 +393,8 @@ html, body {
   bottom: 25px;
 }
 
-.prefsScene--close {
+.prefsScene--close
+{
   transition: left .3s, right .3s, top .3s, bottom .3s;
   top: 0;
   right: 0;
@@ -359,7 +402,8 @@ html, body {
   bottom: 100%;
 }
 
-.prefsScene__header {
+.prefsScene__header
+{
   position: sticky;
   left: 0;
   right: 0;
@@ -368,24 +412,33 @@ html, body {
   background-color: white;
 }
 
-.prefsScene__title {
+.prefsScene__title
+{
   text-align: right;
   padding: 5px;
 }
 
-.formoTab__header {
+.formoTab__header
+{
   border-bottom: 1px solid #eee;
   padding-bottom: 5px;
 }
 
-.formoTab__line {
+.formoTab__line
+{
   padding: 5px 0 10px 10px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.prefsTabbox {
+.prefsSheetList
+{
+  margin-bottom: 15px;
+}
+
+.prefsTabbox
+{
   padding: 10px 20px 10px 20px;
 }
 
@@ -394,22 +447,26 @@ input::placeholder
   color: #bbb;
 }
 
-.prefsSheetsList {
+.prefsSheetsList
+{
   padding-left: 15px;
   padding-top: 0;
   padding-bottom: 0;
 }
 
-.prefsSheetsList__item {
+.prefsSheetsList__item
+{
   margin-bottom: 10px;
   list-style-type: circle;
 }
 
-.prefsSheetsDesc {
+.prefsSheetsDesc
+{
   font-weight: normal;
 }
 
-.prefsSheetsKey {
+.prefsSheetsKey
+{
   color: #999 !important;
   font-size: 10px;
 }
