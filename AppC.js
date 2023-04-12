@@ -20,7 +20,7 @@ import { PresentationC } from './PresentationC.js';
 import { PresentationV } from './PresentationV.js';
 import { PrefsC } from './PrefsC.js';
 import { PrefsV } from './PrefsV.js';
-
+import { CurtainX } from '/frontschweine/js/CurtainX.js';
 
 class AppC extends BaseC
 {
@@ -60,12 +60,14 @@ class AppC extends BaseC
     window.customElements.define('vce-controls', VceControlsV);
     window.customElements.define('vce-clock', VceClockV);
 
+    this.anim = new CurtainX();
+
     // Init views
     this.views =
     {
       sidebarView: document.querySelector('.sidebar'),
-      presentView: new PresentationV(),
-      prefsView: new PrefsV()
+      presentView: new PresentationV(this.anim),
+      prefsView: new PrefsV(this.anim)
     }
 
     // Init models

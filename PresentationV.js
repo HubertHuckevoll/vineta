@@ -2,9 +2,9 @@ import { BaseV } from '/frontschweine/js/BaseV.js';
 
 export class PresentationV extends BaseV
 {
-  constructor()
+  constructor(anim)
   {
-    super();
+    super(anim);
 
     this.sidebarView = document.querySelector('.sidebar');
 
@@ -50,7 +50,6 @@ export class PresentationV extends BaseV
 
   async webcamSwap(ev)
   {
-    let webcamCssClasses = { 'showClass': 'webcam--show', 'hideClass': 'webcam--hide' };
     var bgSize = 'contain';
     var nextCam =
     {
@@ -63,7 +62,7 @@ export class PresentationV extends BaseV
     let webcam = document.querySelector('.webcam');
 
     // fade out current image
-    await this.hide(webcam, webcamCssClasses);
+    await this.anim.hide(webcam);
 
     // grab next image
     nextCam.prefs = ev.detail.payload.prefs;
@@ -118,7 +117,7 @@ export class PresentationV extends BaseV
       this.sidebarView.setSidebarCamColor(nextCam.cam, nextCam.idx);
 
       // finally, fade in new image
-      await this.show(webcam, webcamCssClasses);
+      await this.anim.show(webcam);
     }
   }
 

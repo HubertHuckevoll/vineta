@@ -2,9 +2,9 @@ import { BaseV } from '/frontschweine/js/BaseV.js';
 
 export class PrefsV extends BaseV
 {
-  constructor()
+  constructor(anim)
   {
-    super();
+    super(anim);
 
     this.mainOpenCloseCSS = {
       showClass: 'mainScene--foreground',
