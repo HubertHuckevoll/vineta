@@ -14,11 +14,6 @@ export class VceSidebarV extends FormoBase
       img: null
     };
 
-    this.showHideCSS = {
-      showClass: 'sidebar--open',
-      hideClass: 'sidebar--close'
-    };
-
     this.open = false;
   }
 
@@ -173,32 +168,6 @@ export class VceSidebarV extends FormoBase
   {
     let cam = this.querySelector(".sidebarWebcams .sidebarWebcam[data-idx='"+ev.detail.payload.idx+"']");
     if (cam != null) cam.classList.remove('sidebarWebcam--loading');
-  }
-
-  async showElement(curCamIdx)
-  {
-    super.showElement();
-    this.scrollToCam(curCamIdx);
-    this.open = true;
-  }
-
-  async hideElement()
-  {
-    this.closeSidebarWebcamsCamActions();
-    super.hideElement();
-    this.open = false;
-  }
-
-  toggleSidebar(curIdx)
-  {
-    if (this.open === false)
-    {
-      this.showElement(curIdx);
-    }
-    else
-    {
-      this.hideElement();
-    }
   }
 
   scrollToTop()

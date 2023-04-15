@@ -25,19 +25,6 @@ export class VceMapV extends WidgetV
     this.setAttribute('place', txt);
   }
 
-  showElement(opacity)
-  {
-    this.isVisible = true;
-    this.fetchMap();
-    super.showElement(opacity);
-  }
-
-  hideElement(opacity)
-  {
-    this.isVisible = false;
-    super.hideElement(opacity);
-  }
-
   render()
   {
     this.innerHTML = '<img class="widgetMap__image" src="'+this.transparentGIF+'">';

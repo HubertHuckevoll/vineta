@@ -5,29 +5,18 @@ export class PrefsV extends BaseV
   constructor(anim)
   {
     super(anim);
-
-    this.mainOpenCloseCSS = {
-      showClass: 'mainScene--foreground',
-      hideClass: 'mainScene--background'
-    }
-
-    this.prefsOpenCloseCSS = {
-      showClass: 'prefsScene--open',
-      hideClass: 'prefsScene--close'
-    };
-
   }
 
   prefsOpen()
   {
-    this.hide('.mainScene', this.mainOpenCloseCSS);
-    this.show('.prefsScene', this.prefsOpenCloseCSS);
+    this.anim.hide('.mainScene');
+    this.anim.show('.prefsScene');
   }
 
   prefsClose()
   {
-    this.hide('.prefsScene', this.prefsOpenCloseCSS);
-    this.show('.mainScene', this.mainOpenCloseCSS);
+    this.anim.hide('.prefsScene');
+    this.anim.show('.mainScene');
   }
 
   drawSheets(ev)

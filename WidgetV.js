@@ -9,20 +9,11 @@ export class WidgetV extends FormoBase
     this.widgetOpacity = 'widget--opacity100';
   }
 
-  showElement()
-  {
-    this.show(this, {showClass: this.widgetOpacity, hideClass: this.widgetOpacity0});
-  }
-
-  hideElement()
-  {
-    this.hide(this, {showClass: this.widgetOpacity, hideClass: this.widgetOpacity0});
-  }
-
   setWidgetsOpacity(opacity)
   {
     let oldWidgetOpacity = this.widgetOpacity;
     this.widgetOpacity = 'widget--opacity' + opacity;
+    this.setAttribute('data-show', this.widgetOpacity);
 
     // only (re-)set widget opacity if widget not invisible
     if (!this.classList.contains(this.widgetOpacity0))

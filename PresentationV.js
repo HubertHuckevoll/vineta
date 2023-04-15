@@ -30,11 +30,20 @@ export class PresentationV extends BaseV
       {
         if (isVisible === true)
         {
-          this.widgets[widgetName].showElement();
+          if (widgetName == 'map')
+          {
+            this.widgets[widgetName].fetchMap();
+            this.widgets[widgetName].isVisible = true;
+          }
+          this.anim.show(this.widgets[widgetName]);
         }
         else
         {
-          this.widgets[widgetName].hideElement();
+          if (widgetName == 'map')
+          {
+            this.widgets[widgetName].isVisible = false;
+          }
+          this.anim.hide(this.widgets[widgetName]);
         }
       });
     }
@@ -144,6 +153,22 @@ export class PresentationV extends BaseV
         this.consoleLog(msg);
       break;
       case 'none': break;
+    }
+  }
+
+  toggleSidebar(curIdx)
+  {
+    if (this.sidebarView.open === false)
+    {
+      this.anim.show(this.sidebarView);
+      this.sidebarView.scrollToCam(curIdx);
+      this.sidebarView.open = true;
+    }
+    else
+    {
+      this.sidebarView.closeSidebarWebcamsCamActions();
+      this.anim.hide(this.sidebarView);
+      this.sidebarView.open = false;
     }
   }
 

@@ -26,7 +26,11 @@ export class VceClockV extends WidgetV
   {
     if ((name === 'blinking') && (newValue == 'yes'))
     {
-      this.blinkDots();
+      this.shadow.querySelector('.dots').classList.add('blinking');
+    }
+    else if ((name === 'blinking') && (newValue == 'no'))
+    {
+      this.shadow.querySelector('.dots').classList.remove('blinking');
     }
   }
 
@@ -60,31 +64,33 @@ export class VceClockV extends WidgetV
     );
   }
 
-  async blinkDots()
-  {
-    let cssClasses =
-    {
-      showClass: 'showDots',
-      hideClass: 'hideDots'
-    }
-
-    while (this.blinking == 'yes')
-    {
-      await this.hide(this.dots, cssClasses);
-      await this.show(this.dots, cssClasses);
-    }
-  }
-
   render()
   {
-    this.shadow.innerHTML = '<style>'+
-                              '.showDots { transition: opacity 1s; opacity: 1; }'+
-                              '.hideDots { transition: opacity 1s; opacity: 0; }'+
-                            '</style>'+
-                            '<div class="time">'+
-                              '<span class="ch"></span><span class="dots">:</span><span class="cm"></span>'+
-                            '</div>'+
-                            '<div part="date" class="date"></div>';
+    this.shadow.innerHTML = `<style>
+                              @keyframes blink
+                              {
+                                0% {
+                                  opacity: 1;
+                                }
+                                50% {
+                                  opacity: 0;
+                                }
+                                100% {
+                                  opacity: 1;
+                                }
+                              }
+                              .blinking {
+                                animation: blink 2s infinite;
+                              }
+                             </style>
+
+                             <div part="dateTime" class="dateTime">
+                               <div part="date" class="date"></div>
+                               <div part="time" class="time">
+                                 <span class="ch"></span><span class="dots">:</span><span class="cm"></span>
+                               </div>
+                             </div>`;
+
     this.update();
   }
 

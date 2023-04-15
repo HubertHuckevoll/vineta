@@ -19,16 +19,16 @@
 </head>
 <body>
 
-  <div class="scene mainScene mainScene--foreground">
+  <div class="scene mainScene mainScene--foreground" data-show="mainScene--foreground" data-hide="mainScene--background">
     <div class="webcam" data-show="webcam--show" data-hide="webcam--hide">
       <div id="dynamicOverlays">
-        <vce-location class="widgetLocation" place="" desc=""></vce-location>
-        <vce-map class="widgetMap"></vce-map>
-        <vce-lastcam class="widgetLastCam"></vce-lastcam>
+        <vce-location class="widgetLocation" place="" desc="" data-show="widget--opacity100" data-hide="widget--opacity0"></vce-location>
+        <vce-map class="widgetMap" data-show="widget--opacity100" data-hide="widget--opacity0"></vce-map>
+        <vce-lastcam class="widgetLastCam" data-show="widget--opacity100" data-hide="widget--opacity0"></vce-lastcam>
       </div>
     </div>
     <div id="staticOverlays">
-      <vce-sidebar class="sidebar sidebar--close">
+      <vce-sidebar class="sidebar sidebar--close" data-show="sidebar--open" data-hide="sidebar--close">
         <div class="sidebarFilter">
           <input type="text" class="sidebarFilter__input">
           <button class="sidebarFilter__clearButton">Clear</button>
@@ -39,14 +39,14 @@
         <div class="sidebarDisabledWebcamCount"></div>
       </vce-sidebar>
       <div class="timeAndControlsWidgetWrapper">
-        <vce-clock class="widgetClock"></vce-clock>
-        <vce-controls class="widgetControls"></vce-controls>
+        <vce-clock class="widgetClock" data-show="widget--opacity100" data-hide="widget--opacity0"></vce-clock>
+        <vce-controls class="widgetControls" data-show="widget--opacity100" data-hide="widget--opacity0"></vce-controls>
       </div>
-      <vce-log class="widgetLog"></vce-log>
+      <vce-log class="widgetLog" data-show="widget--opacity100" data-hide="widget--opacity0"></vce-log>
     </div>
   </div>
 
-  <div class="prefsScene prefsScene--close">
+  <div class="prefsScene prefsScene--close" data-show="prefsScene--open" data-hide="prefsScene--close">
 
     <div class="prefsScene__header">
       <div class="prefsScene__title">
