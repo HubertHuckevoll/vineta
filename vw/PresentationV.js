@@ -1,4 +1,4 @@
-import { BaseV } from '/frontschweine/js/BaseV.js';
+import { BaseV }         from '/frontschweine/js/BaseV.js';
 
 export class PresentationV extends BaseV
 {

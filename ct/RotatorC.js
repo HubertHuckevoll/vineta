@@ -1,9 +1,8 @@
-import { BaseC } from '/frontschweine/js/BaseC.js';
-import { WebcamLoaderM } from './WebcamLoaderM.js';
+import { BaseC }         from '/frontschweine/js/BaseC.js';
 
 export class RotatorC extends BaseC
 {
-  constructor()
+  constructor(webcamLoader)
   {
     super();
 
@@ -22,7 +21,7 @@ export class RotatorC extends BaseC
     this.lastCam = {};
 
     this.img = document.getElementById('image');
-    this.loader = new WebcamLoaderM();
+    this.loader = webcamLoader;
   }
 
   setPrefs(prefs)

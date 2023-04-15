@@ -1,4 +1,4 @@
-import { WidgetV } from './WidgetV.js';
+import { WidgetV }      from './WidgetV.js';
 
 export class VceClockV extends WidgetV
 {

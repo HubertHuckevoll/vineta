@@ -1,26 +1,28 @@
-import { BaseC }        from '/frontschweine/js/BaseC.js';
 import { FormoTabbox }  from '/frontschweine/js/FormoTabbox.js';
 import { FormoSlider }  from '/frontschweine/js/FormoSlider.js';
 import { CurtainX }     from '/frontschweine/js/CurtainX.js';
 
-import { VceLocationV } from './VceLocationV.js';
-import { VceLogV }      from './VceLogV.js';
-import { VceMapV }      from './VceMapV.js';
-import { VceLastCamV }  from './VceLastCamV.js';
-import { VceControlsV } from './VceControlsV.js';
-import { VceClockV }    from './VceClockV.js';
+import { VceLocationV } from './vce/VceLocationV.js';
+import { VceLogV }      from './vce/VceLogV.js';
+import { VceMapV }      from './vce/VceMapV.js';
+import { VceLastCamV }  from './vce/VceLastCamV.js';
+import { VceControlsV } from './vce/VceControlsV.js';
+import { VceClockV }    from './vce/VceClockV.js';
+import { VceSidebarV }  from './vce/VceSidebarV.js';
 
-import { SheetsM }      from './SheetsM.js';
-import { RotatorC }     from './RotatorC.js';
+import { SheetsM }       from './md/SheetsM.js';
+import { PrefsM }        from './md/PrefsM.js';
+import { WebcamsM }      from './md/WebcamsM.js';
+import { WebcamLoaderM } from './md/WebcamLoaderM.js';
 
-import { PrefsM }         from './PrefsM.js';
-import { WebcamsM }       from './WebcamsM.js';
-import { VceSidebarV }    from './VceSidebarV.js';
-import { WidgetsC }       from './WidgetsC.js';
-import { PresentationC }  from './PresentationC.js';
-import { PresentationV }  from './PresentationV.js';
-import { PrefsC }         from './PrefsC.js';
-import { PrefsV }         from './PrefsV.js';
+import { BaseC }          from '/frontschweine/js/BaseC.js';
+import { RotatorC }       from './ct/RotatorC.js';
+import { WidgetsC }       from './ct/WidgetsC.js';
+import { PresentationC }  from './ct/PresentationC.js';
+import { PrefsC }         from './ct/PrefsC.js';
+
+import { PrefsV }         from './vw/PrefsV.js';
+import { PresentationV }  from './vw/PresentationV.js';
 
 
 class AppC extends BaseC
@@ -70,7 +72,6 @@ class AppC extends BaseC
       presentView: new PresentationV(this.anim),
       prefsView: new PrefsV(this.anim)
     }
-    this.views.sidebarView.anim = this.anim;
 
     // Init models
     this.models =
@@ -83,7 +84,7 @@ class AppC extends BaseC
     this.subcontrollers =
     {
       widgets: new WidgetsC(),
-      rotator: new RotatorC()
+      rotator: new RotatorC(new WebcamLoaderM())
     }
 
     // Init controllers
@@ -95,5 +96,5 @@ class AppC extends BaseC
   }
 }
 
-var vineta = new AppC();
+let vineta = new AppC();
 window.addEventListener("DOMContentLoaded", vineta.load.bind(vineta));

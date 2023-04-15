@@ -1,4 +1,4 @@
-import { BaseM } from '/frontschweine/js/BaseM.js';
+import { BaseM }         from '/frontschweine/js/BaseM.js';
 
 export class WebcamLoaderM extends BaseM
 {

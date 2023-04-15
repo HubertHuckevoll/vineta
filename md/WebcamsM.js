@@ -1,5 +1,5 @@
-import { BaseM } from '/frontschweine/js/BaseM.js';
-import { ImpExTsvM } from './ImpExTsvM.js';
+import { BaseM }         from '/frontschweine/js/BaseM.js';
+import { ImpExTsvM }     from './ImpExTsvM.js';
 
 export class WebcamsM extends BaseM
 {

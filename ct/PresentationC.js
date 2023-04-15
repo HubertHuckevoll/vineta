@@ -1,4 +1,4 @@
-import { BaseC } from '/frontschweine/js/BaseC.js';
+import { BaseC }         from '/frontschweine/js/BaseC.js';
 
 export class PresentationC extends BaseC
 {
