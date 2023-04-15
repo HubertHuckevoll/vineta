@@ -81,6 +81,7 @@ class AppC extends BaseC
       sheets:  new SheetsM()
     }
 
+    // init subcontrollers
     this.subcontrollers =
     {
       widgets: new WidgetsC(),
