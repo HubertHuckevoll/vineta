@@ -8,8 +8,6 @@ import { VceMapV }      from './vce/VceMapV.js';
 import { VceLastCamV }  from './vce/VceLastCamV.js';
 import { VceControlsV } from './vce/VceControlsV.js';
 import { VceClockV }    from './vce/VceClockV.js';
-import { VceSidebarV,
-         getSidebarElem }  from './vce/VceSidebarV.js';
 
 import { SheetsM }       from './md/SheetsM.js';
 import { PrefsM }        from './md/PrefsM.js';
@@ -24,7 +22,7 @@ import { PrefsC }         from './ct/PrefsC.js';
 
 import { PrefsV }         from './vw/PrefsV.js';
 import { PresentationV }  from './vw/PresentationV.js';
-
+import { SidebarV }       from './vw/SidebarV.js';
 
 class AppC extends BaseC
 {
@@ -56,7 +54,6 @@ class AppC extends BaseC
     window.customElements.define('formo-tabbox', FormoTabbox);
 
     // initialize app specific custom elements
-    window.customElements.define('vce-sidebar', VceSidebarV);
     window.customElements.define('vce-location', VceLocationV);
     window.customElements.define('vce-log', VceLogV);
     window.customElements.define('vce-map', VceMapV);
@@ -69,7 +66,7 @@ class AppC extends BaseC
     // Init views
     this.views =
     {
-      sidebarView: getSidebarElem(this.anim),
+      sidebarView: new SidebarV(this.anim),
       presentView: new PresentationV(this.anim),
       prefsView: new PrefsV(this.anim)
     }

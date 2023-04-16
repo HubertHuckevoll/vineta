@@ -1,28 +1,17 @@
-import { FormoBase }    from '/frontschweine/js/FormoBase.js';
+import { BaseV }           from '/frontschweine/js/BaseV.js';
 
-// always use this factory function to retrieve the sidebar
-export function getSidebarElem(anim)
+export class SidebarV extends BaseV
 {
-  let sidebar = document.querySelector('.sidebar');
-  sidebar.anim = anim;
-
-  return sidebar;
-}
-
-export class VceSidebarV extends FormoBase
-{
-  constructor()
+  constructor(anim)
   {
-    super();
-
+    super(anim);
     this.open = false;
-    this.anim = null; // this must be patched in by our caller - use factory function above!
   }
 
   render(webcams)
   {
-    var sw = this.querySelector('.sidebarWebcams');
-    var swd = this.querySelector('.sidebarWebcamsDisabled');
+    var sw = document.querySelector('.sidebarWebcams');
+    var swd = document.querySelector('.sidebarWebcamsDisabled');
     var enabledCamCount = 0;
     var disabledCamCount = 0;
     var div = null;
@@ -92,13 +81,13 @@ export class VceSidebarV extends FormoBase
       this.setSidebarCamColor(webcam, idx);
     };
 
-    this.querySelector('.sidebarWebcamCount').innerHTML = enabledCamCount + ' active camera(s)';
-    this.querySelector('.sidebarDisabledWebcamCount').innerHTML = disabledCamCount + ' disabled camera(s)';
+    document.querySelector('.sidebarWebcamCount').innerHTML = enabledCamCount + ' active camera(s)';
+    document.querySelector('.sidebarDisabledWebcamCount').innerHTML = disabledCamCount + ' disabled camera(s)';
   }
 
   setSidebarCamColor(cam, idx)
   {
-    var camDiv = this.querySelector(".sidebarWebcams .sidebarWebcam[data-idx='"+idx+"']");
+    var camDiv = document.querySelector(".sidebarWebcams .sidebarWebcam[data-idx='"+idx+"']");
 
     if ((camDiv !== null) && (camDiv !== undefined))
     {
@@ -139,21 +128,21 @@ export class VceSidebarV extends FormoBase
   {
     if (this.open === false)
     {
-      this.anim.show(this);
+      this.anim.show('.sidebar');
       this.scrollToCam(curIdx);
       this.open = true;
     }
     else
     {
       this.closeSidebarWebcamsCamActions();
-      this.anim.hide(this);
+      this.anim.hide('.sidebar');
       this.open = false;
     }
   }
 
   closeSidebarWebcamsCamActions()
   {
-    let details = this.querySelectorAll('.sidebarWebcams .sidebarWebcam__details');
+    let details = document.querySelectorAll('.sidebarWebcams .sidebarWebcam__details');
     details.forEach((detail) =>
     {
       detail.removeAttribute("open");
@@ -162,7 +151,7 @@ export class VceSidebarV extends FormoBase
 
   setSidebarActiveCam(idx)
   {
-    var nodeList = this.querySelectorAll('.sidebarWebcams .sidebarWebcam');
+    var nodeList = document.querySelectorAll('.sidebarWebcams .sidebarWebcam');
     nodeList.forEach((node) =>
     {
       if (parseInt(node.getAttribute('data-idx')) == idx)
@@ -178,13 +167,13 @@ export class VceSidebarV extends FormoBase
 
   startLoadingIndicator(ev)
   {
-    let cam = this.querySelector(".sidebarWebcams .sidebarWebcam[data-idx='"+ev.detail.payload.idx+"']");
+    let cam = document.querySelector(".sidebarWebcams .sidebarWebcam[data-idx='"+ev.detail.payload.idx+"']");
     if (cam != null) cam.classList.add('sidebarWebcam--loading');
   }
 
   stopLoadingIndicator(ev)
   {
-    let cam = this.querySelector(".sidebarWebcams .sidebarWebcam[data-idx='"+ev.detail.payload.idx+"']");
+    let cam = document.querySelector(".sidebarWebcams .sidebarWebcam[data-idx='"+ev.detail.payload.idx+"']");
     if (cam != null) cam.classList.remove('sidebarWebcam--loading');
   }
 
@@ -198,7 +187,7 @@ export class VceSidebarV extends FormoBase
     // scroll current cam into view
     if (curCamIdx !== null)
     {
-      var curCamElem = this.querySelector('.sidebarWebcam[data-idx="'+curCamIdx+'"]');
+      var curCamElem = document.querySelector('.sidebarWebcam[data-idx="'+curCamIdx+'"]');
       if (curCamElem != null)
       {
         await this.anim.wait(500); // wait a litte, so we can be sure the sidebar animation has started

@@ -1,5 +1,6 @@
 import { BaseV }           from '/frontschweine/js/BaseV.js';
-import { getSidebarElem }  from '../vce/VceSidebarV.js';
+import { SidebarV }        from './SidebarV.js';
+
 
 export class PresentationV extends BaseV
 {
@@ -7,7 +8,7 @@ export class PresentationV extends BaseV
   {
     super(anim);
 
-    this.sidebarView = getSidebarElem(anim);
+    this.sidebarView = new SidebarV(anim);
 
     this.widgets =
     {
