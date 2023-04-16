@@ -1,4 +1,5 @@
-import { BaseV }         from '/frontschweine/js/BaseV.js';
+import { BaseV }           from '/frontschweine/js/BaseV.js';
+import { getSidebarElem }  from '../vce/VceSidebarV.js';
 
 export class PresentationV extends BaseV
 {
@@ -6,7 +7,7 @@ export class PresentationV extends BaseV
   {
     super(anim);
 
-    this.sidebarView = document.querySelector('.sidebar');
+    this.sidebarView = getSidebarElem(anim);
 
     this.widgets =
     {
@@ -153,22 +154,6 @@ export class PresentationV extends BaseV
         this.consoleLog(msg);
       break;
       case 'none': break;
-    }
-  }
-
-  toggleSidebar(curIdx)
-  {
-    if (this.sidebarView.open === false)
-    {
-      this.anim.show(this.sidebarView);
-      this.sidebarView.scrollToCam(curIdx);
-      this.sidebarView.open = true;
-    }
-    else
-    {
-      this.sidebarView.closeSidebarWebcamsCamActions();
-      this.anim.hide(this.sidebarView);
-      this.sidebarView.open = false;
     }
   }
 

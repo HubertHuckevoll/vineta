@@ -1,20 +1,22 @@
 import { FormoBase }    from '/frontschweine/js/FormoBase.js';
 
+// always use this factory function to retrieve the sidebar
+export function getSidebarElem(anim)
+{
+  let sidebar = document.querySelector('.sidebar');
+  sidebar.anim = anim;
+
+  return sidebar;
+}
+
 export class VceSidebarV extends FormoBase
 {
   constructor()
   {
     super();
 
-    this.nextCam =
-    {
-      idx: null,
-      cam: null,
-      lastCam: null,
-      img: null
-    };
-
     this.open = false;
+    this.anim = null; // this must be patched in by our caller - use factory function above!
   }
 
   render(webcams)
@@ -133,9 +135,25 @@ export class VceSidebarV extends FormoBase
    * Public functions
    */
 
+  toggleSidebar(curIdx)
+  {
+    if (this.open === false)
+    {
+      this.anim.show(this);
+      this.scrollToCam(curIdx);
+      this.open = true;
+    }
+    else
+    {
+      this.closeSidebarWebcamsCamActions();
+      this.anim.hide(this);
+      this.open = false;
+    }
+  }
+
   closeSidebarWebcamsCamActions()
   {
-    let details = document.querySelectorAll('.sidebarWebcams .sidebarWebcam__details');
+    let details = this.querySelectorAll('.sidebarWebcams .sidebarWebcam__details');
     details.forEach((detail) =>
     {
       detail.removeAttribute("open");
@@ -183,10 +201,9 @@ export class VceSidebarV extends FormoBase
       var curCamElem = this.querySelector('.sidebarWebcam[data-idx="'+curCamIdx+'"]');
       if (curCamElem != null)
       {
-        await this.wait(500); // wait a litte, so we can be sure the sidebar animation has started
+        await this.anim.wait(500); // wait a litte, so we can be sure the sidebar animation has started
         this.scrollTop = parseInt(curCamElem.offsetTop) - 200;
       }
     }
   }
-
 }

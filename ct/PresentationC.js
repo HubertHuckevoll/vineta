@@ -141,7 +141,7 @@ export class PresentationC extends BaseC
     {
       if (ev.target.classList.contains('webcam'))
       {
-        this.views.presentView.toggleSidebar(this.subcontrollers.rotator.idx);
+        this.views.sidebarView.toggleSidebar(this.subcontrollers.rotator.idx);
       }
     }
   }

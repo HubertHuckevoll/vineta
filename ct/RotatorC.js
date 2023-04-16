@@ -9,8 +9,6 @@ export class RotatorC extends BaseC
     this.prefs = {};
     this.webcams = [];
 
-    this.onImageLoadEnd = null;
-
     this.isRunning = false;
 
     this.ticks = 0;
@@ -271,8 +269,7 @@ export class RotatorC extends BaseC
       'err': err
     })
 
-
-    if (this.onImageLoadEnd !== null) this.onImageLoadEnd(this.idx, false);
+    this.emit('rotatorImageLoadEnd', {'idx': this.idx, 'success': false});
   }
 
   saveLastCam()
