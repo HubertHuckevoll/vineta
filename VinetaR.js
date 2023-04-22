@@ -111,7 +111,7 @@ class VinetaR extends AppR
     // start on regaining internet connection
     this.on('online', this.present.onReconnect.bind(this.present));
 
-    //open / close ui elements
+    // open / close ui elements
     this.on('click', '.widgetControls__prefsOpenButton', this.present.prefsOpen.bind(this.present));
     this.on('click', '.widgetControls__screenshotModeButton', this.present.enableScreenshotMode.bind(this.present));
     this.on('click', '.webcam', this.present.toggleSidebar.bind(this.present));
@@ -140,7 +140,6 @@ class VinetaR extends AppR
     // any log event
     this.on('log', this.views.presentView.log.bind(this.views.presentView));
 
-
     // event routing for pref ui elements
     this.on('click', '.prefsCloseButton',                     this.prefs.prefsClose.bind(this.prefs));
     this.on('click', '.prefsSheetsAddButton',                 this.prefs.prefsSheetsAddButton.bind(this.prefs));
@@ -157,7 +156,6 @@ class VinetaR extends AppR
     // these come from our pref model
     this.on('sheetsChange', this.views.prefsView.drawSheets.bind(this.views.prefsView));
     this.on('sheetsError', this.views.prefsView.error.bind(this.views.prefsView));
-
 
     // event routing for Widgets
     this.on('mousemove', null, this.subcontrollers.widgets.onMousemove.bind(this.subcontrollers.widgets));
