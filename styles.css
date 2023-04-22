@@ -274,19 +274,30 @@ html, body
   padding: 5px;
 }
 
+@keyframes blinker
+{
+  50% { background-color: #ddd; }
+}
+
 .sidebarWebcam--loading
 {
   animation: blinker 1.5s ease infinite;
 }
 
-@keyframes blinker
+.sidebarWebcamCamActions a
 {
-  50% { background-color: orangered; }
+  display: block;
+}
+
+.sidebarWebcamCamActions__openCamInGDocs--disabled
+{
+  display: none;
 }
 
 .sidebarWebcam--activeCam
 {
-  border-left: 5px solid orangered;
+  border-left: 5px solid red;
+  border-right: 5px solid red;
 }
 
 .sidebarWebcam__summary--grey::marker

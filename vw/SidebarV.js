@@ -10,76 +10,72 @@ export class SidebarV extends BaseV
 
   render(webcams)
   {
-    var sw = document.querySelector('.sidebarWebcams');
-    var swd = document.querySelector('.sidebarWebcamsDisabled');
-    var enabledCamCount = 0;
-    var disabledCamCount = 0;
-    var div = null;
-    var previewURL = null;
-    var now = new Date();
-    let str = '';
+    const sw = document.querySelector('.sidebarWebcams');
+    const swd = document.querySelector('.sidebarWebcamsDisabled');
 
+    let sidebar = null;
+    let templ = null;
+    let cam = null;
+
+    let enabledCamCount = 0;
+    let disabledCamCount = 0;
+    let previewURL = null;
+
+    let now = new Date();
     now = now.getTime();
+
     sw.innerHTML = '';
     swd.innerHTML = '';
 
     for (let idx = 0; idx < webcams.length; idx++)
     {
       let webcam = webcams[idx];
+
       if ((webcam.enabled === true) && (webcam.visible === true))
       {
         enabledCamCount = enabledCamCount + 1;
-        div = document.createElement('div');
-        div.setAttribute('class', 'sidebarWebcam');
-        div.setAttribute('data-idx', idx);
-        str = '<details class="sidebarWebcam__details">'+
-              '<summary class="sidebarWebcam__summary">'+
-                '<span class="sidebarWebcam__location">'+webcam.location+'</span><br>'+
-                '<span class="sidebarWebcam__desc">'+webcam.description+'</span><br>'+
-              '</summary>'+
-              '<div class="sidebarWebcamCamActions" data-idx="'+idx+'">'+
-                '<a class="sidebarWebcamCamActions__disableButton">Disable Camera</a><br>'+
-                '<a href="'+webcam.homepage+'" target="_blank">Open Camera Homepage</a><br>'+
-                '<a href="'+webcam.url+'"      target="_blank">Open Camera Image In New Tab</a><br>';
-
-        if (webcam.sheetURL)
-        {
-          str += '<a href="'+webcam.sheetURL+'" target="_blank">Open Containing Google Sheet ("'+webcam.sheetName+'")</a><br>';
-        }
-
-        str = str + '</div></details>';
-        div.innerHTML = str;
-        sw.appendChild(div);
+        sidebar = sw;
+        templ = document.querySelector('#sidebarWebcamT');
+        cam = templ.content.cloneNode(true);
       }
-
-      if (webcam.enabled === false)
+      else if (webcam.enabled === false)
       {
         disabledCamCount = disabledCamCount + 1;
         previewURL = webcam.url.toString();
         previewURL = (previewURL.indexOf('?') != -1) ? previewURL + '&tstamp=' + now : previewURL + '?tstamp=' + now;
-
-        div = document.createElement('div');
-        div.setAttribute('class', 'sidebarWebcam');
-        div.setAttribute('data-idx', idx);
-        div.innerHTML = '<details class="sidebarWebcam__details">'+
-                          '<summary class="sidebarWebcam__summary">'+
-                            '<span class="sidebarWebcam__location">'+webcam.location+'</span><br>'+
-                            '<span class="sidebarWebcam__desc">'+webcam.description+'</span><br>'+
-                          '</summary>'+
-                          '<div class="sidebarWebcamCamActions" data-idx="'+idx+'">'+
-                            '<a class="sidebarWebcamCamActions__enableButton">Enable Camera</a><br>'+
-                            '<a href="'+webcam.homepage+'" target="_blank">Open Camera Homepage</a><br>'+
-                            '<a href="'+webcam.url+'"      target="_blank">Open Camera Image In New Tab</a><br>'+
-                            '<a href="'+webcam.sheetURL+'" target="_blank">Open Containing Google Sheet ("'+webcam.sheetName+'")</a>'+
-                          '</div>'+
-                        '</details>'+
-                        '<img class="sidebarWebcam__previewImage" src="'+previewURL+'" alt="Image for '+webcam.homepage+'">';
-
-        swd.appendChild(div);
+        sidebar = swd;
+        templ = document.querySelector('#sidebarWebcamDisabledT');
+        cam = templ.content.cloneNode(true);
       }
 
-      this.setSidebarCamColor(webcam, idx);
-    };
+      if (webcam.visible === true)
+      {
+        cam.querySelector('.sidebarWebcam').setAttribute('data-idx', idx);
+        cam.querySelector('.sidebarWebcam__location').innerHTML = webcam.location;
+        cam.querySelector('.sidebarWebcam__desc').innerHTML = webcam.description;
+        cam.querySelector('.sidebarWebcamCamActions').setAttribute("data-idx", idx);
+        cam.querySelector('.sidebarWebcamCamActions__openCamHomepageButton').setAttribute('href', webcam.homepage);
+        cam.querySelector('.sidebarWebcamCamActions__openCamImageInTab').setAttribute('href', webcam.url);
+
+        if (webcam.sheetURL)
+        {
+          let ocigd = cam.querySelector('.sidebarWebcamCamActions__openCamInGDocs');
+          ocigd.setAttribute('href', webcam.sheetURL);
+          ocigd.innerHTML = `Open Containing Google Sheet ("${webcam.sheetName}")`;
+          ocigd.classList.remove('sidebarWebcamCamActions__openCamInGDocs--disabled');
+        }
+
+        if (webcam.enabled === false)
+        {
+          cam.querySelector('.sidebarWebcam__previewImage').setAttribute('src', previewURL);
+          cam.querySelector('.sidebarWebcam__previewImage').setAttribute('alt', `Image for ${webcam.homepage}`);
+        };
+
+        sidebar.appendChild(cam);
+
+        this.setSidebarCamColor(webcam, idx);
+      }
+    }
 
     document.querySelector('.sidebarWebcamCount').innerHTML = enabledCamCount + ' active camera(s)';
     document.querySelector('.sidebarDisabledWebcamCount').innerHTML = disabledCamCount + ' disabled camera(s)';
@@ -87,15 +83,15 @@ export class SidebarV extends BaseV
 
   setSidebarCamColor(cam, idx)
   {
-    var camDiv = document.querySelector(".sidebarWebcams .sidebarWebcam[data-idx='"+idx+"']");
+    let camDiv = document.querySelector(".sidebarWebcams .sidebarWebcam[data-idx='"+idx+"']");
 
     if ((camDiv !== null) && (camDiv !== undefined))
     {
-      var camStatusLED = camDiv.querySelector('.sidebarWebcam__summary');
+      let camStatusLED = camDiv.querySelector('.sidebarWebcam__summary');
 
-      var tc = cam.totalCalls;
-      var fc = cam.failedCalls;
-      var ratio = (fc / tc) * 100;
+      let tc = cam.totalCalls;
+      let fc = cam.failedCalls;
+      let ratio = (fc / tc) * 100;
 
       if (isNaN(ratio))
       {
@@ -151,7 +147,7 @@ export class SidebarV extends BaseV
 
   setSidebarActiveCam(idx)
   {
-    var nodeList = document.querySelectorAll('.sidebarWebcams .sidebarWebcam');
+    let nodeList = document.querySelectorAll('.sidebarWebcams .sidebarWebcam');
     nodeList.forEach((node) =>
     {
       if (parseInt(node.getAttribute('data-idx')) == idx)
@@ -187,7 +183,7 @@ export class SidebarV extends BaseV
     // scroll current cam into view
     if (curCamIdx !== null)
     {
-      var curCamElem = document.querySelector('.sidebarWebcam[data-idx="'+curCamIdx+'"]');
+      let curCamElem = document.querySelector('.sidebarWebcam[data-idx="'+curCamIdx+'"]');
       if (curCamElem != null)
       {
         await this.anim.wait(500); // wait a litte, so we can be sure the sidebar animation has started

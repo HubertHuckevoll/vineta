@@ -159,10 +159,43 @@
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
+
+  <template id="sidebarWebcamT">
+    <div class="sidebarWebcam" data-idx="">
+      <details class="sidebarWebcam__details">
+        <summary class="sidebarWebcam__summary">
+          <span class="sidebarWebcam__location"></span><br>
+          <span class="sidebarWebcam__desc"></span><br>
+        </summary>
+        <div class="sidebarWebcamCamActions" data-idx="">
+          <a class="sidebarWebcamCamActions__disableButton">Disable Camera</a>
+          <a class="sidebarWebcamCamActions__openCamHomepageButton" href="" target="_blank">Open Camera Homepage</a>
+          <a class="sidebarWebcamCamActions__openCamImageInTab" href="" target="_blank">Open Camera Image In New Tab</a>
+          <a class="sidebarWebcamCamActions__openCamInGDocs sidebarWebcamCamActions__openCamInGDocs--disabled" href="" target="_blank"></a>
+        </div>
+      </details>
+    </div>
+  </template>
+
+  <template id="sidebarWebcamDisabledT">
+    <div class="sidebarWebcam" data-idx="">
+      <details class="sidebarWebcam__details">
+        <summary class="sidebarWebcam__summary">
+          <span class="sidebarWebcam__location"></span><br>
+          <span class="sidebarWebcam__desc"></span><br>
+        </summary>
+        <div class="sidebarWebcamCamActions" data-idx="">
+          <a class="sidebarWebcamCamActions__enableButton">Enable Camera</a>
+          <a class="sidebarWebcamCamActions__openCamHomepageButton" href="" target="_blank">Open Camera Homepage</a>
+          <a class="sidebarWebcamCamActions__openCamImageInTab" href="" target="_blank">Open Camera Image In New Tab</a>
+          <a class="sidebarWebcamCamActions__openCamInGDocs sidebarWebcamCamActions__openCamInGDocs--disabled" href="" target="_blank"></a>
+        </div>
+      </details>
+      <img class="sidebarWebcam__previewImage" src="" alt="">
+    </div>
+  </template>
 
   <div style="display: none;">
     <img id="image">
