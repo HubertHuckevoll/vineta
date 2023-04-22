@@ -89,14 +89,17 @@ export class PrefsV extends BaseV
     oB.innerHTML = '';
     prefs.overlays.forEach((overlay, idx) =>
     {
-      disabled = (overlay.name === 'controls') ? ' disabled' : '';
-      var modeList = '<select id="overlayShowSelect_'+overlay.name+'"><option value="1">Always</option><option value="2">On Mousemove</option><option value="3"'+disabled+'>Never</option></select>';
-      var div = document.createElement('div');
-      div.classList.add('formoTab__line');
-      var name = overlay.name.charAt(0).toUpperCase() + overlay.name.slice(1);
-      div.innerHTML = name+' '+modeList;
-      div.querySelector('select').options.selectedIndex = overlay.show - 1 ;
-      oB.appendChild(div);
+      const overlayNode = document.querySelector('#overlaysBoxItemT').content.cloneNode(true);
+
+      let name = overlay.name.charAt(0).toUpperCase() + overlay.name.slice(1);
+      disabled = (overlay.name === 'controls') ? true : false;
+
+      overlayNode.querySelector('.overlayName').innerHTML = name;
+      overlayNode.querySelector('select').setAttribute('id', 'overlayShowSelect_'+overlay.name);
+      overlayNode.querySelector('select option[value="3"]').disabled = disabled;
+      overlayNode.querySelector('select').options.selectedIndex = overlay.show - 1 ;
+
+      oB.appendChild(overlayNode);
     });
 
     document.getElementById('overlaysDisplayTime').setAttribute('value', prefs.overlaysDisplayTime);
