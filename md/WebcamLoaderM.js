@@ -2,9 +2,9 @@ import { BaseM }         from '/frontschweine/js/BaseM.js';
 
 export class WebcamLoaderM extends BaseM
 {
-  constructor()
+  constructor(evtEmt)
   {
-    super();
+    super(evtEmt);
 
     this.prefs = null;
 

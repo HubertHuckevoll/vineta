@@ -1,6 +1,8 @@
-import { FormoTabbox }  from '/frontschweine/js/FormoTabbox.js';
-import { FormoSlider }  from '/frontschweine/js/FormoSlider.js';
+import { FormoTabbox }  from '/frontschweine/formo/FormoTabbox.js';
+import { FormoSlider }  from '/frontschweine/formo/FormoSlider.js';
+
 import { CurtainX }     from '/frontschweine/js/CurtainX.js';
+import { EventEmit }    from '/frontschweine/js/EventEmit.js';
 
 import { VceLocationV } from './vce/VceLocationV.js';
 import { VceLogV }      from './vce/VceLogV.js';
@@ -14,8 +16,6 @@ import { PrefsM }        from './md/PrefsM.js';
 import { WebcamsM }      from './md/WebcamsM.js';
 import { WebcamLoaderM } from './md/WebcamLoaderM.js';
 
-import { AppR }           from '/frontschweine/js/AppR.js';
-
 import { RotatorC }       from './ct/RotatorC.js';
 import { WidgetsC }       from './ct/WidgetsC.js';
 import { PresentationC }  from './ct/PresentationC.js';
@@ -24,6 +24,9 @@ import { PrefsC }         from './ct/PrefsC.js';
 import { PrefsV }         from './vw/PrefsV.js';
 import { PresentationV }  from './vw/PresentationV.js';
 import { SidebarV }       from './vw/SidebarV.js';
+
+import { AppR }           from '/frontschweine/js/AppR.js';
+
 
 class VinetaR extends AppR
 {
@@ -39,6 +42,7 @@ class VinetaR extends AppR
     this.present = null;
     this.prefs = null;
     this.anim = null;
+    this.evtEmt = null;
   }
 
   load()
@@ -63,33 +67,34 @@ class VinetaR extends AppR
     window.customElements.define('vce-clock', VceClockV);
 
     this.anim = new CurtainX();
+    this.evtEmt = new EventEmit();
 
     // Init views
     this.views =
     {
-      sidebarView: new SidebarV(this.anim),
-      presentView: new PresentationV(this.anim),
-      prefsView: new PrefsV(this.anim)
+      sidebarView: new SidebarV(this.evtEmt, this.anim),
+      presentView: new PresentationV(this.evtEmt, this.anim),
+      prefsView: new PrefsV(this.evtEmt, this.anim)
     }
 
     // Init models
     this.models =
     {
-      prefs: new PrefsM(),
-      webcams: new WebcamsM(),
-      sheets:  new SheetsM()
+      prefs: new PrefsM(this.evtEmt),
+      webcams: new WebcamsM(this.evtEmt),
+      sheets:  new SheetsM(this.evtEmt)
     }
 
     // init subcontrollers
     this.subcontrollers =
     {
-      widgets: new WidgetsC(),
-      rotator: new RotatorC(new WebcamLoaderM())
+      widgets: new WidgetsC(this.evtEmt),
+      rotator: new RotatorC(this.evtEmt, new WebcamLoaderM(this.evtEmt))
     }
 
     // Init controllers
-    this.present = new PresentationC(this.views, this.models, this.subcontrollers);
-    this.prefs = new PrefsC(this.views, this.models, this.subcontrollers);
+    this.present = new PresentationC(this.evtEmt, this.views, this.models, this.subcontrollers);
+    this.prefs = new PrefsC(this.evtEmt, this.views, this.models, this.subcontrollers);
 
     // event routing for presentation
 

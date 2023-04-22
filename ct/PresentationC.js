@@ -2,9 +2,9 @@ import { BaseC }         from '/frontschweine/js/BaseC.js';
 
 export class PresentationC extends BaseC
 {
-  constructor(views, models, subcontrollers)
+  constructor(evtEmt, views, models, subcontrollers)
   {
-    super();
+    super(evtEmt);
 
     this.views = views;
     this.models = models;

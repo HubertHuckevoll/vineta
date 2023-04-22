@@ -1,6 +1,6 @@
-import { WidgetV }      from './WidgetV.js';
+import { Vce }      from './Vce.js';
 
-export class VceControlsV extends WidgetV
+export class VceControlsV extends Vce
 {
   constructor()
   {
@@ -34,9 +34,9 @@ export class VceControlsV extends WidgetV
 
   render()
   {
-    this.innerHTML = '<button class="widgetControls__startStopButton      widgetControls__button" data-tip="Start / Stop">'+this.caption+'</button>'+
-                     '<button class="widgetControls__prefsOpenButton      widgetControls__button" data-tip="Preferences">Preferences</button>'+
-                     '<button class="widgetControls__screenshotModeButton widgetControls__button" data-tip="Hide all overlays (screenshot mode)">Hide Widgets</button>';
+    this.innerHTML = `<button class="widgetControls__startStopButton      widgetControls__button" data-tip="Start / Stop">${this.caption}</button>
+                      <button class="widgetControls__prefsOpenButton      widgetControls__button" data-tip="Preferences">Preferences</button>
+                      <button class="widgetControls__screenshotModeButton widgetControls__button" data-tip="Hide all overlays (screenshot mode)">Hide Widgets</button>`;
   }
 
 }

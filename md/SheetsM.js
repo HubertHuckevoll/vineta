@@ -2,9 +2,9 @@ import { BaseM }         from '/frontschweine/js/BaseM.js';
 
 export class SheetsM extends BaseM
 {
-  constructor()
+  constructor(evtEmt)
   {
-    super();
+    super(evtEmt);
 
     this.sheets = [
       {
@@ -37,7 +37,7 @@ export class SheetsM extends BaseM
       this.sheets = JSON.parse(p);
     }
 
-    this.emit('sheetsChange', {'sheets': this.sheets});
+    this.evtEmt.emit('sheetsChange', {'sheets': this.sheets});
     return this.sheets;
   }
 
@@ -88,17 +88,17 @@ export class SheetsM extends BaseM
         }
         else
         {
-          this.emit('sheetsError', {'txt': 'Sheet not added, was already in list.'});
+          this.evtEmt.emit('sheetsError', {'txt': 'Sheet not added, was already in list.'});
         }
       }
       else
       {
-        this.emit('sheetsError', {'txt': 'Not a valid URL.'});
+        this.evtEmt.emit('sheetsError', {'txt': 'Not a valid URL.'});
       }
     }
     else
     {
-      this.emit('sheetsError', {'txt': 'Description or TSV-file URL empty.'});
+      this.evtEmt.emit('sheetsError', {'txt': 'Description or TSV-file URL empty.'});
     }
   }
 
@@ -117,7 +117,7 @@ export class SheetsM extends BaseM
   save()
   {
     localStorage.setItem('vinetaSheets', JSON.stringify(this.sheets));
-    this.emit('sheetsChange', {'sheets': this.sheets});
+    this.evtEmt.emit('sheetsChange', {'sheets': this.sheets});
   }
 
   getSheetsForFile()

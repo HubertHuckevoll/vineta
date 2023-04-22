@@ -1,6 +1,6 @@
-import { WidgetV }      from './WidgetV.js';
+import { Vce }      from './Vce.js';
 
-export class VceLogV extends WidgetV
+export class VceLogV extends Vce
 {
   constructor()
   {

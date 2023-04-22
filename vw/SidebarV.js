@@ -2,9 +2,9 @@ import { BaseV }           from '/frontschweine/js/BaseV.js';
 
 export class SidebarV extends BaseV
 {
-  constructor(anim)
+  constructor(evtEmt, anim)
   {
-    super(anim);
+    super(evtEmt, anim);
     this.open = false;
   }
 

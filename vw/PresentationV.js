@@ -4,9 +4,9 @@ import { SidebarV }        from './SidebarV.js';
 
 export class PresentationV extends BaseV
 {
-  constructor(anim)
+  constructor(evtEmt, anim)
   {
-    super(anim);
+    super(evtEmt, anim);
 
     this.sidebarView = new SidebarV(anim);
 

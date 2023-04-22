@@ -2,9 +2,9 @@ import { BaseC }         from '/frontschweine/js/BaseC.js';
 
 export class RotatorC extends BaseC
 {
-  constructor(webcamLoader)
+  constructor(evtEmt, webcamLoader)
   {
-    super();
+    super(evtEmt);
 
     this.prefs = {};
     this.webcams = [];
@@ -68,7 +68,7 @@ export class RotatorC extends BaseC
   start()
   {
     this.isRunning = true;
-    this.emit('rotatorStart');
+    this.evtEmt.emit('rotatorStart');
 
     this.resetTicksToZero();
     this.rotate();
@@ -81,8 +81,8 @@ export class RotatorC extends BaseC
     this.isRunning = false;
     this.resetTicksToZero();
 
-    this.emit('rotatorImageLoadEnd', {'idx': this.idx, 'success': false})
-    this.emit('rotatorStop');
+    this.evtEmt.emit('rotatorImageLoadEnd', {'idx': this.idx, 'success': false})
+    this.evtEmt.emit('rotatorStop');
   }
 
   async goto(idx)
@@ -147,7 +147,7 @@ export class RotatorC extends BaseC
       else
       {
         // just keep ticking
-        this.emit('log', {'txt': this.ticks});
+        this.evtEmt.emit('log', {'txt': this.ticks});
         this.ticks = this.ticks - 1;
         this.rotate();
       }
@@ -217,10 +217,10 @@ export class RotatorC extends BaseC
     let url = camC.url.toString();
 
     // update status
-    this.emit('log', {'txt': 'Loading: '+camC.location+' / '+camC.description});
+    this.evtEmt.emit('log', {'txt': 'Loading: '+camC.location+' / '+camC.description});
 
     // tell the world we are now trying to start loading the image
-    this.emit('rotatorImageLoadStart', {'idx':this.idx});
+    this.evtEmt.emit('rotatorImageLoadStart', {'idx':this.idx});
 
     // finally, load image
     try
@@ -236,8 +236,8 @@ export class RotatorC extends BaseC
   imageLoadSuccess()
   {
     // tell the world about our achievement
-    this.emit('log', {'txt': 'Done'});
-    this.emit('rotatorSwitch', {
+    this.evtEmt.emit('log', {'txt': 'Done'});
+    this.evtEmt.emit('rotatorSwitch', {
       'prefs': this.prefs,
       'lastCam': Object.assign({}, this.lastCam),
       'img': this.img,
@@ -245,7 +245,7 @@ export class RotatorC extends BaseC
       'idx': this.idx
     });
 
-    this.emit('rotatorImageLoadEnd', {'idx': this.idx, 'success': true})
+    this.evtEmt.emit('rotatorImageLoadEnd', {'idx': this.idx, 'success': true})
 
     // it is important to call saveLastCam AFTER swapping the image
     // it is also important to pass lastCam "by value", thats why we clone the object
@@ -261,15 +261,15 @@ export class RotatorC extends BaseC
     cam.failedCalls = cam.failedCalls + 1;
 
     // tell the world about our misery
-    this.emit('log', {'txt': 'Failed'});
-    this.emit('rotatorSwitchError', {
+    this.evtEmt.emit('log', {'txt': 'Failed'});
+    this.evtEmt.emit('rotatorSwitchError', {
       'logMode': this.prefs.logMode,
       'cam': cam,
       'idx': this.idx,
       'err': err
     })
 
-    this.emit('rotatorImageLoadEnd', {'idx': this.idx, 'success': false});
+    this.evtEmt.emit('rotatorImageLoadEnd', {'idx': this.idx, 'success': false});
   }
 
   saveLastCam()

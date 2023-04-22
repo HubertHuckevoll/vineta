@@ -1,6 +1,6 @@
-import { FormoBase }    from '/frontschweine/js/FormoBase.js';
+import { FormoBase }    from '/frontschweine/formo/FormoBase.js';
 
-export class WidgetV extends FormoBase
+export class Vce extends FormoBase
 {
   constructor()
   {

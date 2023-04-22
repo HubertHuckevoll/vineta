@@ -2,9 +2,9 @@ import { BaseC }         from '/frontschweine/js/BaseC.js';
 
 export class WidgetsC extends BaseC
 {
-  constructor()
+  constructor(evtEmt)
   {
-    super();
+    super(evtEmt);
 
     this.prefs = null;
     this.alwaysOverlays = null;
@@ -40,9 +40,9 @@ export class WidgetsC extends BaseC
       }
     }
 
-    this.emit('widgetsVisibilityChange', {'widgets': this.alwaysOverlays, 'isVisible':true});
-    this.emit('widgetsVisibilityChange', {'widgets': this.mousemoveOverlays, 'isVisible':false});
-    this.emit('widgetsVisibilityChange', {'widgets': this.neverOverlays, 'isVisible':false});
+    this.evtEmt.emit('widgetsVisibilityChange', {'widgets': this.alwaysOverlays, 'isVisible':true});
+    this.evtEmt.emit('widgetsVisibilityChange', {'widgets': this.mousemoveOverlays, 'isVisible':false});
+    this.evtEmt.emit('widgetsVisibilityChange', {'widgets': this.neverOverlays, 'isVisible':false});
   }
 
   onMousemove(ev)
@@ -55,14 +55,14 @@ export class WidgetsC extends BaseC
     else
     {
       this.timer = setTimeout(this.onTimeout.bind(this), this.prefs.overlaysDisplayTime * 1000);
-      this.emit('widgetsVisibilityChange', {'widgets': this.mousemoveOverlays, 'isVisible':true});
+      this.evtEmt.emit('widgetsVisibilityChange', {'widgets': this.mousemoveOverlays, 'isVisible':true});
     }
   }
 
   onTimeout()
   {
     this.timer = null;
-    this.emit('widgetsVisibilityChange', {'widgets': this.mousemoveOverlays, 'isVisible':false});
+    this.evtEmt.emit('widgetsVisibilityChange', {'widgets': this.mousemoveOverlays, 'isVisible':false});
   }
 
   cancelTimeout()

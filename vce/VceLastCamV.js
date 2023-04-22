@@ -1,6 +1,6 @@
-import { WidgetV }      from './WidgetV.js';
+import { Vce }      from './Vce.js';
 
-export class VceLastCamV extends WidgetV
+export class VceLastCamV extends Vce
 {
   constructor()
   {
@@ -42,6 +42,6 @@ export class VceLastCamV extends WidgetV
 
   render()
   {
-    this.innerHTML = (this.url !== "undefined") ? '<img class="widgetLastCam__image" src="' + this.url + '">' : '';
+    this.innerHTML = (this.url !== "undefined") ? `<img class="widgetLastCam__image" src="${this.url}">` : '';
   }
 }

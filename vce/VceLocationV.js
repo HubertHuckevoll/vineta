@@ -1,6 +1,6 @@
-import { WidgetV }      from './WidgetV.js';
+import { Vce }      from './Vce.js';
 
-export class VceLocationV extends WidgetV
+export class VceLocationV extends Vce
 {
   constructor()
   {
@@ -54,8 +54,8 @@ export class VceLocationV extends WidgetV
 
   render()
   {
-    this.innerHTML = '<div class="widgetLocation__desc"><a class="widgetLocation__link" href="'+this.url+'" target="_blank">'+this.desc+'</a></div>'+
-                     '<div class="widgetLocation__place">'+this.place+'</div>';
+    this.innerHTML = `<div class="widgetLocation__desc"><a class="widgetLocation__link" href="${this.url}" target="_blank">${this.desc}</a></div>
+                      <div class="widgetLocation__place">${this.place}</div>`;
   }
 
 }

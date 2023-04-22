@@ -3,9 +3,9 @@ import { ImpExTsvM }     from './ImpExTsvM.js';
 
 export class WebcamsM extends BaseM
 {
-  constructor()
+  constructor(evtEmt)
   {
-    super();
+    super(evtEmt);
 
     this.cams = []; // cam list, filtered or not
     this.disabledURLs = []; // Disabled Cam URLs for storage
@@ -23,9 +23,9 @@ export class WebcamsM extends BaseM
         {
           try
           {
-            this.emit('log', {'txt': 'Loading webcams from "'+sheet.desc+'"...'});
+            this.evtEmt.emit('log', {'txt': 'Loading webcams from "'+sheet.desc+'"...'});
             let sheetWebcams = await this.loadSheetData(sheet.pubUrl);
-            this.emit('log', {'txt': 'Loading webcams from "'+sheet.desc+'"...finished.'});
+            this.evtEmt.emit('log', {'txt': 'Loading webcams from "'+sheet.desc+'"...finished.'});
 
             this.loadDisabledURLs();
 
@@ -55,7 +55,7 @@ export class WebcamsM extends BaseM
           }
           catch(err)
           {
-            this.emit('log', {'txt': err.message});
+            this.evtEmt.emit('log', {'txt': err.message});
           }
         }
       }));
