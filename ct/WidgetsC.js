@@ -22,7 +22,7 @@ export class WidgetsC extends BaseC
     this.mousemoveOverlays = [];
     this.neverOverlays = [];
 
-    for (var i=0; i<prefs.overlays.length; i++)
+    for (let i=0; i<prefs.overlays.length; i++)
     {
       if (prefs.overlays[i].show == 1)
       { // always
