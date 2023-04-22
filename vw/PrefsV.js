@@ -36,13 +36,14 @@ export class PrefsV extends BaseV
       li.querySelector('.prefsSheetsEnabledCheckbox').setAttribute('data-idx', idx)
       li.querySelector('.prefsSheetsEnabledCheckbox').checked = sheet.enabled;
       li.querySelector('.prefsSheetsDesc').innerHTML = sheet.desc;
+      li.querySelector('.prefsSheetsDesc').setAttribute('href', sheet.pubUrl);
       li.querySelector('.prefsSheetsRemoveLink').setAttribute('data-idx', idx);
       if (sheet.sheetUrl)
       {
         li.querySelector('.prefsSheetsEditLink').setAttribute('href', sheet.sheetUrl);
+        li.querySelector('.prefsSheetsEditLinkSep').classList.remove('prefsSheetsEditLink--disabled');
+        li.querySelector('.prefsSheetsEditLink').classList.remove('prefsSheetsEditLink--disabled');
       }
-      li.querySelector('.prefsSheetsKey').innerHTML = sheet.pubUrl;
-      li.querySelector('.prefsSheetsKey').innerHTML = sheet.sheetUrl;
 
       sheetsEl.appendChild(li);
     };

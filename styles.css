@@ -400,10 +400,10 @@ html, body
 .prefsScene--open
 {
   transition: left .3s, right .3s, top .3s, bottom .3s;
-  top: 25px;
-  right: 25px;
-  left: 25px;
-  bottom: 25px;
+  top: 3vh;
+  right: 10vw;
+  left: 10vw;
+  bottom: 3vh;
 }
 
 .prefsScene--close
@@ -434,20 +434,16 @@ html, body
 .formoTab__header
 {
   border-bottom: 1px solid #eee;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 
 .formoTab__line
 {
-  padding: 5px 0 10px 10px;
+  padding: 5px 0 0px 0px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-}
-
-.prefsSheetList
-{
-  margin-bottom: 15px;
+  row-gap: 15px;
 }
 
 .prefsTabbox
@@ -462,15 +458,22 @@ input::placeholder
 
 .prefsSheetsList
 {
-  padding-left: 15px;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-left: 0px;
+  margin-bottom: 15px;
 }
 
 .prefsSheetsList__item
 {
   margin-bottom: 10px;
-  list-style-type: circle;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prefsSheetsList__item *
+{
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .prefsSheetsDesc
@@ -482,6 +485,11 @@ input::placeholder
 {
   color: #999 !important;
   font-size: 10px;
+}
+
+.prefsSheetsEditLink--disabled
+{
+  display: none;
 }
 
 .formoSliderMirror
