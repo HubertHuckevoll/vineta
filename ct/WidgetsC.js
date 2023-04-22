@@ -12,8 +12,6 @@ export class WidgetsC extends BaseC
     this.neverOverlays = null;
 
     this.timer = null;
-
-    this.on('mousemove', null, this.onMousemove.bind(this));
   }
 
   update(prefs)

@@ -12,23 +12,6 @@ export class PrefsC extends BaseC
     this.subcontrollers = subcontrollers;
 
     this.sheetsHaveChanged = false;
-
-    // wire ui elements
-    this.on('click', '.prefsCloseButton',                     this.prefsClose.bind(this));
-    this.on('click', '.prefsSheetsAddButton',                 this.prefsSheetsAddButton.bind(this));
-    this.on('click', '.prefsSheetsEnabledCheckbox',           this.prefsSheetsEnabledCheckbox.bind(this));
-    this.on('click', '.prefsSheetsRemoveLink',                this.prefsSheetsRemoveLink.bind(this));
-    this.on('click', '.prefsSheetsEditLink',                  this.prefsSheetsEditLink.bind(this));
-    this.on('change',   '.prefsSceneTabPresentation select',  this.prefsSelectChange.bind(this));
-    this.on('formoSliderChange', '.prefsSceneTabPresentation .formoSlider', this.prefsSliderChange.bind(this));
-    this.on('click',  '#prefsExpSheets',                      this.prefsExpSheets.bind(this));
-    this.on('click',  '#prefsImpSheetsSelect',                this.prefsImpSheetsSelect.bind(this));
-    this.on('change', '#prefsImpSheetsFS',                    this.prefsImpSheetsFS.bind(this));
-    this.on('change', '#prefsProxy',                          this.prefsProxyChanged.bind(this));
-
-    // these come from our pref model
-    this.on('sheetsChange', this.views.prefsView.drawSheets.bind(this.views.prefsView));
-    this.on('sheetsError', this.views.prefsView.error.bind(this.views.prefsView));
   }
 
   async prefsClose(ev)

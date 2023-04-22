@@ -11,50 +11,7 @@ export class PresentationC extends BaseC
     this.subcontrollers = subcontrollers;
 
     this.automaticRestart = false;
-
     this.screenshotMode = false;
-
-    // start / stop
-    this.on('keyup', this.startStopOnSpacebar.bind(this));
-    this.on('click', '.widgetControls__startStopButton', this.startStopOnButton.bind(this));
-
-    // start / stop on (loosing / regaining) visibility
-    this.on('visibilitychange', this.onDocumentVisibilityChange.bind(this));
-
-    // stop on loosing internet connection
-    this.on('offline', this.onConnectionLost.bind(this));
-
-    // start on regaining internet connection
-    this.on('online', this.onReconnect.bind(this));
-
-    //open / close ui elements
-    this.on('click', '.widgetControls__prefsOpenButton', this.prefsOpen.bind(this));
-    this.on('click', '.widgetControls__screenshotModeButton', this.enableScreenshotMode.bind(this));
-    this.on('click', '.webcam', this.toggleSidebar.bind(this));
-
-    // sidebar actions
-    this.on('input', '.sidebarFilter__input', this.filterWebcams.bind(this));
-    this.on('click', '.sidebarFilter__clearButton', this.filterWebcamsReset.bind(this));
-    this.on('click', '.sidebarWebcam__summary', this.gotoCam.bind(this));
-    this.on('click', '.sidebarWebcamCamActions__disableButton', this.disableCam.bind(this));
-    this.on('click', '.sidebarWebcamCamActions__enableButton', this.enableCam.bind(this));
-
-    // last cam
-    this.on('click', '.widgetLastCam__image', this.gotoPreviousCam.bind(this));
-
-    // widgets
-    this.on('widgetsVisibilityChange', this.views.presentView.setWidgetVisibility.bind(this.views.presentView));
-
-    // rotator
-    this.on('rotatorStart', this.views.presentView.start.bind(this.views.presentView));
-    this.on('rotatorStop', this.views.presentView.stop.bind(this.views.presentView));
-    this.on('rotatorSwitch', this.views.presentView.webcamSwap.bind(this.views.presentView));
-    this.on('rotatorSwitchError', this.views.presentView.webcamSwapFailed.bind(this.views.presentView));
-    this.on('rotatorImageLoadStart', this.views.sidebarView.startLoadingIndicator.bind(this.views.sidebarView));
-    this.on('rotatorImageLoadEnd', this.views.sidebarView.stopLoadingIndicator.bind(this.views.sidebarView));
-
-    // any log event
-    this.on('log', this.views.presentView.log.bind(this.views.presentView));
   }
 
   async go()
