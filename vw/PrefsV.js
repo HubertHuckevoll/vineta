@@ -23,32 +23,27 @@ export class PrefsV extends BaseV
   {
     // grab Sheets
     let sheets = ev.detail.payload.sheets;
-    let str = '';
 
     // Sheets
     var sheetsEl = document.querySelector('.prefsSheetsList');
     sheetsEl.innerHTML = '';
+
     for (let idx = 0; idx < sheets.length; idx++)
     {
       let sheet = sheets[idx];
-      var li = document.createElement('li');
-      li.className = 'prefsSheetsList__item';
-      var checked = (sheet.enabled === true) ? 'checked' : '';
-      str = `<label>
-              <input class="prefsSheetsEnabledCheckbox" data-idx="${idx}" type="checkbox" ${checked}>
-              <span class="prefsSheetsDesc">${sheet.desc}</span>
-             </label>
-             &nbsp;&mdash;&nbsp;
-             <button class="prefsSheetsRemoveLink" data-idx="${idx}">Remove</button>&nbsp;`;
+      let li = document.querySelector('#prefsSheetsListItemT').content.cloneNode(true);
+
+      li.querySelector('.prefsSheetsEnabledCheckbox').setAttribute('data-idx', idx)
+      li.querySelector('.prefsSheetsEnabledCheckbox').checked = sheet.enabled;
+      li.querySelector('.prefsSheetsDesc').innerHTML = sheet.desc;
+      li.querySelector('.prefsSheetsRemoveLink').setAttribute('data-idx', idx);
       if (sheet.sheetUrl)
       {
-        str += `<a class="prefsSheetsEditLink" href="${sheet.sheetUrl}" target="_blank">Edit Sheet</a>`;
+        li.querySelector('.prefsSheetsEditLink').setAttribute('href', sheet.sheetUrl);
       }
-      str += `<br>
-             <span class="prefsSheetsKey">${sheet.pubUrl}</span><br>
-             <span class="prefsSheetsKey">${sheet.sheetUrl}</span>`;
+      li.querySelector('.prefsSheetsKey').innerHTML = sheet.pubUrl;
+      li.querySelector('.prefsSheetsKey').innerHTML = sheet.sheetUrl;
 
-      li.innerHTML = str;
       sheetsEl.appendChild(li);
     };
   }
