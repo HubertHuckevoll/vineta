@@ -17,10 +17,10 @@ import { WebcamsM }      from './md/WebcamsM.js';
 import { WebcamLoaderM } from './md/WebcamLoaderM.js';
 
 import { RotatorC }       from './ct/RotatorC.js';
-import { WidgetsC }       from './ct/WidgetsC.js';
 import { PresentationC }  from './ct/PresentationC.js';
 import { PrefsC }         from './ct/PrefsC.js';
 
+import { WidgetsV }       from './vw/WidgetsV.js';
 import { PrefsV }         from './vw/PrefsV.js';
 import { PresentationV }  from './vw/PresentationV.js';
 import { SidebarV }       from './vw/SidebarV.js';
@@ -72,15 +72,16 @@ class VinetaR extends AppR
     // Init views
     this.views =
     {
+      widgetsView: new WidgetsV(this.evtEmt, this.anim),
       sidebarView: new SidebarV(this.evtEmt, this.anim),
       presentView: new PresentationV(this.evtEmt, this.anim),
-      prefsView: new PrefsV(this.evtEmt, this.anim)
+      prefsView:   new PrefsV(this.evtEmt, this.anim)
     }
 
     // Init models
     this.models =
     {
-      prefs: new PrefsM(this.evtEmt),
+      prefs:   new PrefsM(this.evtEmt),
       webcams: new WebcamsM(this.evtEmt),
       sheets:  new SheetsM(this.evtEmt)
     }
@@ -88,7 +89,6 @@ class VinetaR extends AppR
     // init subcontrollers
     this.subcontrollers =
     {
-      widgets: new WidgetsC(this.evtEmt),
       rotator: new RotatorC(this.evtEmt, new WebcamLoaderM(this.evtEmt))
     }
 
@@ -104,6 +104,9 @@ class VinetaR extends AppR
 
     // start / stop on (loosing / regaining) visibility
     this.on('visibilitychange', this.present.onDocumentVisibilityChange.bind(this.present));
+
+    // mousemove event routing for Widgets
+    this.on('mousemove', null, this.present.onMousemove.bind(this.present));
 
     // stop on loosing internet connection
     this.on('offline', this.present.onConnectionLost.bind(this.present));
@@ -126,19 +129,13 @@ class VinetaR extends AppR
     // last cam
     this.on('click', '.widgetLastCam__image', this.present.gotoPreviousCam.bind(this.present));
 
-    // widgets
-    this.on('widgetsVisibilityChange', this.views.presentView.setWidgetVisibility.bind(this.views.presentView));
-
     // rotator
-    this.on('rotatorStart', this.views.presentView.start.bind(this.views.presentView));
-    this.on('rotatorStop', this.views.presentView.stop.bind(this.views.presentView));
-    this.on('rotatorSwitch', this.views.presentView.webcamSwap.bind(this.views.presentView));
-    this.on('rotatorSwitchError', this.views.presentView.webcamSwapFailed.bind(this.views.presentView));
+    this.on('rotatorStart', this.present.start.bind(this.present));
+    this.on('rotatorStop', this.present.stop.bind(this.present));
+    this.on('rotatorSwitch', this.present.webcamSwap.bind(this.present));
+    this.on('rotatorSwitchError', this.present.webcamSwapFailed.bind(this.present));
     this.on('rotatorImageLoadStart', this.views.sidebarView.startLoadingIndicator.bind(this.views.sidebarView));
     this.on('rotatorImageLoadEnd', this.views.sidebarView.stopLoadingIndicator.bind(this.views.sidebarView));
-
-    // any log event
-    this.on('log', this.views.presentView.log.bind(this.views.presentView));
 
     // event routing for pref ui elements
     this.on('click', '.prefsCloseButton',                     this.prefs.prefsClose.bind(this.prefs));
@@ -153,12 +150,8 @@ class VinetaR extends AppR
     this.on('change', '#prefsImpSheetsFS',                    this.prefs.prefsImpSheetsFS.bind(this.prefs));
     this.on('change', '#prefsProxy',                          this.prefs.prefsProxyChanged.bind(this.prefs));
 
-    // these come from our pref model
-    this.on('sheetsChange', this.views.prefsView.drawSheets.bind(this.views.prefsView));
-    this.on('sheetsError', this.views.prefsView.error.bind(this.views.prefsView));
-
-    // event routing for Widgets
-    this.on('mousemove', null, this.subcontrollers.widgets.onMousemove.bind(this.subcontrollers.widgets));
+    // any log event
+    this.on('log', this.views.widgetsView.log.bind(this.views.widgetsView));
 
     // load and go
     this.present.go();

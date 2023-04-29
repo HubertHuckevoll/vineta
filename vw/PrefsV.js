@@ -19,11 +19,8 @@ export class PrefsV extends BaseV
     this.anim.show('.mainScene');
   }
 
-  drawSheets(ev)
+  drawSheets(sheets)
   {
-    // grab Sheets
-    let sheets = ev.detail.payload.sheets;
-
     // Sheets
     var sheetsEl = document.querySelector('.prefsSheetsList');
     sheetsEl.innerHTML = '';
@@ -109,8 +106,8 @@ export class PrefsV extends BaseV
     document.getElementById('logMode').value = prefs.logMode;
   }
 
-  error(ev)
+  error(str)
   {
-    window.alert(ev.detail.payload.txt);
+    window.alert(str);
   }
 }

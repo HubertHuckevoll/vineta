@@ -37,8 +37,7 @@ export class SheetsM extends BaseM
       this.sheets = JSON.parse(p);
     }
 
-    this.evtEmt.emit('sheetsChange', {'sheets': this.sheets});
-    return this.sheets;
+    return this.getSheets();
   }
 
   getSheets()
@@ -85,20 +84,21 @@ export class SheetsM extends BaseM
 
           this.sheets.push(sheet);
           this.save();
+          return this.getSheets();
         }
         else
         {
-          this.evtEmt.emit('sheetsError', {'txt': 'Sheet not added, was already in list.'});
+          throw new Error('Sheet not added, was already in list.');
         }
       }
       else
       {
-        this.evtEmt.emit('sheetsError', {'txt': 'Not a valid URL.'});
+        throw new Error('Not a valid URL.');
       }
     }
     else
     {
-      this.evtEmt.emit('sheetsError', {'txt': 'Description or TSV-file URL empty.'});
+      throw new Error('Description or TSV-file URL empty.');
     }
   }
 
@@ -106,18 +106,19 @@ export class SheetsM extends BaseM
   {
     this.sheets.splice(idx, 1);
     this.save();
+    return this.getSheets();
   }
 
   toggleSheet(idx, val)
   {
     this.sheets[idx].enabled = val;
     this.save();
+    return this.getSheets();
   }
 
   save()
   {
     localStorage.setItem('vinetaSheets', JSON.stringify(this.sheets));
-    this.evtEmt.emit('sheetsChange', {'sheets': this.sheets});
   }
 
   getSheetsForFile()

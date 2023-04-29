@@ -20,18 +20,27 @@ export class PrefsC extends BaseC
 
     let prefs = this.models.prefs.getPrefs();
     this.subcontrollers.rotator.setPrefs(prefs);
-    this.subcontrollers.widgets.update(prefs);
-    this.views.presentView.setWidgetsOpacity(prefs);
+    this.views.widgetsView.update(prefs);
+    this.views.widgetsView.setWidgetsOpacity(prefs);
 
     if (this.sheetsHaveChanged === true)
     {
-      let sheets = this.models.sheets.load();
-      let webcams = await this.models.webcams.load(sheets);
-      this.subcontrollers.rotator.stop();
-      this.subcontrollers.rotator.setWebcams(webcams);
-      this.views.sidebarView.render(webcams);
-      this.subcontrollers.rotator.start();
-      this.sheetsHaveChanged = false;
+      try
+      {
+        let sheets = this.models.sheets.load();
+        this.views.prefsView.drawSheets(sheets);
+
+        let webcams = await this.models.webcams.load(sheets);
+        this.subcontrollers.rotator.stop();
+        this.subcontrollers.rotator.setWebcams(webcams);
+        this.views.sidebarView.render(webcams);
+        this.subcontrollers.rotator.start();
+        this.sheetsHaveChanged = false;
+      }
+      catch(err)
+      {
+        this.views.prefsView.error(err.message);
+      }
     }
   }
 
@@ -41,21 +50,32 @@ export class PrefsC extends BaseC
     let sheetUrl = document.getElementById('prefsSheetsAddSheet').value;
     let desc =  document.getElementById('prefsSheetsAddDesc').value;
 
-    this.models.sheets.addSheet(pubUrl, sheetUrl, desc);
-    this.sheetsHaveChanged = true;
+    try
+    {
+      let sheets = this.models.sheets.addSheet(pubUrl, sheetUrl, desc);
+      this.views.prefsView.drawSheets(sheets);
+      this.sheetsHaveChanged = true;
+    }
+    catch (err)
+    {
+      this.views.prefsView.error(err.message);
+    }
   }
 
   prefsSheetsEnabledCheckbox(ev)
   {
     let idx = ev.target.getAttribute('data-idx');
-    this.models.sheets.toggleSheet(idx, ev.target.checked);
+
+    let sheets = this.models.sheets.toggleSheet(idx, ev.target.checked);
+    this.views.prefsView.drawSheets(sheets);
     this.sheetsHaveChanged = true;
   }
 
   prefsSheetsRemoveLink(ev)
   {
     let idx = ev.target.getAttribute('data-idx');
-    this.models.sheets.removeSheet(idx);
+    let sheets = this.models.sheets.removeSheet(idx);
+    this.views.prefsView.drawSheets(sheets);
     this.sheetsHaveChanged = true;
   }
 
@@ -146,7 +166,7 @@ export class PrefsC extends BaseC
       }
       else
       {
-        alert("Error while importing the file.");
+        this.views.prefsView.error("Error while importing the file.");
       }
     }
   }
