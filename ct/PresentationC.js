@@ -100,36 +100,33 @@ export class PresentationC extends BaseC
 
   async webcamSwapFailed(ev)
   {
-    let e =
-    {
-      logMode: null,
-      cam: null,
-      idx: null,
-      err: null
-    }
+    let logMode = ev.detail.payload.logMode;
+    let cam = ev.detail.payload.cam;
+    let idx = ev.detail.payload.idx;
+    let err = ev.detail.payload.err;
 
-    e.logMode = ev.detail.payload.logMode;
-    e.cam = ev.detail.payload.cam;
-    e.idx = ev.detail.payload.idx;
-    e.err = ev.detail.payload.err;
-
-    let msg = `Failed loading image: "${e.cam.location} / ${e.cam.description}".\r\n
-               Homepage: ${e.cam.homepage} \r\n
-               URL: ${e.cam.url} \r\n
-               Reason: ${e.err.name}: ${e.err.message}`;
+    let msg = `Failed loading image: "${cam.location} / ${cam.description}"\r\n`+
+              `Homepage: ${cam.homepage}\r\n`+
+              `URL: ${cam.url}\r\n`+
+              `Reason: ${err.name}: ${err.message}\r\n`;
 
     switch (logMode)
     {
-      case 'screen': this.views.widgetV.logText(msg); break;
-      case 'console': console.log(msg); break;
-      case 'both':
-        this.views.widgetV.logText(msg);
+      case 'screen':
+        this.views.widgetsView.logText(msg);
+      break;
+      case 'console':
         console.log(msg);
       break;
-      case 'none': break;
+      case 'both':
+        this.views.widgetsView.logText(msg);
+        console.log(msg);
+      break;
+      case 'none':
+      break;
     }
 
-    this.views.sidebarView.setSidebarCamColor(e.cam, e.idx);
+    this.views.sidebarView.setSidebarCamColor(cam, idx);
   }
 
   filterWebcams(ev)
@@ -211,7 +208,7 @@ export class PresentationC extends BaseC
     if (ev.key == ' ')
     { // space bar
       this.subcontrollers.rotator.toggle();
-      ev.preventDefault(); // if we omit this formoTab__line, the space bar press will trigger a scroll down
+      ev.preventDefault(); // if we omit this, the space bar press will trigger a scroll down
       return false;
     }
   }
@@ -223,30 +220,7 @@ export class PresentationC extends BaseC
 
   onMousemove(ev)
   {
-    if (this.mousemoveTimer != null)
-    {
-      //FIXME
-      this.cancelTimeout();
-      this.mousemoveTimer = setTimeout(this.onTimeout.bind(this), this.prefs.overlaysDisplayTime * 1000);
-    }
-    else
-    {
-      //FIXME
-      this.mousemoveTimer = setTimeout(this.onTimeout.bind(this), this.prefs.overlaysDisplayTime * 1000);
-      this.views.presentView.setWidgetVisibility(this.views.widgetV.mousemoveOverlays, true);
-    }
-  }
-
-  onTimeout()
-  {
-    this.mousemoveTimer = null;
-    this.views.presentView.setWidgetVisibility(this.views.widgetV.mousemoveOverlays, false);
-  }
-
-  cancelTimeout()
-  {
-    clearTimeout(this.mousemoveTimer);
-    this.mousemoveTimer = null;
+    this.views.widgetsView.showWidgetsOnMousemove();
   }
 
   onConnectionLost()

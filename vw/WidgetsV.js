@@ -20,10 +20,14 @@ export class WidgetsV extends BaseV
     this.alwaysOverlays = null;
     this.mousemoveOverlays = null;
     this.neverOverlays = null;
+
+    this.mousemoveTimer = null;
   }
 
   update(prefs)
   {
+    this.cancelMousemoveTimeout();
+
     this.prefs = prefs;
     this.alwaysOverlays = [];
     this.mousemoveOverlays = [];
@@ -85,6 +89,32 @@ export class WidgetsV extends BaseV
     {
       this.widgets[widget].setWidgetsOpacity(prefs.overlaysOpacity);
     }
+  }
+
+  showWidgetsOnMousemove()
+  {
+    if (this.mousemoveTimer != null)
+    {
+      this.cancelMousemoveTimeout();
+      this.mousemoveTimer = setTimeout(this.hideWidgetsOnTimeout.bind(this), this.prefs.overlaysDisplayTime * 1000);
+    }
+    else
+    {
+      this.mousemoveTimer = setTimeout(this.hideWidgetsOnTimeout.bind(this), this.prefs.overlaysDisplayTime * 1000);
+      this.setWidgetVisibility(this.mousemoveOverlays, true);
+    }
+  }
+
+  hideWidgetsOnTimeout()
+  {
+    this.mousemoveTimer = null;
+    this.setWidgetVisibility(this.mousemoveOverlays, false);
+  }
+
+  cancelMousemoveTimeout()
+  {
+    clearTimeout(this.mousemoveTimer);
+    this.mousemoveTimer = null;
   }
 
   setWidgetAttribute(widgetName, attrName, attrVal)

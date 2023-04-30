@@ -1,6 +1,5 @@
 import { BaseV }           from '/frontschweine/js/BaseV.js';
 
-
 export class PresentationV extends BaseV
 {
   constructor(evtEmt, anim)
@@ -45,6 +44,5 @@ export class PresentationV extends BaseV
 
     // finally, fade in new image (returns promise)
     return this.anim.show(webcam);
-
   }
 }
