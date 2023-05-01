@@ -196,4 +196,10 @@ export class SidebarV extends BaseV
   {
     document.querySelector('.sidebarFilter__input').value = '';
   }
+
+  getIdxFromEventTarget(ev)
+  {
+    let idx = ev.target.closest('*[data-idx]').getAttribute('data-idx');
+    return idx;
+  }
 }

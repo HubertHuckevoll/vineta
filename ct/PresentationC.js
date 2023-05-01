@@ -91,31 +91,34 @@ export class PresentationC extends BaseC
 
   gotoCam(ev)
   {
-    this.views.sidebarView.closeSidebarWebcamsCamActions();
+    let idx = this.views.sidebarView.getIdxFromEventTarget(ev);
 
-    let idx = ev.target.parentNode.parentNode.getAttribute('data-idx');
+    this.views.sidebarView.closeSidebarWebcamsCamActions();
     this.subcontrollers.rotator.goto(idx);
   }
 
   enableCam(ev)
   {
-    var idx = ev.target.parentNode.getAttribute('data-idx');
+    let idx = this.views.sidebarView.getIdxFromEventTarget(ev);
     let webcams = this.models.webcams.enableCam(idx);
+
     this.subcontrollers.rotator.setWebcams(webcams);
     this.views.sidebarView.render(webcams);
   }
 
   disableCam(ev)
   {
-    var idx = ev.target.parentNode.getAttribute('data-idx');
+    let idx = this.views.sidebarView.getIdxFromEventTarget(ev);
     let webcams = this.models.webcams.disableCam(idx);
+
     this.subcontrollers.rotator.setWebcams(webcams);
     this.views.sidebarView.render(webcams);
   }
 
   gotoPreviousCam(ev)
   {
-    var idx = ev.target.parentNode.getAttribute('idx');
+    let idx = this.views.sidebarView.getIdxFromEventTarget(ev);
+
     this.subcontrollers.rotator.goto(idx);
   }
 
