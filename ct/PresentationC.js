@@ -117,7 +117,7 @@ export class PresentationC extends BaseC
 
   gotoPreviousCam(ev)
   {
-    let idx = this.views.sidebarView.getIdxFromEventTarget(ev);
+    let idx = ev.target.closest('*[idx]').getAttribute('idx');
 
     this.subcontrollers.rotator.goto(idx);
   }
