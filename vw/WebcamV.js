@@ -1,6 +1,6 @@
 import { BaseV }           from '/frontschweine/js/BaseV.js';
 
-export class PresentationV extends BaseV
+export class WebcamV extends BaseV
 {
   constructor(evtEmt, anim)
   {

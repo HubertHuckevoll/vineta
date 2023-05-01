@@ -21,7 +21,6 @@ export class PrefsC extends BaseC
     let prefs = this.models.prefs.getPrefs();
     this.subcontrollers.rotator.setPrefs(prefs);
     this.views.widgetsView.update(prefs);
-    this.views.widgetsView.setWidgetsOpacity(prefs);
 
     if (this.sheetsHaveChanged === true)
     {

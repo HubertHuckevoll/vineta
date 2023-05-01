@@ -22,7 +22,7 @@ import { PrefsC }         from './ct/PrefsC.js';
 
 import { WidgetsV }       from './vw/WidgetsV.js';
 import { PrefsV }         from './vw/PrefsV.js';
-import { PresentationV }  from './vw/PresentationV.js';
+import { WebcamV }        from './vw/WebcamV.js';
 import { SidebarV }       from './vw/SidebarV.js';
 
 import { AppR }           from '/frontschweine/js/AppR.js';
@@ -39,8 +39,8 @@ class VinetaR extends AppR
     this.models = null;
     this.subcontrollers = null;
     this.events = null;
-    this.present = null;
-    this.prefs = null;
+    this.presentC = null;
+    this.prefsC = null;
     this.anim = null;
     this.evtEmt = null;
   }
@@ -74,7 +74,7 @@ class VinetaR extends AppR
     {
       widgetsView: new WidgetsV(this.evtEmt, this.anim),
       sidebarView: new SidebarV(this.evtEmt, this.anim),
-      presentView: new PresentationV(this.evtEmt, this.anim),
+      webcamView:  new WebcamV(this.evtEmt, this.anim),
       prefsView:   new PrefsV(this.evtEmt, this.anim)
     }
 
@@ -93,68 +93,68 @@ class VinetaR extends AppR
     }
 
     // Init controllers
-    this.present = new PresentationC(this.evtEmt, this.views, this.models, this.subcontrollers);
-    this.prefs = new PrefsC(this.evtEmt, this.views, this.models, this.subcontrollers);
+    this.presentC = new PresentationC(this.evtEmt, this.views, this.models, this.subcontrollers);
+    this.prefsC = new PrefsC(this.evtEmt, this.views, this.models, this.subcontrollers);
 
     // event routing for presentation
 
     // start / stop
-    this.on('keyup', this.present.startStopOnSpacebar.bind(this.present));
-    this.on('click', '.widgetControls__startStopButton', this.present.startStopOnButton.bind(this.present));
+    this.on('keyup', this.presentC.startStopOnSpacebar.bind(this.presentC));
+    this.on('click', '.widgetControls__startStopButton', this.presentC.startStopOnButton.bind(this.presentC));
 
     // start / stop on (loosing / regaining) visibility
-    this.on('visibilitychange', this.present.onDocumentVisibilityChange.bind(this.present));
+    this.on('visibilitychange', this.presentC.onDocumentVisibilityChange.bind(this.presentC));
 
     // mousemove event routing for Widgets
-    this.on('mousemove', null, this.present.onMousemove.bind(this.present));
+    this.on('mousemove', null, this.presentC.onMousemove.bind(this.presentC));
 
     // stop on loosing internet connection
-    this.on('offline', this.present.onConnectionLost.bind(this.present));
+    this.on('offline', this.presentC.onConnectionLost.bind(this.presentC));
 
     // start on regaining internet connection
-    this.on('online', this.present.onReconnect.bind(this.present));
+    this.on('online', this.presentC.onReconnect.bind(this.presentC));
 
     // open / close ui elements
-    this.on('click', '.widgetControls__prefsOpenButton', this.present.prefsOpen.bind(this.present));
-    this.on('click', '.widgetControls__screenshotModeButton', this.present.enableScreenshotMode.bind(this.present));
-    this.on('click', '.webcam', this.present.toggleSidebar.bind(this.present));
+    this.on('click', '.widgetControls__prefsOpenButton', this.presentC.prefsOpen.bind(this.presentC));
+    this.on('click', '.widgetControls__screenshotModeButton', this.presentC.enableScreenshotMode.bind(this.presentC));
+    this.on('click', '.webcam', this.presentC.toggleSidebar.bind(this.presentC));
 
     // sidebar actions
-    this.on('input', '.sidebarFilter__input', this.present.filterWebcams.bind(this.present));
-    this.on('click', '.sidebarFilter__clearButton', this.present.filterWebcamsReset.bind(this.present));
-    this.on('click', '.sidebarWebcam__summary', this.present.gotoCam.bind(this.present));
-    this.on('click', '.sidebarWebcamCamActions__disableButton', this.present.disableCam.bind(this.present));
-    this.on('click', '.sidebarWebcamCamActions__enableButton', this.present.enableCam.bind(this.present));
+    this.on('input', '.sidebarFilter__input', this.presentC.filterWebcams.bind(this.presentC));
+    this.on('click', '.sidebarFilter__clearButton', this.presentC.filterWebcamsReset.bind(this.presentC));
+    this.on('click', '.sidebarWebcam__summary', this.presentC.gotoCam.bind(this.presentC));
+    this.on('click', '.sidebarWebcamCamActions__disableButton', this.presentC.disableCam.bind(this.presentC));
+    this.on('click', '.sidebarWebcamCamActions__enableButton', this.presentC.enableCam.bind(this.presentC));
 
     // last cam
-    this.on('click', '.widgetLastCam__image', this.present.gotoPreviousCam.bind(this.present));
+    this.on('click', '.widgetLastCam__image', this.presentC.gotoPreviousCam.bind(this.presentC));
 
     // rotator
-    this.on('rotatorStart', this.present.start.bind(this.present));
-    this.on('rotatorStop', this.present.stop.bind(this.present));
-    this.on('rotatorSwitch', this.present.webcamSwap.bind(this.present));
-    this.on('rotatorSwitchError', this.present.webcamSwapFailed.bind(this.present));
+    this.on('rotatorStart', this.presentC.onStart.bind(this.presentC));
+    this.on('rotatorStop', this.presentC.onStop.bind(this.presentC));
+    this.on('rotatorSwitch', this.presentC.onWebcamSwap.bind(this.presentC));
+    this.on('rotatorSwitchError', this.presentC.onWebcamSwapFailed.bind(this.presentC));
     this.on('rotatorImageLoadStart', this.views.sidebarView.startLoadingIndicator.bind(this.views.sidebarView));
     this.on('rotatorImageLoadEnd', this.views.sidebarView.stopLoadingIndicator.bind(this.views.sidebarView));
 
     // event routing for pref ui elements
-    this.on('click', '.prefsCloseButton',                     this.prefs.prefsClose.bind(this.prefs));
-    this.on('click', '.prefsSheetsAddButton',                 this.prefs.prefsSheetsAddButton.bind(this.prefs));
-    this.on('click', '.prefsSheetsEnabledCheckbox',           this.prefs.prefsSheetsEnabledCheckbox.bind(this.prefs));
-    this.on('click', '.prefsSheetsRemoveLink',                this.prefs.prefsSheetsRemoveLink.bind(this.prefs));
-    this.on('click', '.prefsSheetsEditLink',                  this.prefs.prefsSheetsEditLink.bind(this.prefs));
-    this.on('change',   '.prefsSceneTabPresentation select',  this.prefs.prefsSelectChange.bind(this.prefs));
-    this.on('formoSliderChange', '.prefsSceneTabPresentation .formoSlider', this.prefs.prefsSliderChange.bind(this.prefs));
-    this.on('click',  '#prefsExpSheets',                      this.prefs.prefsExpSheets.bind(this.prefs));
-    this.on('click',  '#prefsImpSheetsSelect',                this.prefs.prefsImpSheetsSelect.bind(this.prefs));
-    this.on('change', '#prefsImpSheetsFS',                    this.prefs.prefsImpSheetsFS.bind(this.prefs));
-    this.on('change', '#prefsProxy',                          this.prefs.prefsProxyChanged.bind(this.prefs));
+    this.on('click', '.prefsCloseButton',                     this.prefsC.prefsClose.bind(this.prefsC));
+    this.on('click', '.prefsSheetsAddButton',                 this.prefsC.prefsSheetsAddButton.bind(this.prefsC));
+    this.on('click', '.prefsSheetsEnabledCheckbox',           this.prefsC.prefsSheetsEnabledCheckbox.bind(this.prefsC));
+    this.on('click', '.prefsSheetsRemoveLink',                this.prefsC.prefsSheetsRemoveLink.bind(this.prefsC));
+    this.on('click', '.prefsSheetsEditLink',                  this.prefsC.prefsSheetsEditLink.bind(this.prefsC));
+    this.on('change',   '.prefsSceneTabPresentation select',  this.prefsC.prefsSelectChange.bind(this.prefsC));
+    this.on('formoSliderChange', '.prefsSceneTabPresentation .formoSlider', this.prefsC.prefsSliderChange.bind(this.prefsC));
+    this.on('click',  '#prefsExpSheets',                      this.prefsC.prefsExpSheets.bind(this.prefsC));
+    this.on('click',  '#prefsImpSheetsSelect',                this.prefsC.prefsImpSheetsSelect.bind(this.prefsC));
+    this.on('change', '#prefsImpSheetsFS',                    this.prefsC.prefsImpSheetsFS.bind(this.prefsC));
+    this.on('change', '#prefsProxy',                          this.prefsC.prefsProxyChanged.bind(this.prefsC));
 
     // any log event
     this.on('log', this.views.widgetsView.log.bind(this.views.widgetsView));
 
     // load and go
-    this.present.go();
+    this.presentC.go();
   }
 }
 

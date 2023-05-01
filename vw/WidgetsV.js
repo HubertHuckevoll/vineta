@@ -54,6 +54,8 @@ export class WidgetsV extends BaseV
     this.setWidgetVisibility(this.alwaysOverlays, true);
     this.setWidgetVisibility(this.mousemoveOverlays, false);
     this.setWidgetVisibility(this.neverOverlays, false);
+
+    this.setWidgetsOpacity(prefs);
   }
 
   setWidgetVisibility(widgets, isVisible)

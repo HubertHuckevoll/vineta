@@ -191,4 +191,9 @@ export class SidebarV extends BaseV
       }
     }
   }
+
+  resetFilterInput()
+  {
+    document.querySelector('.sidebarFilter__input').value = '';
+  }
 }

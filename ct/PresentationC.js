@@ -21,7 +21,6 @@ export class PresentationC extends BaseC
     let prefs = this.models.prefs.load();
     this.subcontrollers.rotator.setPrefs(prefs);
     this.views.widgetsView.update(prefs);
-    this.views.widgetsView.setWidgetsOpacity(prefs);
 
     try
     {
@@ -36,97 +35,39 @@ export class PresentationC extends BaseC
     }
     catch(err)
     {
-      this.views.presentView.logText(err.message);
+      this.views.webcamView.logText(err.message);
     }
   }
 
-  stop()
+  startStopOnButton(ev)
   {
-    this.views.widgetsView.setWidgetAttribute('controls', 'caption', 'Start');
-    this.views.widgetsView.setWidgetAttribute('clock', 'blinking', 'no');
-    this.views.widgetsView.logText('Stopped');
+    this.subcontrollers.rotator.toggle();
   }
 
-  start(ev)
+  startStopOnSpacebar(ev)
   {
-    this.views.widgetsView.setWidgetAttribute('controls', 'caption', 'Stop');
-    this.views.widgetsView.setWidgetAttribute('clock', 'blinking', 'yes');
-    this.views.widgetsView.logText('Starting');
+    if (ev.key == ' ')
+    { // space bar
+      this.subcontrollers.rotator.toggle();
+      ev.preventDefault(); // if we omit this, the space bar press will trigger a scroll down
+      return false;
+    }
   }
 
-  async webcamSwap(ev)
+  toggleSidebar(ev)
   {
-    let nextCam =
+    if (this.screenshotMode === true)
     {
-      idx: null,
-      cam: null,
-      lastCam: null,
-      img: null
-    };
-
-    // grab next image
-    nextCam.prefs = ev.detail.payload.prefs;
-    nextCam.lastCam = ev.detail.payload.lastCam;
-    nextCam.img = ev.detail.payload.img;
-    nextCam.cam = ev.detail.payload.cam;
-    nextCam.idx = ev.detail.payload.idx;
-
-    if (nextCam.cam !== null)
+      this.screenshotMode = false;
+      this.views.widgetsView.showOverlays();
+    }
+    else
     {
-      // hide image
-      await this.views.presentView.webcamHide();
-
-      // update widgets
-      this.views.widgetsView.setWidgetAttribute('location', 'place', nextCam.cam.location);
-      this.views.widgetsView.setWidgetAttribute('location', 'desc', nextCam.cam.description);
-      this.views.widgetsView.setWidgetAttribute('location', 'url', nextCam.cam.homepage);
-      this.views.widgetsView.setWidgetAttribute('map', 'place', nextCam.cam.location);
-
-      // store "last cam"
-      if ((nextCam.lastCam.url !== null) || (nextCam.lastCam.url !== null))
+      if (ev.target.classList.contains('webcam'))
       {
-        this.views.widgetsView.setWidgetAttribute('lastCam', 'url', nextCam.lastCam.url);
-        this.views.widgetsView.setWidgetAttribute('lastCam', 'idx', nextCam.lastCam.idx);
+        this.views.sidebarView.toggleSidebar(this.subcontrollers.rotator.idx);
       }
-
-      // update sidebar
-      this.views.sidebarView.setSidebarActiveCam(nextCam.idx);
-      this.views.sidebarView.setSidebarCamColor(nextCam.cam, nextCam.idx);
-
-      // show image
-      await this.views.presentView.webcamShow(nextCam);
     }
-  }
-
-  async webcamSwapFailed(ev)
-  {
-    let logMode = ev.detail.payload.logMode;
-    let cam = ev.detail.payload.cam;
-    let idx = ev.detail.payload.idx;
-    let err = ev.detail.payload.err;
-
-    let msg = `Failed loading image: "${cam.location} / ${cam.description}"\r\n`+
-              `Homepage: ${cam.homepage}\r\n`+
-              `URL: ${cam.url}\r\n`+
-              `Reason: ${err.name}: ${err.message}\r\n`;
-
-    switch (logMode)
-    {
-      case 'screen':
-        this.views.widgetsView.logText(msg);
-      break;
-      case 'console':
-        console.log(msg);
-      break;
-      case 'both':
-        this.views.widgetsView.logText(msg);
-        console.log(msg);
-      break;
-      case 'none':
-      break;
-    }
-
-    this.views.sidebarView.setSidebarCamColor(cam, idx);
   }
 
   filterWebcams(ev)
@@ -140,7 +81,7 @@ export class PresentationC extends BaseC
 
   filterWebcamsReset(ev)
   {
-    document.querySelector('.sidebarFilter__input').value = '';
+    this.views.sidebarView.resetFilterInput();
     this.subcontrollers.rotator.stop();
     let webcams = this.models.webcams.filterReset();
     this.subcontrollers.rotator.setWebcams(webcams);
@@ -152,11 +93,8 @@ export class PresentationC extends BaseC
   {
     this.views.sidebarView.closeSidebarWebcamsCamActions();
 
-    if (ev.target.parentNode.parentNode.parentNode.classList.contains('sidebarWebcams'))
-    {
-      let idx = ev.target.parentNode.parentNode.getAttribute('data-idx');
-      this.subcontrollers.rotator.goto(idx);
-    }
+    let idx = ev.target.parentNode.parentNode.getAttribute('data-idx');
+    this.subcontrollers.rotator.goto(idx);
   }
 
   enableCam(ev)
@@ -187,35 +125,100 @@ export class PresentationC extends BaseC
     this.views.widgetsView.hideOverlays();
   }
 
-  toggleSidebar(ev)
+  prefsOpen()
   {
-    if (this.screenshotMode === true)
+    let prefs = this.models.prefs.getPrefs();
+    this.views.prefsView.drawPrefs(prefs);
+    this.views.prefsView.prefsOpen();
+  }
+
+  onStart(ev)
+  {
+    this.views.widgetsView.setWidgetAttribute('controls', 'caption', 'Stop');
+    this.views.widgetsView.setWidgetAttribute('clock', 'blinking', 'yes');
+    this.views.widgetsView.logText('Starting');
+  }
+
+  onStop(ev)
+  {
+    this.views.widgetsView.setWidgetAttribute('controls', 'caption', 'Start');
+    this.views.widgetsView.setWidgetAttribute('clock', 'blinking', 'no');
+    this.views.widgetsView.logText('Stopped');
+  }
+
+  async onWebcamSwap(ev)
+  {
+    let nextCam =
     {
-      this.screenshotMode = false;
-      this.views.widgetsView.showOverlays();
-    }
-    else
+      idx: null,
+      cam: null,
+      lastCam: null,
+      img: null
+    };
+
+    // grab next image
+    nextCam.prefs = ev.detail.payload.prefs;
+    nextCam.lastCam = ev.detail.payload.lastCam;
+    nextCam.img = ev.detail.payload.img;
+    nextCam.cam = ev.detail.payload.cam;
+    nextCam.idx = ev.detail.payload.idx;
+
+    if (nextCam.cam !== null)
     {
-      if (ev.target.classList.contains('webcam'))
+      // hide image
+      await this.views.webcamView.webcamHide();
+
+      // update widgets
+      this.views.widgetsView.setWidgetAttribute('location', 'place', nextCam.cam.location);
+      this.views.widgetsView.setWidgetAttribute('location', 'desc', nextCam.cam.description);
+      this.views.widgetsView.setWidgetAttribute('location', 'url', nextCam.cam.homepage);
+      this.views.widgetsView.setWidgetAttribute('map', 'place', nextCam.cam.location);
+
+      // store "last cam"
+      if ((nextCam.lastCam.url !== null) || (nextCam.lastCam.url !== null))
       {
-        this.views.sidebarView.toggleSidebar(this.subcontrollers.rotator.idx);
+        this.views.widgetsView.setWidgetAttribute('lastCam', 'url', nextCam.lastCam.url);
+        this.views.widgetsView.setWidgetAttribute('lastCam', 'idx', nextCam.lastCam.idx);
       }
+
+      // update sidebar
+      this.views.sidebarView.setSidebarActiveCam(nextCam.idx);
+      this.views.sidebarView.setSidebarCamColor(nextCam.cam, nextCam.idx);
+
+      // show image
+      await this.views.webcamView.webcamShow(nextCam);
     }
   }
 
-  startStopOnSpacebar(ev)
+  async onWebcamSwapFailed(ev)
   {
-    if (ev.key == ' ')
-    { // space bar
-      this.subcontrollers.rotator.toggle();
-      ev.preventDefault(); // if we omit this, the space bar press will trigger a scroll down
-      return false;
-    }
-  }
+    let logMode = ev.detail.payload.logMode;
+    let cam = ev.detail.payload.cam;
+    let idx = ev.detail.payload.idx;
+    let err = ev.detail.payload.err;
 
-  startStopOnButton(ev)
-  {
-    this.subcontrollers.rotator.toggle();
+    let msg = `Failed loading image: "${cam.location} / ${cam.description}"\r\n`+
+              `Homepage: ${cam.homepage}\r\n`+
+              `URL: ${cam.url}\r\n`+
+              `Reason: ${err.name}: ${err.message}\r\n`;
+
+    switch (logMode)
+    {
+      case 'screen':
+        this.views.widgetsView.logText(msg);
+      break;
+      case 'console':
+        console.log(msg);
+      break;
+      case 'both':
+        this.views.widgetsView.logText(msg);
+        console.log(msg);
+      break;
+      case 'none':
+      break;
+    }
+
+    this.views.sidebarView.setSidebarCamColor(cam, idx);
   }
 
   onMousemove(ev)
@@ -259,12 +262,5 @@ export class PresentationC extends BaseC
         this.subcontrollers.rotator.start();
       }
     }
-  }
-
-  prefsOpen()
-  {
-    let prefs = this.models.prefs.getPrefs();
-    this.views.prefsView.drawPrefs(prefs);
-    this.views.prefsView.prefsOpen();
   }
 }
