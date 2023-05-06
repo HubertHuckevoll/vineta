@@ -230,6 +230,38 @@
     </div>
   </template>
 
+  <template id="vceClockT">
+    <style>
+      @keyframes blink
+      {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      .blinking {
+        animation: blink 2s infinite;
+      }
+    </style>
+    <div class="widgetClock__date"></div>
+    <div class="widgetClock__time">
+      <span class="widgetClock__timeH"></span>
+      <span class="widgetClock__timeDots">:</span>
+      <span class="widgetClock__timeM"></span>
+    </div>
+  </template>
+
+  <template id="vceControlsT">
+    <button class="widgetControls__startStopButton      widgetControls__button" data-tip="Start / Stop">Caption</button>
+    <button class="widgetControls__prefsOpenButton      widgetControls__button" data-tip="Preferences">Preferences</button>
+    <button class="widgetControls__screenshotModeButton widgetControls__button" data-tip="Hide all overlays (screenshot mode)">Hide Widgets</button>
+  </template>
+
   <template id="vceMapT">
     <img class="widgetMap__image" src="">
     <div class="widgetMap__weather">
@@ -238,6 +270,21 @@
       <!--div><span class="widgetMap__winddirection"></span><span>Degree</span></div-->
       <div><span>Wind:&nbsp;</span><span class="widgetMap__windspeed"></span><span>&nbsp;km/h</span></div>
     </div>
+  </template>
+
+  <template id="vceLastCamT">
+    <img class="widgetLastCam__image" src="">
+  </template>
+
+  <template id="vceLocationT">
+    <div class="widgetLocation__desc">
+      <a class="widgetLocation__link" href="" target="_blank"></a>
+    </div>
+    <div class="widgetLocation__place"></div>
+  </template>
+
+  <template id="vceLogT">
+    <span class="widgetLogText"></span>
   </template>
 
   <div style="display: none;">

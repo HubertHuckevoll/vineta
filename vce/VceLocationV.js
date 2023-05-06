@@ -54,8 +54,14 @@ export class VceLocationV extends Vce
 
   render()
   {
-    this.innerHTML = `<div class="widgetLocation__desc"><a class="widgetLocation__link" href="${this.url}" target="_blank">${this.desc}</a></div>
-                      <div class="widgetLocation__place">${this.place}</div>`;
+    const templ = document.querySelector('#vceLocationT').content.cloneNode(true);
+
+    templ.querySelector('.widgetLocation__link').innerHTML = this.desc;
+    templ.querySelector('.widgetLocation__link').setAttribute('href', this.url);
+    templ.querySelector('.widgetLocation__place').innerHTML = this.place;
+
+    this.innerHTML = '';
+    this.appendChild(templ);
   }
 
 }

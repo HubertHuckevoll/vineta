@@ -24,17 +24,23 @@ export class VceLogV extends Vce
 
   attributeChangedCallback(name, oldValue, newValue)
   {
-    this.render();
+    this.update();
   }
 
   connectedCallback()
   {
     this.render();
+    this.update();
   }
 
   render()
   {
-    this.innerHTML = '<span class="widgetLogText">'+this.text+'</span>';
+    const templ = document.querySelector('#vceLogT').content.cloneNode(true);
+    this.appendChild(templ);
   }
 
+  update()
+  {
+    this.querySelector('.widgetLogText').innerHTML = this.text;
+  }
 }

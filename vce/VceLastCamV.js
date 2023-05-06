@@ -42,6 +42,11 @@ export class VceLastCamV extends Vce
 
   render()
   {
-    this.innerHTML = (this.url !== "undefined") ? `<img class="widgetLastCam__image" src="${this.url}">` : '';
+    const templ = document.querySelector('#vceLastCamT').content.cloneNode(true);
+    const url = (this.url !== "undefined") ? this.url : '';
+
+    this.innerHTML = '';
+    templ.querySelector('.widgetLastCam__image').setAttribute('src', url);
+    this.appendChild(templ);
   }
 }

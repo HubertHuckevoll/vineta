@@ -6,7 +6,6 @@ export class VceClockV extends Vce
   {
     super();
     this.tid = null;
-    this.shadow = this.attachShadow({mode: 'closed'});
     this.dots = null;
   }
 
@@ -18,7 +17,7 @@ export class VceClockV extends Vce
   connectedCallback()
   {
     this.render();
-    this.dots = this.shadow.querySelector('.dots');
+    this.dots = this.querySelector('.widgetClock__timeDots');
     this.clockTick();
   }
 
@@ -26,11 +25,11 @@ export class VceClockV extends Vce
   {
     if ((name === 'blinking') && (newValue == 'yes'))
     {
-      this.shadow.querySelector('.dots').classList.add('blinking');
+      this.dots.classList.add('blinking');
     }
     else if ((name === 'blinking') && (newValue == 'no'))
     {
-      this.shadow.querySelector('.dots').classList.remove('blinking');
+      this.dots.classList.remove('blinking');
     }
   }
 
@@ -66,31 +65,8 @@ export class VceClockV extends Vce
 
   render()
   {
-    this.shadow.innerHTML = `<style>
-                              @keyframes blink
-                              {
-                                0% {
-                                  opacity: 1;
-                                }
-                                50% {
-                                  opacity: 0;
-                                }
-                                100% {
-                                  opacity: 1;
-                                }
-                              }
-                              .blinking {
-                                animation: blink 2s infinite;
-                              }
-                             </style>
-
-                             <div part="dateTime" class="dateTime">
-                               <div part="date" class="date"></div>
-                               <div part="time" class="time">
-                                 <span class="ch"></span><span class="dots">:</span><span class="cm"></span>
-                               </div>
-                             </div>`;
-
+    const templ = document.querySelector('#vceClockT').content.cloneNode(true);
+    this.appendChild(templ);
     this.update();
   }
 
@@ -106,9 +82,9 @@ export class VceClockV extends Vce
     cm = (cm < 10) ? '0'+cm : cm;
     cd = t.toLocaleDateString({}, dateOptions);
 
-    this.shadow.querySelector('.ch').innerHTML = ch;
-    this.shadow.querySelector('.cm').innerHTML = cm;
-    this.shadow.querySelector('.date').innerHTML = cd;
+    this.querySelector('.widgetClock__timeH').innerHTML = ch;
+    this.querySelector('.widgetClock__timeM').innerHTML = cm;
+    this.querySelector('.widgetClock__date').innerHTML = cd;
   }
 
 }

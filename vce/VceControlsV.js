@@ -34,9 +34,11 @@ export class VceControlsV extends Vce
 
   render()
   {
-    this.innerHTML = `<button class="widgetControls__startStopButton      widgetControls__button" data-tip="Start / Stop">${this.caption}</button>
-                      <button class="widgetControls__prefsOpenButton      widgetControls__button" data-tip="Preferences">Preferences</button>
-                      <button class="widgetControls__screenshotModeButton widgetControls__button" data-tip="Hide all overlays (screenshot mode)">Hide Widgets</button>`;
+    const templ = document.querySelector('#vceControlsT').content.cloneNode(true);
+
+    templ.querySelector('.widgetControls__startStopButton').innerHTML = this.caption;
+    this.innerHTML = '';
+    this.appendChild(templ);
   }
 
 }
