@@ -52,7 +52,6 @@ export class VceMapV extends Vce
         var mapUrl = `https://static-maps.yandex.ru/1.x/?lang=de_DE&ll=${loc[0].lon},${loc[0].lat}&size=350,350&z=10&l=map&pt=${loc[0].lon},${loc[0].lat},vkgrm`;
         this.setImage(mapUrl);
 
-
         const weatherResp = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc[0].lat}&longitude=${loc[0].lon}&current_weather=true`);
         const weather = await weatherResp.json()
         const currentWeather = weather.current_weather;
