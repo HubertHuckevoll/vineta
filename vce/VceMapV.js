@@ -89,6 +89,7 @@ export class VceMapV extends Vce
   setWeather(weather)
   {
     this.querySelector('.widgetMap__temp').innerHTML = weather.temperature;
+    this.querySelector('.widgetMap__time').innerHTML = new Date(weather.time).toLocaleTimeString('de-DE', {timeStyle: 'short'});
     //this.querySelector('.widgetMap__weathercode').innerHTML = weather.weathercode;
     //this.querySelector('.widgetMap__winddirection').innerHTML = weather.winddirection;
     this.querySelector('.widgetMap__windspeed').innerHTML = weather.windspeed;

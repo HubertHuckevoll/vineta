@@ -165,8 +165,8 @@ html, body
   position: absolute;
   top: 35px;
   right: 35px;
-  display: inline-block;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .widgetMap__image
@@ -188,10 +188,11 @@ html, body
 
 .widgetMap__weather
 {
-  margin-right: 10px;
-  text-align: right;
-  color: white;
-  text-shadow: 1px  1px 1px black, 1px -1px 1px black, -1px  1px 1px black, -1px -1px 1px black;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  border: 3px solid #fafafa;
+  background-color: #fafafa;
 }
 
 .widget--opacity0   {transition: opacity .5s; opacity:  0;}
@@ -457,11 +458,6 @@ html, body
 .prefsTabbox
 {
   padding: 10px 20px 10px 20px;
-}
-
-input::placeholder
-{
-  color: #bbb;
 }
 
 .prefsSheetsList
