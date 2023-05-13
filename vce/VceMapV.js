@@ -121,10 +121,10 @@ export class VceMapV extends Vce
   setWeather(weather)
   {
     this.querySelector('.widgetMap__temp').innerHTML = weather.temperature + ' °C';
-    this.querySelector('.widgetMap__time').innerHTML = '(' + new Date(weather.time).toLocaleTimeString([], {timeStyle: 'short'}) + ')';
+    this.querySelector('.widgetMap__time').innerHTML = new Date(weather.time).toLocaleTimeString([], {timeStyle: 'short'});
     //this.querySelector('.widgetMap__weathercode').innerHTML = weather.weathercode;
     //this.querySelector('.widgetMap__winddirection').innerHTML = weather.winddirection;
-    this.querySelector('.widgetMap__windspeed_kmh').innerHTML = weather.windspeed + ' km/h / ';
-    this.querySelector('.widgetMap__windspeed_bft').innerHTML = this.kmhToBft(weather.windspeed) + ' bft';
+    this.querySelector('.widgetMap__windspeed_kmh').innerHTML = weather.windspeed + ' km/h ';
+    this.querySelector('.widgetMap__windspeed_bft').innerHTML = '(' + this.kmhToBft(weather.windspeed) + ' bft)';
   }
 }
