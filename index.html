@@ -263,11 +263,14 @@
   <template id="vceMapT">
     <img class="widgetMap__image" src="">
     <div class="widgetMap__weather">
-      <div><span>&#127777;&nbsp;</span><span class="widgetMap__temp"></span><span>&nbsp;°C</span></div>
-      <div><span>&#8986;&nbsp;</span><span class="widgetMap__time"></span><span></span></div>
+      <div><span class="widgetMap__temp"></span></div>
       <!--div><span class="widgetMap__weathercode"></span><span>Code</span></div-->
       <!--div><span class="widgetMap__winddirection"></span><span>Degree</span></div-->
-      <div><span>&#127786;&nbsp;</span><span class="widgetMap__windspeed"></span><span>&nbsp;km/h</span></div>
+      <div>
+        <span class="widgetMap__windspeed_kmh"></span>
+        <span class="widgetMap__windspeed_bft"></span>
+      </div>
+      <div><span class="widgetMap__time"></span></div>
     </div>
   </template>
 

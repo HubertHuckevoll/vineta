@@ -52,7 +52,7 @@ export class VceMapV extends Vce
         var mapUrl = `https://static-maps.yandex.ru/1.x/?lang=de_DE&ll=${loc[0].lon},${loc[0].lat}&size=350,350&z=10&l=map&pt=${loc[0].lon},${loc[0].lat},vkgrm`;
         this.setImage(mapUrl);
 
-        const weatherResp = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc[0].lat}&longitude=${loc[0].lon}&current_weather=true`);
+        const weatherResp = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc[0].lat}&longitude=${loc[0].lon}&current_weather=true&timezone=auto`);
         const weather = await weatherResp.json()
         const currentWeather = weather.current_weather;
         this.setWeather(currentWeather);
@@ -64,6 +64,38 @@ export class VceMapV extends Vce
         this.setImage(mapUrl);
       };
     }
+  }
+
+  kmhToBft(kmh)
+  {
+    let bft = null;
+    const transTable = [
+      [0, 1], // 0
+      [1, 5], // 1
+      [6, 11], // 2
+      [12, 19], // 3
+      [20, 28], // 4
+      [29, 38], // 5
+      [39, 49], // 6
+      [50, 61], // 7
+      [62, 74], // 8
+      [75, 88], // 9
+      [89, 102], // 10
+      [103, 117] // 11
+      // > 117 = 12
+    ]
+
+    for (let idx=0; idx<=transTable.length; idx++)
+    {
+      if ((kmh => transTable[idx][0]) && (kmh <= transTable[idx][1]))
+      {
+        bft = idx;
+        break;
+      }
+    };
+
+    if ((bft === null) && (idx === 11)) bft = 12;
+    return bft;
   }
 
   setSpinner()
@@ -88,10 +120,11 @@ export class VceMapV extends Vce
 
   setWeather(weather)
   {
-    this.querySelector('.widgetMap__temp').innerHTML = weather.temperature;
-    this.querySelector('.widgetMap__time').innerHTML = new Date(weather.time).toLocaleTimeString('de-DE', {timeStyle: 'short'});
+    this.querySelector('.widgetMap__temp').innerHTML = weather.temperature + ' °C';
+    this.querySelector('.widgetMap__time').innerHTML = '(' + new Date(weather.time).toLocaleTimeString([], {timeStyle: 'short'}) + ')';
     //this.querySelector('.widgetMap__weathercode').innerHTML = weather.weathercode;
     //this.querySelector('.widgetMap__winddirection').innerHTML = weather.winddirection;
-    this.querySelector('.widgetMap__windspeed').innerHTML = weather.windspeed;
+    this.querySelector('.widgetMap__windspeed_kmh').innerHTML = weather.windspeed + ' km/h / ';
+    this.querySelector('.widgetMap__windspeed_bft').innerHTML = this.kmhToBft(weather.windspeed) + ' bft';
   }
 }
