@@ -193,6 +193,7 @@ html, body
   justify-content: space-between;
   border: 3px solid #fafafa;
   background-color: #fafafa;
+  font-size: 0.7vw;
 }
 
 .widget--opacity0   {transition: opacity .5s; opacity:  0;}
