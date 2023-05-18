@@ -33,7 +33,6 @@ export class PrefsV extends BaseV
       li.querySelector('.prefsSheetsEnabledCheckbox').setAttribute('data-idx', idx)
       li.querySelector('.prefsSheetsEnabledCheckbox').checked = sheet.enabled;
       li.querySelector('.prefsSheetsDesc').innerHTML = sheet.desc;
-      li.querySelector('.prefsSheetsDesc').setAttribute('href', sheet.pubUrl);
       li.querySelector('.prefsSheetsRemoveLink').setAttribute('data-idx', idx);
       if (sheet.sheetUrl)
       {
@@ -44,6 +43,13 @@ export class PrefsV extends BaseV
 
       sheetsEl.appendChild(li);
     };
+  }
+
+  addSheetReset()
+  {
+    document.getElementById('prefsSheetsAddPub').value = '';
+    document.getElementById('prefsSheetsAddSheet').value = '';
+    document.getElementById('prefsSheetsAddDesc').value = '';
   }
 
   drawScreenModeHint(screenMode)

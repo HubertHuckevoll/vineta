@@ -53,6 +53,7 @@ export class PrefsC extends BaseC
     {
       let sheets = this.models.sheets.addSheet(pubUrl, sheetUrl, desc);
       this.views.prefsView.drawSheets(sheets);
+      this.views.prefsView.addSheetReset();
       this.sheetsHaveChanged = true;
     }
     catch (err)
