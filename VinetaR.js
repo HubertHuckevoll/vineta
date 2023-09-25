@@ -1,8 +1,8 @@
-import { FormoTabbox }  from '/frontschweine/formo/FormoTabbox.js';
-import { FormoSlider }  from '/frontschweine/formo/FormoSlider.js';
-
-import { CurtainX }     from '/frontschweine/js/CurtainX.js';
-import { EventEmit }    from '/frontschweine/js/EventEmit.js';
+import { FormoTabbox }  from '/coins/heads/v1/js/formo/FormoTabbox.js';
+import { FormoSlider }  from '/coins/heads/v1/js/formo/FormoSlider.js';
+import { CurtainX }     from '/coins/heads/v1/js/mvc/CurtainX.js';
+import { EventEmit }    from '/coins/heads/v1/js/mvc/EventEmit.js';
+import { AppR }         from '/coins/heads/v1/js/mvc/AppR.js';
 
 import { VceLocationV } from './vce/VceLocationV.js';
 import { VceLogV }      from './vce/VceLogV.js';
@@ -24,8 +24,6 @@ import { WidgetsV }       from './vw/WidgetsV.js';
 import { PrefsV }         from './vw/PrefsV.js';
 import { WebcamV }        from './vw/WebcamV.js';
 import { SidebarV }       from './vw/SidebarV.js';
-
-import { AppR }           from '/frontschweine/js/AppR.js';
 
 
 class VinetaR extends AppR
